@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { menteeURL } from '../serverUrl';
-import { HttpResponseModel,MenteeModel, ValidateOtpModel } from '../model/menteeModel';
+import { HttpResponseModel,LoginModel,LoginResponseModel,MenteeModel, ValidateOtpModel } from '../model/menteeModel';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -27,5 +27,7 @@ export class MenteeService {
   }
 
   // Login User
-  
+  login(data:LoginModel):Observable<LoginResponseModel>{
+    return this.http.post<LoginResponseModel>(`${menteeURL}/login`,data);
+  }
 }

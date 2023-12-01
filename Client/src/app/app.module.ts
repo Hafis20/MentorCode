@@ -11,7 +11,7 @@ import { MenteeLoginComponent } from './component/mentee/mentee-login/mentee-log
 import { MentorLoginComponent } from './component/mentor/mentor-login/mentor-login.component';
 import { MenteeRegisterComponent } from './component/mentee/mentee-register/mentee-register.component';
 import { HomeComponent } from './component/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -19,6 +19,11 @@ import { MaterialModule } from './material.component';
 import { FormComponent } from './shared/form/form.component';
 import { OtpComponent } from './component/otp/otp.component';
 import { PadCounterPipe } from './customPipes/padCounter';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { MenteeEffect } from './store/Mentee/mentee.effect';
+import { MenteeReducer } from './store/Mentee/mentee.reducer';
+import { AdminLoginComponent } from './component/admin/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './component/admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +36,8 @@ import { PadCounterPipe } from './customPipes/padCounter';
     FormComponent,
     OtpComponent,
     PadCounterPipe,
+    AdminLoginComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,11 +52,13 @@ import { PadCounterPipe } from './customPipes/padCounter';
       progressAnimation: 'increasing',
       preventDuplicates: true,
     }),
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({mentee:MenteeReducer}, {}),
+    EffectsModule.forRoot([MenteeEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

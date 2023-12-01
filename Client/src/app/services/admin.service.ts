@@ -6,4 +6,9 @@ import { Injectable } from '@angular/core';
 export class AdminService {
 
   constructor() { }
+
+  // Getting all Mentees
+  getAllMentees(){
+    
+  }
 }

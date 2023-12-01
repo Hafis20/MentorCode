@@ -8,5 +8,14 @@ module.exports ={
       } catch (error) {
          console.log(error.message);
       }
+   },
+
+   comparePass:async(password,hashedPass)=>{
+      try {
+         const match = await bcrypt.compare(password,hashedPass)
+         return match;
+      } catch (error) {
+         console.log(error.message);
+      }
    }
 }
