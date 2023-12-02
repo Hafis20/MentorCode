@@ -11,7 +11,6 @@ const _menteeReducer = createReducer(MenteeState,
          menteeInfo:{
             name:mentee.name,
             email:mentee.email,
-            mobile:mentee.mobile,
             role:mentee.role,
          }
       }

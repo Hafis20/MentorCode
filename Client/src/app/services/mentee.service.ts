@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { menteeURL } from '../serverUrl';
-import { HttpResponseModel,LoginModel,LoginResponseModel,MenteeModel, ValidateOtpModel } from '../model/menteeModel';
+import { HttpResponseModel,LoginModel,LoginResponseModel, ValidateOtpModel } from '../model/commonModel';
+
 import { Observable } from 'rxjs';
+import { MenteeModel } from '../model/menteeModel';
 
 @Injectable({
   providedIn: 'root'

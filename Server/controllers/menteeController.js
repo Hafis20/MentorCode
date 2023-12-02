@@ -108,7 +108,6 @@ const login = async (req, res) => {
          const accessedMentee = {
             name:menteeData.name,
             email:menteeData.email,
-            mobile:menteeData.mobile,
             role:menteeData.role
          }
          res.status(201).json({accessToken,accessedMentee,message:'Login successfull'});

@@ -83,7 +83,7 @@ export class OtpComponent implements OnInit {
               progressBar:true
             }),
             localStorage.clear();
-            this.router.navigate(['mentee-login']);
+            this.router.navigate(['/mentee/login']);
           },
           error:(error)=>{
             this.toastr.error(error.error.message,'',{

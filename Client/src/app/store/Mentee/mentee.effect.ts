@@ -23,13 +23,13 @@ export class MenteeEffect {
           map((data) => {
             const userData = data;
             if (userData) {
-              localStorage.setItem('token', userData.accessToken);
+              localStorage.setItem('menteeToken', userData.accessToken);
               this.toastr.success(userData.message, '', {
                 timeOut: 2000,
                 progressAnimation: 'increasing',
                 progressBar: true,
               });
-              this.router.navigate(['home']);
+              this.router.navigate(['home'])
               return loginMenteeSuccess({ mentee: userData.accessedMentee });
             } else {
               return;

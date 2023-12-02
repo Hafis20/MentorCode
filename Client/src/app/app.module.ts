@@ -24,6 +24,9 @@ import { MenteeEffect } from './store/Mentee/mentee.effect';
 import { MenteeReducer } from './store/Mentee/mentee.reducer';
 import { AdminLoginComponent } from './component/admin/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './component/admin/admin-dashboard/admin-dashboard.component';
+import { AdminEffect } from './store/Admin/admin.effect';
+import { AdminReducer } from './store/Admin/admin.reducer';
+import { ListUsersComponent } from './component/admin/list-users/list-users.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { AdminDashboardComponent } from './component/admin/admin-dashboard/admin
     PadCounterPipe,
     AdminLoginComponent,
     AdminDashboardComponent,
+    ListUsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +56,8 @@ import { AdminDashboardComponent } from './component/admin/admin-dashboard/admin
       progressAnimation: 'increasing',
       preventDuplicates: true,
     }),
-    StoreModule.forRoot({mentee:MenteeReducer}, {}),
-    EffectsModule.forRoot([MenteeEffect]),
+    StoreModule.forRoot({mentee:MenteeReducer,admin:AdminReducer}, {}),
+    EffectsModule.forRoot([MenteeEffect,AdminEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [

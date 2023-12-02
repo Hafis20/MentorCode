@@ -1,0 +1,9 @@
+.mdc-card{
+   margin: 2%;
+   z-index: -1;
+}
+
+button{
+   margin: 2px;
+}
+

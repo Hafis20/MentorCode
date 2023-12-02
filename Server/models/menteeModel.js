@@ -26,7 +26,7 @@ const menteeSchema = new mongoose.Schema({
    },
    role:{
       type:String,
-      default:'Mentee'
+      default:'mentee'
    }
 })
 

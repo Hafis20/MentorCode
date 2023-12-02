@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,11 +9,26 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   constructor(private router:Router){}
 
+  @Input() role:string = '';
+  smallview: string = "hidden"
+
   ngOnInit(): void {
     
   }
+  tog() {
+    if (this.smallview == "") {
+      this.smallview = "hidden"
+      return
+    }
+    this.smallview = ""
+
+  }
 
   navigateLogin(){
-    this.router.navigate(['/mentee-login']);
+    if(this.role === 'mentee'){
+      this.router.navigate(['/mentee-login']);
+    }else if(this.role === 'admin'){
+      this.router.navigate(['admin-login']);
+    }
   }
 }

@@ -14,6 +14,7 @@ import { getMenteeInfo } from 'src/app/store/Mentee/mentee.selector';
 })
 export class MenteeLoginComponent implements OnInit {
   loginForm!: FormGroup;
+  userRole:string = 'mentee';
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,

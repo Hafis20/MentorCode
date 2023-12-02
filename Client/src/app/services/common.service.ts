@@ -15,4 +15,8 @@ export class CommonService {
   getRoleFromLocalStorage():string{
     return localStorage.getItem('role') as string;
   }
+
+  getTokenFromLocalStorage():string{
+    return localStorage.getItem('token') as string;
+  }
 }

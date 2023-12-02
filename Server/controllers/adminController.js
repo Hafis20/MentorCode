@@ -1,0 +1,44 @@
+const { comparePass } = require("../Helper/hashPass");
+const Admin = require("../models/adminModel");
+const jwt = require('jsonwebtoken');
+
+// Login Admin
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const adminData = await Admin.findOne({ email: email });
+    // Checking the all possibilities
+    if (adminData) {
+      // checking the password is correct
+      const matchPass = await comparePass(password, adminData.password);
+      if (matchPass) {
+        if (adminData.role === "admin") {
+         // creating a body
+         const data = {
+            userId:adminData._id,
+         }
+         // making a jwt token
+         const accessToken = jwt.sign(data,process.env.JWT_ACCESS_TOKEN);
+         // Creating admin details
+         const accessedMentee = {
+            name:adminData.name,
+            role:adminData.role,
+         }
+         res.status(201).json({accessToken,accessedMentee,message:'Login success'});
+        } else {
+          res.status(404).json({ message: "Invalid Credentials" });
+        }
+      } else {
+        res.status(404).json({ message: "Invalid Credentials" });
+      }
+    } else {
+      res.status(404).json({ message: "Invalid Credentials" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server side error" });
+  }
+};
+
+module.exports = {
+   login,
+};

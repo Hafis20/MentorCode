@@ -93,7 +93,7 @@ export class MenteeRegisterComponent implements OnInit {
           this.registerForm.reset()
           localStorage.setItem('email',menteeData.email); 
           localStorage.setItem('role','mentee'); 
-          this.router.navigate(['verify-otp']);
+          this.router.navigate(['/mentee/verify-otp']);
         },
         error:(error)=>{
           this.toastr.error(error.error.message, '', {
