@@ -4,20 +4,7 @@ import { MenteeLoginComponent } from './component/mentee/mentee-login/mentee-log
 import { MenteeRegisterComponent } from './component/mentee/mentee-register/mentee-register.component';
 import { HomeComponent } from './component/home/home.component';
 import { OtpComponent } from './component/otp/otp.component';
-import { AdminLoginComponent } from './component/admin/admin-login/admin-login.component';
-import { AdminDashboardComponent } from './component/admin/admin-dashboard/admin-dashboard.component';
-import { adminLoginGuard } from './guard/admin-login.guard';
 
-// Admin routes
-const adminRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: AdminLoginComponent },
-  {
-    path: 'dashboard',
-    component: AdminDashboardComponent,
-    canActivate: [adminLoginGuard],
-  },
-];
 
 // Mentor routes
 const menteeRoutes: Routes = [
@@ -33,8 +20,12 @@ const routes: Routes = [
   // Mentee side
   { path: 'mentee', children: menteeRoutes },
 
-  // Admin side
-  { path: 'admin', children: adminRoutes },
+  // Lazy loading
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./component/admin/admin.module').then((m)=>m.AdminModule)
+  },
 ];
 
 @NgModule({

@@ -17,6 +17,7 @@ export interface MenteeState{
 
 // Admin side mentee listing 
 export interface MenteeList{
+   _id:string;
    name:string;
    email:string;
    mobile:string;

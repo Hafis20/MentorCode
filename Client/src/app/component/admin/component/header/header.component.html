@@ -13,7 +13,7 @@
          </li>
        </ul>
      </nav>
-     <button *ngIf="role === 'mentee'" (click)="navigateLogin()" class="border border-indigo-600 rounded-full font-bold px-6 py-2">Sign in</button>
-     <button *ngIf="role === 'admin'" (click)="navigateLogin()" class="border border-indigo-600 rounded-full font-bold px-6 py-2">List Mentee</button>
+     <button *ngIf="!isLoggedIn"  class="border border-indigo-600 rounded-full font-bold px-6 py-2">Login</button>
+     <button  *ngIf="isLoggedIn" class="border border-indigo-600 rounded-full font-bold px-6 py-2">Logout</button>
    </div>
  </header>

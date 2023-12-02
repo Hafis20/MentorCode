@@ -1,5 +1,6 @@
 const { comparePass } = require("../Helper/hashPass");
 const Admin = require("../models/adminModel");
+const Mentee = require('../models/menteeModel');
 const jwt = require('jsonwebtoken');
 
 // Login Admin
@@ -39,6 +40,19 @@ const login = async (req, res) => {
   }
 };
 
+// Get all Mentees
+const getAllMentees = async(req,res)=>{
+  try {
+    console.log('Admin Id : ',req.userId);
+    const menteesData = await Mentee.find({},{name:1,email:1,role:1,_id:0});
+    console.log(menteesData);
+    res.status(200).json({menteesData});
+  } catch (error) {
+    res.status(500).json({message:'Server side error'});
+    console.log(error.message);
+  }
+}
 module.exports = {
    login,
+   getAllMentees,
 };

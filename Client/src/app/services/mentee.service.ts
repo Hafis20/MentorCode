@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { menteeURL } from '../serverUrl';
+import { environment} from './../../environments/environment';
 import { HttpResponseModel,LoginModel,LoginResponseModel, ValidateOtpModel } from '../model/commonModel';
 
 import { Observable } from 'rxjs';
@@ -15,21 +15,21 @@ export class MenteeService {
 
   // Registering a mentee
   registerMentee(data:MenteeModel):Observable<HttpResponseModel>{
-    return this.http.post<HttpResponseModel>(`${menteeURL}/register`,data);
+    return this.http.post<HttpResponseModel>(`${environment.menteeURL}/register`,data);
   }
 
   // Resend otp
   resendOtp(email:object):Observable<HttpResponseModel>{
-    return this.http.post<HttpResponseModel>(`${menteeURL}/resendOtp`,email);
+    return this.http.post<HttpResponseModel>(`${environment.menteeURL}/resendOtp`,email);
   }
 
   // Validating the otp
   validateOtp(data:ValidateOtpModel):Observable<HttpResponseModel>{
-    return this.http.post<HttpResponseModel>(`${menteeURL}/verifyOtp`,data);
+    return this.http.post<HttpResponseModel>(`${environment.menteeURL}/verifyOtp`,data);
   }
 
   // Login User
   login(data:LoginModel):Observable<LoginResponseModel>{
-    return this.http.post<LoginResponseModel>(`${menteeURL}/login`,data);
+    return this.http.post<LoginResponseModel>(`${environment.menteeURL}/login`,data);
   }
 }

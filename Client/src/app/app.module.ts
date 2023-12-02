@@ -22,11 +22,9 @@ import { PadCounterPipe } from './customPipes/padCounter';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { MenteeEffect } from './store/Mentee/mentee.effect';
 import { MenteeReducer } from './store/Mentee/mentee.reducer';
-import { AdminLoginComponent } from './component/admin/admin-login/admin-login.component';
-import { AdminDashboardComponent } from './component/admin/admin-dashboard/admin-dashboard.component';
-import { AdminEffect } from './store/Admin/admin.effect';
-import { AdminReducer } from './store/Admin/admin.reducer';
-import { ListUsersComponent } from './component/admin/list-users/list-users.component';
+import { AdminEffect } from './component/admin/store/admin.effect';
+import { AdminReducer } from './component/admin/store/admin.reducer';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +37,7 @@ import { ListUsersComponent } from './component/admin/list-users/list-users.comp
     FormComponent,
     OtpComponent,
     PadCounterPipe,
-    AdminLoginComponent,
-    AdminDashboardComponent,
-    ListUsersComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +54,7 @@ import { ListUsersComponent } from './component/admin/list-users/list-users.comp
     }),
     StoreModule.forRoot({mentee:MenteeReducer,admin:AdminReducer}, {}),
     EffectsModule.forRoot([MenteeEffect,AdminEffect]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}

@@ -18,7 +18,6 @@ const menteeSchema = new mongoose.Schema({
    },
    otp_updated_at: {
       type: Date,
-      default: Date.now()
    },
    is_verified:{
       type:Boolean,

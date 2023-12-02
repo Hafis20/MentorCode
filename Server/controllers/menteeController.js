@@ -1,5 +1,5 @@
 // JWT webtoken configuration
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const { generateMail } = require("../Helper/generateOTP");
 const { hashedPass, comparePass } = require("../Helper/hashPass");
 const Mentee = require("../models/menteeModel");
@@ -26,11 +26,12 @@ const register = async (req, res) => {
         email: email,
         password: hashPass,
         otp: otp,
+        otp_updated_at:new Date()
       });
       res.status(201).json({ message: "Check your mail... Verify your otp" });
     }
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json({message:'Server side error'});
     console.log(error.message);
   }
 };
@@ -67,22 +68,25 @@ const verifyOtp = async (req, res) => {
 
     const menteeData = await Mentee.findOne({ email: email });
 
-    if (menteeData.otp === Number(otp)) {
-      // Checking the otp is expired or not
+    if (menteeData.otp !== Number(otp)) {
+      return res.status(400).json({ message: "Incorrect OTP" });
+    } else {
+      const OTP_EXPIRY_SECONDS = 30;
+
+      // Checking the timer
       const timeDifferenceInSeconds = Math.floor(
         (new Date() - menteeData.otp_updated_at) / 1000
       );
-      if (timeDifferenceInSeconds > 30) {
+
+      if (timeDifferenceInSeconds > OTP_EXPIRY_SECONDS) {
         return res.status(400).json({ message: "OTP Expired" });
-      } else {
+      }else{
         menteeData.is_verified = true;
         await menteeData.save();
         return res
           .status(201)
           .json({ message: "Account verified go to Login" });
       }
-    } else {
-      return res.status(400).json({ message: "Invalid OTP" });
     }
   } catch (error) {
     res.status(500).json({ message: "Server side error" });
@@ -92,31 +96,33 @@ const verifyOtp = async (req, res) => {
 // Login the mentee
 const login = async (req, res) => {
   try {
-   const {email,password} = req.body;
-   const menteeData = await Mentee.findOne({email:email});
+    const { email, password } = req.body;
+    const menteeData = await Mentee.findOne({ email: email });
 
-   if(menteeData){
+    if (menteeData) {
       // Checking the user password is match with saved pass
-      const matchPass = await comparePass(password,menteeData.password);
-      if(matchPass){
-         const data = {
-            userId:menteeData._id,
-         }
-         // Generate jwt token
-         const accessToken = jwt.sign(data,process.env.JWT_ACCESS_TOKEN);
-         // Send the correct mentee details into store
-         const accessedMentee = {
-            name:menteeData.name,
-            email:menteeData.email,
-            role:menteeData.role
-         }
-         res.status(201).json({accessToken,accessedMentee,message:'Login successfull'});
-      }else{
-         res.status(400).json({message:'Email or password is invalid'})
+      const matchPass = await comparePass(password, menteeData.password);
+      if (matchPass) {
+        const data = {
+          userId: menteeData._id,
+        };
+        // Generate jwt token
+        const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
+        // Send the correct mentee details into store
+        const accessedMentee = {
+          name: menteeData.name,
+          email: menteeData.email,
+          role: menteeData.role,
+        };
+        res
+          .status(201)
+          .json({ accessToken, accessedMentee, message: "Login successfull" });
+      } else {
+        res.status(400).json({ message: "Email or password is invalid" });
       }
-   }else{
-      res.status(404).json({message:'Invalid Mentee'});
-   }
+    } else {
+      res.status(404).json({ message: "Invalid Mentee" });
+    }
   } catch (error) {
     res.status(500).json(error.message);
   }
