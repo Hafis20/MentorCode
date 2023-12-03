@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   nameValidation,
   negativeValidation,
 } from 'src/app/customValidation/validation';
+import { MentorService } from 'src/app/services/mentor.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 import { SharedFormService } from 'src/app/services/sharedForm.service';
 
@@ -18,7 +20,9 @@ export class MentorRegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sharedForm: SharedFormService,
-    private showMessage: MessageToastrService
+    private showMessage: MessageToastrService,
+    private mentorService:MentorService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +62,7 @@ export class MentorRegisterComponent implements OnInit {
         this.showMessage.showWarningToastr(this.experienceError());
       }
     }else{
+      // Proceeding the form for registration
       const registerForm = this.registerForm.value;
       const data = {
         name:registerForm.name,
@@ -66,7 +71,17 @@ export class MentorRegisterComponent implements OnInit {
         mobile:registerForm.mobile,
         experience:registerForm.experience,
       }
-      console.log(data);
+      this.mentorService.register(data).subscribe({ // Getting the observable
+        next:(response)=>{
+          this.showMessage.showSuccessToastr(response.message);
+          localStorage.setItem('email',data.email);  // Storing email for resend option
+          localStorage.setItem('role','mentor');    // Storing role for navigation
+          this.router.navigate(['/mentor/verify-otp']);
+        },
+        error:(error)=>{
+          this.showMessage.showErrorToastr(error.error.message);
+        }
+      })
     }
   }
 

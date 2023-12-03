@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginModel, LoginResponseModel, MenteeInfo } from 'src/app/model/commonModel';
+import { LoginModel, LoginResponseModel, UserInfo } from 'src/app/model/commonModel';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class AdminService {
   }
 
   // Getting all Mentees
-  getAllMentees():Observable<MenteeInfo[]>{
-    return this.http.get<MenteeInfo[]>(`${environment.adminURL}/getAllMentees`);
+  getAllMentees():Observable<UserInfo[]>{
+    return this.http.get<UserInfo[]>(`${environment.adminURL}/getAllMentees`);
   }
 }

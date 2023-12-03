@@ -42,7 +42,7 @@ const resendOtp = async (req, res) => {
     const { email } = req.body;
     const otp = await generateMail(email);
 
-    const menteeData = await Mentee.findOneAndUpdate(
+    const updateMenteeData = await Mentee.findOneAndUpdate(
       {
         email: email,
       },

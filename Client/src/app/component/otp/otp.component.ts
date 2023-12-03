@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/services/common.service';
 import { MenteeService } from 'src/app/services/mentee.service';
+import { MentorService } from 'src/app/services/mentor.service';
+import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
 @Component({
   selector: 'app-otp',
@@ -19,8 +20,9 @@ export class OtpComponent implements OnInit {
   constructor(
     private commonservice: CommonService,
     private menteeService: MenteeService,
+    private mentorService: MentorService,
     private fb: FormBuilder,
-    private toastr: ToastrService,
+    private showMessage: MessageToastrService,
     private router:Router,
   ) {}
 
@@ -50,11 +52,19 @@ export class OtpComponent implements OnInit {
     if (this.role === 'mentee') {
       this.menteeService.resendOtp({email:this.email}).subscribe({
         next: (response) => {
-          console.log(response);
+          this.showMessage.showSuccessToastr(response.message);
+          this.otpForm.reset();
         },
       });
     } else if (this.role === 'mentor') {
+      this.mentorService.resendOtp({email:this.email}).subscribe({
+        next:(response)=>{
+          this.showMessage.showSuccessToastr(response.message);
+          this.otpForm.reset();
+        },
+      })
     } else {
+      return
     }
   }
 
@@ -62,11 +72,7 @@ export class OtpComponent implements OnInit {
   onSubmit() { 
     if (this.otpForm.invalid) { // If the form is not valid go to the following actions
       if (this.otpError()) {
-        this.toastr.warning(this.otpError(), '', {
-          timeOut: 2000,
-          progressAnimation: 'increasing',
-          progressBar: true,
-        });
+        this.showMessage.showWarningToastr(this.otpError());
       }
     } else { // If the form is valid then go to the following actions
       if (this.role === 'mentee') {
@@ -77,20 +83,29 @@ export class OtpComponent implements OnInit {
 
         this.menteeService.validateOtp(data).subscribe({
           next: (response) => {
-            this.toastr.success(response.message,'',{
-              timeOut:2000,
-              progressAnimation:'increasing',
-              progressBar:true
-            }),
+            this.showMessage.showSuccessToastr(response.message);
             localStorage.clear();
             this.router.navigate(['/mentee/login']);
           },
           error:(error)=>{
-            this.toastr.error(error.error.message,'',{
-              timeOut:2000,
-              progressAnimation:'increasing',
-              progressBar:true
-            })
+            this.showMessage.showErrorToastr(error.error.message);
+          },
+        });
+      }else if(this.role === 'mentor'){
+        console.log('Mentor working')
+        const data = {
+          email: this.email,
+          otp: this.otpForm.value.otp as string,
+        };
+
+        this.mentorService.validateOtp(data).subscribe({
+          next: (response) => {
+            this.showMessage.showSuccessToastr(response.message);
+            localStorage.clear();
+            this.router.navigate(['/mentor/login']);
+          },
+          error:(error)=>{
+            this.showMessage.showErrorToastr(error.error.message);
           },
         });
       }

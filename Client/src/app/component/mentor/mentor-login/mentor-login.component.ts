@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { Store } from '@ngrx/store';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 import { SharedFormService } from 'src/app/services/sharedForm.service';
+import { loginMentor } from 'src/app/store/Mentor/mentor.action';
 
 @Component({
   selector: 'app-mentor-login',
@@ -14,7 +15,8 @@ export class MentorLoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sharedForm: SharedFormService,
-    private showMessage:MessageToastrService
+    private showMessage:MessageToastrService,
+    private store:Store,
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,13 @@ export class MentorLoginComponent implements OnInit {
       if(this.sharedForm.passwordError()){
         this.showMessage.showWarningToastr(this.sharedForm.passwordError());
       }
+    }else{
+      const loginForm = this.loginForm.value.form;
+      const data = {
+        email:loginForm.email,
+        password:loginForm.password
+      }
+      this.store.dispatch(loginMentor({data}));
     }
   }
 }

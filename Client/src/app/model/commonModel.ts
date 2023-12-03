@@ -19,7 +19,7 @@ export interface LoginModel{
 
 
 // Store setting
-export interface MenteeInfo{
+export interface UserInfo{
    name:string;
    email:string;
    role:string;
@@ -33,6 +33,6 @@ export interface AdminInfo{
 // Getting data when login success
 export interface LoginResponseModel{
    accessToken:string;
-   accessedMentee:MenteeInfo;
+   accessedUser:UserInfo;
    message:string;
 }

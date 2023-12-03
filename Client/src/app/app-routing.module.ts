@@ -18,6 +18,7 @@ const menteeRoutes: Routes = [
 const mentorRoutes: Routes = [
   { path: 'login', component: MentorLoginComponent },
   { path: 'register', component: MentorRegisterComponent },
+  { path: 'verify-otp', component: OtpComponent },
 ];
 
 const routes: Routes = [

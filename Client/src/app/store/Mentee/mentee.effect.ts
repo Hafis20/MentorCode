@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { loginMentee, loginMenteeSuccess } from './mentee.action';
 import { MenteeService } from 'src/app/services/mentee.service';
 import { exhaustMap, map, catchError, of } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
@@ -27,7 +26,7 @@ export class MenteeEffect {
               localStorage.setItem('menteeToken', userData.accessToken);
               this.showMessage.showSuccessToastr(userData.message);
               this.router.navigate(['home'])
-              return loginMenteeSuccess({ mentee: userData.accessedMentee });
+              return loginMenteeSuccess({ mentee: userData.accessedUser });
             } else {
               return;
             }

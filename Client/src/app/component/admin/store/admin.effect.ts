@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { loginAdmin, loginAdminSuccess } from './admin.action';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../services/admin-service.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
@@ -27,7 +26,7 @@ export class AdminEffect {
               localStorage.setItem('adminToken', userData.accessToken);
               this.showMessage.showSuccessToastr(userData.message);
               this.router.navigate(['/admin/']);
-              return loginAdminSuccess({ admin: userData.accessedMentee });
+              return loginAdminSuccess({ admin: userData.accessedUser });
             } else {
               return;
             }

@@ -53,6 +53,7 @@ const getAllMentees = async(req,res)=>{
   }
 }
 
+// Get all mentors
 const getAllMentors = async(req,res)=>{
   try {
     res.status(200).json({mentorsData});

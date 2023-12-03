@@ -26,6 +26,8 @@ import { AdminEffect } from './component/admin/store/admin.effect';
 import { AdminReducer } from './component/admin/store/admin.reducer';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { MentorRegisterComponent } from './component/mentor/mentor-register/mentor-register.component';
+import { MentorReducer } from './store/Mentor/mentor.reducer';
+import { MentorEffect } from './store/Mentor/mentor.effect';
 
 @NgModule({
   declarations: [
@@ -54,8 +56,8 @@ import { MentorRegisterComponent } from './component/mentor/mentor-register/ment
       progressAnimation: 'increasing',
       preventDuplicates: true,
     }),
-    StoreModule.forRoot({mentee:MenteeReducer,admin:AdminReducer}, {}),
-    EffectsModule.forRoot([MenteeEffect,AdminEffect]),
+    StoreModule.forRoot({mentee:MenteeReducer,admin:AdminReducer,mentor:MentorReducer}, {}),
+    EffectsModule.forRoot([MenteeEffect,AdminEffect,MentorEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [
