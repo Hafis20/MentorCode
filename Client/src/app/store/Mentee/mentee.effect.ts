@@ -5,13 +5,14 @@ import { MenteeService } from 'src/app/services/mentee.service';
 import { exhaustMap, map, catchError, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
 @Injectable()
 export class MenteeEffect {
   constructor(
     private action$: Actions,
     private menteeService: MenteeService,
-    private toastr: ToastrService,
+    private showMessage: MessageToastrService,
     private router:Router
   ) {}
 
@@ -24,11 +25,7 @@ export class MenteeEffect {
             const userData = data;
             if (userData) {
               localStorage.setItem('menteeToken', userData.accessToken);
-              this.toastr.success(userData.message, '', {
-                timeOut: 2000,
-                progressAnimation: 'increasing',
-                progressBar: true,
-              });
+              this.showMessage.showSuccessToastr(userData.message);
               this.router.navigate(['home'])
               return loginMenteeSuccess({ mentee: userData.accessedMentee });
             } else {
@@ -36,11 +33,7 @@ export class MenteeEffect {
             }
           }),
           catchError((error) => {
-            this.toastr.error('Invalid credentials', '', {
-              timeOut: 2000,
-              progressAnimation: 'increasing',
-              progressBar: true,
-            });
+            this.showMessage.showErrorToastr('Invalid Credentials');
             return of(error.message);
           })
         );

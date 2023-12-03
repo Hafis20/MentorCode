@@ -5,6 +5,7 @@ import { catchError, exhaustMap, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from '../services/admin-service.service';
+import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
 @Injectable()
 export class AdminEffect {
@@ -12,7 +13,7 @@ export class AdminEffect {
     private action$: Actions,
     private adminService: AdminService,
     private router: Router,
-    private toastr: ToastrService
+    private showMessage: MessageToastrService
   ) {}
 
   _loginAdmin$ = createEffect(() =>
@@ -24,11 +25,7 @@ export class AdminEffect {
             if (data) {
               const userData = data;
               localStorage.setItem('adminToken', userData.accessToken);
-              this.toastr.success(userData.message, '', {
-                timeOut: 2000,
-                progressAnimation: 'increasing',
-                progressBar: true,
-              });
+              this.showMessage.showSuccessToastr(userData.message);
               this.router.navigate(['/admin/']);
               return loginAdminSuccess({ admin: userData.accessedMentee });
             } else {
@@ -36,11 +33,7 @@ export class AdminEffect {
             }
           }),
           catchError((error) => {
-            this.toastr.error('Invalid Credentials', '', {
-              timeOut: 2000,
-              progressAnimation: 'increasing',
-              progressBar: true,
-            });
+            this.showMessage.showErrorToastr('Invalid Credentials');
             return of(error.message);
           })
         );

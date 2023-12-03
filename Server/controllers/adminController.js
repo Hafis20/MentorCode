@@ -52,7 +52,16 @@ const getAllMentees = async(req,res)=>{
     console.log(error.message);
   }
 }
+
+const getAllMentors = async(req,res)=>{
+  try {
+    res.status(200).json({mentorsData});
+  } catch (error) {
+    res.status(500).json({message:'Server side error'});
+  }
+}
 module.exports = {
    login,
    getAllMentees,
+   getAllMentors,
 };

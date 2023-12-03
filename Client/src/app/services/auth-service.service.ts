@@ -13,9 +13,5 @@ export class AuthServiceService {
     return !!menteeLoggedIn;
   }
 
-  // Checking the admin is loggedin or not
-  checkAdminLoggedIn():boolean{
-    const adminLoggedIn = window.localStorage.getItem('adminToken');
-    return !!adminLoggedIn;
-  }
+  
 }

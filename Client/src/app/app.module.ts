@@ -25,6 +25,7 @@ import { MenteeReducer } from './store/Mentee/mentee.reducer';
 import { AdminEffect } from './component/admin/store/admin.effect';
 import { AdminReducer } from './component/admin/store/admin.reducer';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { MentorRegisterComponent } from './component/mentor/mentor-register/mentor-register.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     OtpComponent,
     PadCounterPipe,
     SidebarComponent,
+    MentorRegisterComponent,
   ],
   imports: [
     BrowserModule,
