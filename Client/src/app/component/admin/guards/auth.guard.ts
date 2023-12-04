@@ -2,7 +2,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AdminService } from '../services/admin-service.service';
 
-// Checking the user is logged in 
+// Checking the admin is logged in 
 export const LoginAuthGuard: CanActivateFn = (route, state) => {
   const authService = inject(AdminService)
   const router = inject(Router);
@@ -15,7 +15,7 @@ export const LoginAuthGuard: CanActivateFn = (route, state) => {
   }
 };
 
-// Checking the user is logged out
+// Checking the admin is logged out
 export const LoggedInAuthGuard:CanActivateFn = (route,state)=>{
   const authService = inject(AdminService)
   const router = inject(Router);

@@ -8,8 +8,7 @@ import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { LoginComponent } from './component/login/login.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AdminAuthInterceptor } from './interceptor/auth.interceptor';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedTableComponent } from './component/shared-table/shared-table.component';
 import { ListMenteesComponent } from './component/list-mentees/list-mentees.component';
 import { ListMentorsComponent } from './component/list-mentors/list-mentors.component';
@@ -31,9 +30,7 @@ import { ListMentorsComponent } from './component/list-mentors/list-mentors.comp
     AdminRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
   ],
-  providers:[
-    {provide:HTTP_INTERCEPTORS,useClass:AdminAuthInterceptor,multi:true}
-  ]
 })
 export class AdminModule { }

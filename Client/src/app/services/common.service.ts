@@ -23,4 +23,8 @@ export class CommonService {
   getMentorTokenFromLocalStorage():string{
     return localStorage.getItem('mentorToken') as string;
   }
+
+  getAdminTokenFromLocalStorage():string{
+    return localStorage.getItem('adminToken') as string;
+  }
 }

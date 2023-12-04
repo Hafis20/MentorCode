@@ -28,6 +28,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { MentorRegisterComponent } from './component/mentor/mentor-register/mentor-register.component';
 import { MentorReducer } from './store/Mentor/mentor.reducer';
 import { MentorEffect } from './store/Mentor/mentor.effect';
+import { AdminModule } from './component/admin/admin.module';
+import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor';
 
 @NgModule({
   declarations: [
@@ -59,9 +61,11 @@ import { MentorEffect } from './store/Mentor/mentor.effect';
     StoreModule.forRoot({mentee:MenteeReducer,admin:AdminReducer,mentor:MentorReducer}, {}),
     EffectsModule.forRoot([MenteeEffect,AdminEffect,MentorEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    AdminModule,
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorHandlingInterceptor,multi:true}
   ], 
   bootstrap: [AppComponent]
 })

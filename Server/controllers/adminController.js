@@ -44,7 +44,7 @@ const login = async (req, res) => {
 // Get all Mentees
 const getAllMentees = async(req,res)=>{
   try {
-    console.log('Admin Id : ',req.userId);
+    console.log('Admin Id : ',req.adminId);
     const menteesData = await Mentee.find({},{password:0,otp:0,otp_updated_at:0});
     // console.log(menteesData);
     res.status(200).json(menteesData);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MentorData } from 'src/app/model/adminModel';
 import { AdminService } from '../../services/admin-service.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-mentors',
@@ -11,7 +12,7 @@ import { MessageToastrService } from 'src/app/services/message-toastr.service';
 export class ListMentorsComponent implements OnInit {
   tableHeaders: string[] = ['Name','Email', 'Mobile','Status','Experience','Action'];
   mentors!:MentorData[]; 
-  constructor(private service:AdminService,private showMessage:MessageToastrService) {}
+  constructor(private service:AdminService,private showMessage:MessageToastrService,private router:Router) {}
 
   ngOnInit(): void {
     this.service.getAllMentors().subscribe({
@@ -19,7 +20,14 @@ export class ListMentorsComponent implements OnInit {
         this.mentors = response
       },
       error:(error)=>{
-        this.showMessage.showErrorToastr(error.error.message);
+        const errorMessage = error.error.message;
+        if(error.status === 401 && errorMessage === 'Unauthorized'){
+          this.showMessage.showErrorToastr('Unauthorized Admin');
+          localStorage.removeItem('adminToken');
+          this.router.navigate(['/login'])
+        }else{
+          this.showMessage.showErrorToastr(errorMessage);
+        }
       }
     })
   }

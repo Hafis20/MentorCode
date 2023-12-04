@@ -1,15 +1,15 @@
 const express = require("express");
 const adminRouter = express.Router();
 const adminController = require('../controllers/adminController');
-const authToken = require('../middlewares/auth');
+const adminAuth = require('../middlewares/adminAuth');
 
 // Login an admin
 adminRouter.post('/login',adminController.login);
 // Getting all the mentees
-adminRouter.get('/getAllMentees',adminController.getAllMentees);
+adminRouter.get('/getAllMentees',adminAuth,adminController.getAllMentees);
 // Getting all the mentors
-adminRouter.get('/getAllMentors',adminController.getAllMentors);
+adminRouter.get('/getAllMentors',adminAuth,adminController.getAllMentors);
 // Blocking a mentee
-adminRouter.get('/blockMentee',adminController.blockMentee);
+adminRouter.get('/blockMentee',adminAuth,adminController.blockMentee);
 
 module.exports = adminRouter;
