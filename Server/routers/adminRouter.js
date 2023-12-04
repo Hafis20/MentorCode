@@ -10,6 +10,6 @@ adminRouter.get('/getAllMentees',adminAuth,adminController.getAllMentees);
 // Getting all the mentors
 adminRouter.get('/getAllMentors',adminAuth,adminController.getAllMentors);
 // Blocking a mentee
-adminRouter.get('/blockMentee',adminAuth,adminController.blockMentee);
+adminRouter.patch('/blockMentee',adminAuth,adminController.blockMentee);
 
 module.exports = adminRouter;

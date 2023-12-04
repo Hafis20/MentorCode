@@ -44,7 +44,7 @@ const login = async (req, res) => {
 // Get all Mentees
 const getAllMentees = async(req,res)=>{
   try {
-    console.log('Admin Id : ',req.adminId);
+    // console.log('Admin Id : ',req.adminId);
     const menteesData = await Mentee.find({},{password:0,otp:0,otp_updated_at:0});
     // console.log(menteesData);
     res.status(200).json(menteesData);
@@ -67,14 +67,14 @@ const getAllMentors = async(req,res)=>{
 // Block a mentee
 const blockMentee = async(req,res)=>{
   try {
-    const {id} = req.query;
+    const {id} = req.body;
     const updatedMenteeData = await Mentee.findByIdAndUpdate(id,
       {
         $set:{
           is_blocked:true,
         }
       },{new:true});
-      res.status(200).json({updatedMenteeData});
+      res.status(200).json({message:'Successfully Blocked'});
   } catch (error) {
     res.status(500).json({message:'Server side error'});
     console.log(error.message)

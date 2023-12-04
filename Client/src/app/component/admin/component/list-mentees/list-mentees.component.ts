@@ -13,26 +13,29 @@ export class ListMenteesComponent implements OnInit {
   tableHeaders: string[] = ['Name', 'Email', 'Mobile', 'Status', 'Action'];
   mentees!: MenteeData[];
   user: string = 'mentee';
-  constructor(
-    private service: AdminService,
-    private showMessage: MessageToastrService,
-    private router: Router
-  ) {}
+  constructor(private service: AdminService,private showMessage:MessageToastrService) {}
 
   ngOnInit(): void {
     this.service.getAllMentees().subscribe({
       next: (response) => {
-        this.mentees = response;
+        this.mentees = response;  // Setting data into a global variable
       },
       error: (error) => {
         const errorMessage = error.error.message;
-        if (error.status === 401 && errorMessage === 'Unauthorized') {
-          this.showMessage.showErrorToastr('Unauthorized User');
-          localStorage.removeItem('adminToken');  // Because they edit the token and try to use at that time we remove the token
-          this.router.navigate(['/login']);
-        } else {
-          this.showMessage.showErrorToastr(errorMessage);
-        }
+        this.service.errorHandler(error.status, errorMessage);  // Handling the 401 and such errors
+      },
+    });
+  }
+
+  block(id: string) {  // Whenever an event occur in the child this button will call
+    this.service.blockMentee({ id }).subscribe({
+      next: (response) => {
+        this.showMessage.showSuccessToastr(response.message);
+        this.ngOnInit()
+      },
+      error: (error) => {
+        const errorMessage = error.error.message;
+        this.service.errorHandler(error.status, errorMessage);
       },
     });
   }
