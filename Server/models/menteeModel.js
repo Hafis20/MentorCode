@@ -26,6 +26,10 @@ const menteeSchema = new mongoose.Schema({
    role:{
       type:String,
       default:'mentee'
+   },
+   is_blocked: {
+      type: Boolean,
+      default: false,
    }
 })
 

@@ -1,6 +1,7 @@
 const { comparePass } = require("../Helper/hashPass");
 const Admin = require("../models/adminModel");
 const Mentee = require('../models/menteeModel');
+const Mentor = require('../models/mentorModel');
 const jwt = require('jsonwebtoken');
 
 // Login Admin
@@ -44,9 +45,9 @@ const login = async (req, res) => {
 const getAllMentees = async(req,res)=>{
   try {
     console.log('Admin Id : ',req.userId);
-    const menteesData = await Mentee.find({},{name:1,email:1,role:1,_id:0});
-    console.log(menteesData);
-    res.status(200).json({menteesData});
+    const menteesData = await Mentee.find({},{password:0,otp:0,otp_updated_at:0});
+    // console.log(menteesData);
+    res.status(200).json(menteesData);
   } catch (error) {
     res.status(500).json({message:'Server side error'});
     console.log(error.message);
@@ -56,13 +57,36 @@ const getAllMentees = async(req,res)=>{
 // Get all mentors
 const getAllMentors = async(req,res)=>{
   try {
-    res.status(200).json({mentorsData});
+    const mentorsData = await Mentor.find({},{password:0,otp:0,otp_updated_at:0});
+    res.status(200).json(mentorsData);
   } catch (error) {
     res.status(500).json({message:'Server side error'});
   }
 }
+
+// Block a mentee
+const blockMentee = async(req,res)=>{
+  try {
+    const {id} = req.query;
+    const updatedMenteeData = await Mentee.findByIdAndUpdate(id,
+      {
+        $set:{
+          is_blocked:true,
+        }
+      },{new:true});
+      res.status(200).json({updatedMenteeData});
+  } catch (error) {
+    res.status(500).json({message:'Server side error'});
+    console.log(error.message)
+  }
+}
+
+
+
+
 module.exports = {
    login,
    getAllMentees,
    getAllMentors,
+   blockMentee,
 };

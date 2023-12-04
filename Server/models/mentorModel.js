@@ -30,6 +30,10 @@ const mentorSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  is_blocked: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 module.exports = mongoose.model("Mentor", mentorSchema);
