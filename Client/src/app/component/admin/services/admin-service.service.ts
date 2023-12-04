@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { MenteeData, MentorData } from 'src/app/model/adminModel';
 import { LoginModel, LoginResponseModel, UserInfo } from 'src/app/model/commonModel';
 import { environment } from 'src/environments/environment';
 
@@ -23,7 +24,12 @@ export class AdminService {
   }
 
   // Getting all Mentees
-  getAllMentees():Observable<UserInfo[]>{
-    return this.http.get<UserInfo[]>(`${environment.adminURL}/getAllMentees`);
+  getAllMentees():Observable<MenteeData[]>{
+    return this.http.get<MenteeData[]>(`${environment.adminURL}/getAllMentees`);
+  }
+
+  // Getting all Mentors
+  getAllMentors():Observable<MentorData[]>{
+    return this.http.get<MentorData[]>(`${environment.adminURL}/getAllMentors`);
   }
 }

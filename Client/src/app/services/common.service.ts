@@ -16,7 +16,11 @@ export class CommonService {
     return localStorage.getItem('role') as string;
   }
 
-  getTokenFromLocalStorage():string{
-    return localStorage.getItem('token') as string;
+  getMenteeTokenFromLocalStorage():string{
+    return localStorage.getItem('menteeToken') as string;
+  }
+
+  getMentorTokenFromLocalStorage():string{
+    return localStorage.getItem('mentorToken') as string;
   }
 }

@@ -1,0 +1,45 @@
+<div class="px-10">
+   <div class="flex flex-col">
+      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+         <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div class="overflow-hidden">
+               <table class="min-w-full text-center text-sm font-light">
+                  <thead class="border-b font-medium dark:border-neutral-500">
+                     <tr>
+                        <th *ngFor="let headers of tableHeaders" scope="col" class="px-6 py-4">{{headers | uppercase}}
+                        </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let user of usersList" class="border-b dark:border-neutral-500">
+                        <td class="whitespace-nowrap px-6 py-4">{{user.name}}</td>
+                        <td class="whitespace-nowrap px-6 py-4">{{user.email}}</td>
+                        <td class="whitespace-nowrap px-6 py-4">{{user.mobile}}</td>
+                        <ng-container *ngIf="user.is_verified; else notVerified">
+                           <td><span class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-700">Verified</span></td>
+                        </ng-container>
+                        <ng-template #notVerified>
+                           <td><span class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-700">Not Verified</span></td>
+                        </ng-template>
+                        <ng-container *ngIf="isMentor(user)">
+                           <td class="whitespace-nowrap px-6 py-4">{{user.experience}}</td>
+                        </ng-container>
+                        <ng-container *ngIf="!user.is_blocked; else blocked">
+                           <td class="whitespace-nowrap px-6 py-4"><button (click)="block(user._id)"
+                                 class="bg-red-500 hover:bg-red-700 text-white py-2 px-6 rounded">
+                                 Block
+                              </button></td>
+                        </ng-container>
+                        <ng-template #blocked>
+                           <td class="whitespace-nowrap px-6 py-4"><button
+                                 class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded">
+                                 UnBlock
+                              </button></td>
+                        </ng-template>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

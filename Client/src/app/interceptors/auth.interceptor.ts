@@ -6,19 +6,35 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CommonService } from '../services/common.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  adminToken!: string;
-  mentorToken!: string;
-  menteeToken!: string;
+  constructor(private service:CommonService) {}
 
-  constructor() {}
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if(window.location.pathname.includes('/mentee')){
+      console.log('Mentee interceptor works')
+      const menteeToken:string = this.service.getMenteeTokenFromLocalStorage();
 
-  intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
-    return next.handle(request);
+      const authRequest = req.clone({
+        setHeaders:{
+          'Content-Type':'application/json',
+          Authorization : `Mentee-Bearer ${menteeToken}`
+        }
+      })
+      return next.handle(authRequest);
+    }else{
+      console.log('Mentor interceptor works')
+      const mentorToken:string = this.service.getMentorTokenFromLocalStorage();
+
+      const authRequest = req.clone({
+        setHeaders:{
+          'Content-Type':'application/json',
+          Authorization :`Mentor-Bearer ${mentorToken}`
+        }
+      })
+      return next.handle(authRequest);
+    }
   }
 }

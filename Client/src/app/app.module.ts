@@ -62,7 +62,7 @@ import { MentorEffect } from './store/Mentor/mentor.effect';
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
-  ],
+  ], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
