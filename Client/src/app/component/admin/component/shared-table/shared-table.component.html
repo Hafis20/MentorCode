@@ -16,10 +16,14 @@
                         <td class="whitespace-nowrap px-6 py-4">{{user.email}}</td>
                         <td class="whitespace-nowrap px-6 py-4">{{user.mobile}}</td>
                         <ng-container *ngIf="user.is_verified; else notVerified">
-                           <td><span class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-700">Verified</span></td>
+                           <td><span
+                                 class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-700">Verified</span>
+                           </td>
                         </ng-container>
                         <ng-template #notVerified>
-                           <td><span class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-700">Not Verified</span></td>
+                           <td><span
+                                 class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-700">Not
+                                 Verified</span></td>
                         </ng-template>
                         <ng-container *ngIf="isMentor(user)">
                            <td class="whitespace-nowrap px-6 py-4">{{user.experience}}</td>

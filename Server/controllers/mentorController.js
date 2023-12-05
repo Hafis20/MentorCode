@@ -99,20 +99,23 @@ const login = async (req, res) => {
     const mentorData = await Mentor.findOne({ email }); // Searching this user is avaliable in the database
     if (mentorData) {
       const matchPass = await comparePass(password, mentorData.password); // Checking the passwords are same
-      if (matchPass) {
-        // Checking the password is available in mentor data
-
-        const data = {
-          userId: mentorData._id,
-        };
-
-        const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
-        const accessedUser = {
-          name: mentorData.name,
-          email: mentorData.email,
-          role: mentorData.role,
-        };
-        res.status(201).json({accessToken,accessedUser,message:'Login Success'});
+      if (matchPass) {  // Checking the password is available in mentor data
+        if(mentorData.is_blocked){
+          return res.status(401).status({message:'Your account is blocked by Admin'})
+        }else{
+          const data = {
+            userId: mentorData._id,
+          };
+  
+          const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
+          const accessedUser = {
+            name: mentorData.name,
+            email: mentorData.email,
+            role: mentorData.role,
+          };
+          res.status(201).json({accessToken,accessedUser,message:'Login Success'});
+        }
+        
       } else {
         res.status(404).json({ message: "Invalid Credentials" });
       }

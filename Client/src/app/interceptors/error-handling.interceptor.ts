@@ -20,7 +20,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       map((res) => {
-        console.log('Passing through tyhe interceptor in response');
+        console.log(res);
         return res;
       }),
       catchError((error: HttpErrorResponse) => {

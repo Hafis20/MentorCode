@@ -41,10 +41,7 @@ export class AdminService {
 
   // Login admin
   login(data: LoginModel): Observable<LoginResponseModel> {
-    return this.http.post<LoginResponseModel>(
-      `${environment.adminURL}/login`,
-      data
-    );
+    return this.http.post<LoginResponseModel>(`${environment.adminURL}/login`,data);
   }
 
   // Getting all Mentees
@@ -59,9 +56,23 @@ export class AdminService {
 
   // Block a mentee
   blockMentee(id: object): Observable<HttpResponseModel> {
-    return this.http.patch<HttpResponseModel>(
-      `${environment.adminURL}/blockMentee`,
-      id
-    );
+    return this.http.patch<HttpResponseModel>(`${environment.adminURL}/blockMentee`,id);
+  }
+
+  // unblock a mentee
+  unblockMentee(id:object):Observable<HttpResponseModel>{
+    return this.http.patch<HttpResponseModel>(`${environment.adminURL}/unblockMentee`,id);
+  }
+
+
+  // Block a mentor
+  blockMentor(id:object):Observable<HttpResponseModel>{
+    return this.http.patch<HttpResponseModel>(`${environment.adminURL}/blockMentor`,id);
+  }
+
+  // Unblock a mentor
+  unblockMentor(id:object):Observable<HttpResponseModel>{
+    return this.http.patch<HttpResponseModel>(`${environment.adminURL}/unblockMentor`,id);
+
   }
 }

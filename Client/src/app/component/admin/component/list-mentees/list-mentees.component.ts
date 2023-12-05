@@ -27,11 +27,11 @@ export class ListMenteesComponent implements OnInit {
     });
   }
 
-  block(id: string) {  // Whenever an event occur in the child this button will call
+  // Blocking the mentee
+  block(id: string):void {  // Whenever an event occur in the child this button will call
     this.service.blockMentee({ id }).subscribe({
       next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
-        this.ngOnInit()
       },
       error: (error) => {
         const errorMessage = error.error.message;
@@ -39,4 +39,18 @@ export class ListMenteesComponent implements OnInit {
       },
     });
   }
+
+  // Unblocking the mentee
+  unblock(id:string):void{
+    this.service.unblockMentee({id}).subscribe({
+      next:(response)=>{
+        this.showMessage.showSuccessToastr(response.message);
+      },
+      error: (error) => {
+        const errorMessage = error.error.message;
+        this.service.errorHandler(error.status, errorMessage);
+      },
+    })
+  }
+
 }

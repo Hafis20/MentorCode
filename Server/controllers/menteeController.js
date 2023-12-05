@@ -26,12 +26,12 @@ const register = async (req, res) => {
         email: email,
         password: hashPass,
         otp: otp,
-        otp_updated_at:new Date()
+        otp_updated_at: new Date(),
       });
       res.status(201).json({ message: "Check your mail... Verify your otp" });
     }
   } catch (error) {
-    res.status(500).json({message:'Server side error'});
+    res.status(500).json({ message: "Server side error" });
     console.log(error.message);
   }
 };
@@ -80,7 +80,7 @@ const verifyOtp = async (req, res) => {
 
       if (timeDifferenceInSeconds > OTP_EXPIRY_SECONDS) {
         return res.status(400).json({ message: "OTP Expired" });
-      }else{
+      } else {
         menteeData.is_verified = true;
         await menteeData.save();
         return res
@@ -103,28 +103,37 @@ const login = async (req, res) => {
       // Checking the user password is match with saved pass
       const matchPass = await comparePass(password, menteeData.password);
       if (matchPass) {
-        const data = {
-          userId: menteeData._id,
-        };
-        // Generate jwt token
-        const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
-        // Send the correct mentee details into store
-        const accessedMentee = {
-          name: menteeData.name,
-          email: menteeData.email,
-          role: menteeData.role,
-        };
-        res
-          .status(201)
-          .json({ accessToken, accessedMentee, message: "Login successfull" });
+          // Checking the user is blocked or not if blocked throw error message;
+        if (menteeData.is_blocked) { 
+          return res.status(401).json({message:"Your account is blocked by Admin"});
+        } else {
+          const data = {
+            userId: menteeData._id,
+          };
+          // Generate jwt token
+          const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
+          // Send the correct mentee details into store
+          const accessedMentee = {
+            name: menteeData.name,
+            email: menteeData.email,
+            role: menteeData.role,
+          };
+          res
+            .status(201)
+            .json({
+              accessToken,
+              accessedMentee,
+              message: "Login successfull",
+            });
+        }
       } else {
         res.status(400).json({ message: "Email or password is invalid" });
       }
     } else {
-      res.status(404).json({ message: "Invalid Mentee" });
+      res.status(404).json({ message: "Email or password is invalid" });
     }
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json({message:"Server side error"});
   }
 };
 

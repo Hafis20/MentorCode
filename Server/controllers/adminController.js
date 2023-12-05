@@ -81,6 +81,64 @@ const blockMentee = async(req,res)=>{
   }
 }
 
+// Unblocking a mentee
+const unblockMentee = async(req,res)=>{
+  try {
+    const {id} = req.body;
+    const menteeData = await Mentee.findByIdAndUpdate(
+      id,
+      {
+        $set:{
+          is_blocked:false
+        }
+      },
+      {
+        new:true,
+      }
+    )
+    res.status(200).json({message:'Successfull Unblock'});
+  } catch (error) {
+    res.status(500).json({message:'Server side error'});
+  }
+}
+
+// Block a mentee
+const blockMentor = async(req,res)=>{
+  try {
+    const {id} = req.body;
+    const updatedMenteeData = await Mentor.findByIdAndUpdate(id,
+      {
+        $set:{
+          is_blocked:true,
+        }
+      },{new:true});
+      res.status(200).json({message:'Successfully Blocked'});
+  } catch (error) {
+    res.status(500).json({message:'Server side error'});
+    console.log(error.message)
+  }
+}
+
+// Unblocking a mentee
+const unblockMentor = async(req,res)=>{
+  try {
+    const {id} = req.body;
+    const menteeData = await Mentor.findByIdAndUpdate(
+      id,
+      {
+        $set:{
+          is_blocked:false
+        }
+      },
+      {
+        new:true,
+      }
+    )
+    res.status(200).json({message:'Successfull Unblock'});
+  } catch (error) {
+    res.status(500).json({message:'Server side error'});
+  }
+}
 
 
 
@@ -89,4 +147,8 @@ module.exports = {
    getAllMentees,
    getAllMentors,
    blockMentee,
+   unblockMentee,
+   blockMentor,
+   unblockMentor
+
 };

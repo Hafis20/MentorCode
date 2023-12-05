@@ -43,7 +43,29 @@ export class ListMentorsComponent implements OnInit {
     });
   }
 
-  block(id:string){
-    console.log('From Mentor side',id)
+  // Blocking the mentor
+  block(id: string):void {  // Whenever an event occur in the child this button will call
+    this.service.blockMentor({ id }).subscribe({
+      next: (response) => {
+        this.showMessage.showSuccessToastr(response.message);
+      },
+      error: (error) => {
+        const errorMessage = error.error.message;
+        this.service.errorHandler(error.status, errorMessage);
+      },
+    });
+  }
+
+  // Unblocking the mentor
+  unblock(id:string):void{
+    this.service.unblockMentor({id}).subscribe({
+      next:(response)=>{
+        this.showMessage.showSuccessToastr(response.message);
+      },
+      error: (error) => {
+        const errorMessage = error.error.message;
+        this.service.errorHandler(error.status, errorMessage);
+      },
+    })
   }
 }
