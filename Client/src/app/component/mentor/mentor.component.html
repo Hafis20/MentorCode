@@ -1,0 +1,11 @@
+<div>
+   <app-header></app-header>
+</div>
+<div class="flex h-screen">
+   <div class="w-1/6 bg-slate-200" style="margin-top: 95px;">
+      <app-sidebar (logoutEvent)="logout()"></app-sidebar>
+   </div>
+   <div class="flex-1" style="margin-top: 95px;">
+      <router-outlet></router-outlet>
+   </div>
+</div>

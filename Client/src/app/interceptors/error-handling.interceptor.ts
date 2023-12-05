@@ -7,8 +7,6 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, catchError, map } from 'rxjs';
-import { MessageToastrService } from '../services/message-toastr.service';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {

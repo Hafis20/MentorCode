@@ -14,8 +14,9 @@ export class AuthServiceService {
     return !!menteeLoggedIn;
   }
 
-  checkAdminLoggedIn():boolean{
-    const adminLoggedIn = this.service.getAdminTokenFromLocalStorage();
-    return !!adminLoggedIn;
+  // Checking the mentor is loggedin or not
+  checkMentorLoggedIn():boolean{
+    const mentorLoggedIn = this.service.getMentorTokenFromLocalStorage();
+    return !!mentorLoggedIn;
   }
 }

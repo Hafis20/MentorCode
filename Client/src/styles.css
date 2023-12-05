@@ -26,5 +26,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .font-poppins{
    font-family: 'Poppins', sans-serif;
+}
+
+.headerColor{
    color: #2B5292;
 }

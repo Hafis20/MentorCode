@@ -6,6 +6,9 @@ import { HomeComponent } from './component/home/home.component';
 import { OtpComponent } from './component/otp/otp.component';
 import { MentorLoginComponent } from './component/mentor/mentor-login/mentor-login.component';
 import { MentorRegisterComponent } from './component/mentor/mentor-register/mentor-register.component';
+import { MentorComponent } from './component/mentor/mentor.component';
+import { MentorDashboardComponent } from './component/mentor/mentor-dashboard/mentor-dashboard.component';
+import { MentorLoggedOutAuthGuard, MentorLoginAuthGuard } from './guard/mentor-guard.guard';
 
 // Mentee routes
 const menteeRoutes: Routes = [
@@ -16,9 +19,27 @@ const menteeRoutes: Routes = [
 
 // Mentor routes
 const mentorRoutes: Routes = [
-  { path: 'login', component: MentorLoginComponent },
-  { path: 'register', component: MentorRegisterComponent },
-  { path: 'verify-otp', component: OtpComponent },
+  {
+    path: '',
+    component: MentorComponent,
+    canActivate: [MentorLoginAuthGuard],
+    children: [{ path: 'dashboard', component: MentorDashboardComponent }],
+  },
+  {
+    path: 'login',
+    component: MentorLoginComponent,
+    canActivate: [MentorLoggedOutAuthGuard],
+  },
+  {
+    path: 'register',
+    component: MentorRegisterComponent,
+    canActivate: [MentorLoggedOutAuthGuard],
+  },
+  {
+    path: 'verify-otp',
+    component: OtpComponent,
+    canActivate: [MentorLoggedOutAuthGuard],
+  },
 ];
 
 const routes: Routes = [

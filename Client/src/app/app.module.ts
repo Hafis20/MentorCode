@@ -30,6 +30,9 @@ import { MentorReducer } from './store/Mentor/mentor.reducer';
 import { MentorEffect } from './store/Mentor/mentor.effect';
 import { AdminModule } from './component/admin/admin.module';
 import { ErrorHandlingInterceptor } from './interceptors/error-handling.interceptor';
+import { FooterComponent } from './shared/footer/footer.component';
+import { MentorComponent } from './component/mentor/mentor.component';
+import { MentorDashboardComponent } from './component/mentor/mentor-dashboard/mentor-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import { ErrorHandlingInterceptor } from './interceptors/error-handling.intercep
     PadCounterPipe,
     SidebarComponent,
     MentorRegisterComponent,
+    FooterComponent,
+    MentorComponent,
+    MentorDashboardComponent,
   ],
   imports: [
     BrowserModule,
