@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
@@ -8,6 +7,7 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  @Output() gotoProfileEvent:EventEmitter<void> = new EventEmitter<void>
   constructor(private auth:AuthServiceService) {}
 
   currentUser!: string;
@@ -24,5 +24,9 @@ export class HeaderComponent implements OnInit {
     } else {
       this.currentUser = '';
     }
+  }
+
+  gotoProfile(){
+    this.gotoProfileEvent.emit();
   }
 }

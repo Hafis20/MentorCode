@@ -5,6 +5,7 @@ import { loginMenteeSuccess } from "./mentee.action";
 
 const _menteeReducer = createReducer(MenteeState,
    on(loginMenteeSuccess,(state,action)=>{
+      console.log(action);
    const mentee = {...action.mentee}
       return {
          ...state,

@@ -34,6 +34,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { MentorComponent } from './component/mentor/mentor.component';
 import { MentorDashboardComponent } from './component/mentor/mentor-dashboard/mentor-dashboard.component';
 import { ListMentorsComponent } from './component/mentee/list-mentors/list-mentors.component';
+import { MenteeDashboardComponent } from './component/mentee/mentee-dashboard/mentee-dashboard.component';
+import { MenteeComponent } from './component/mentee/mentee.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { ListMentorsComponent } from './component/mentee/list-mentors/list-mento
     MentorComponent,
     MentorDashboardComponent,
     ListMentorsComponent,
+    MenteeDashboardComponent,
+    MenteeComponent
   ],
   imports: [
     BrowserModule,

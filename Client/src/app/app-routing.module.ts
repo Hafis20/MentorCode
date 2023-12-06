@@ -17,28 +17,41 @@ import {
   MenteeLoggedInAuth,
   MenteeLoginAuthGuard,
 } from './guard/mentee-guard.guard';
+import { MenteeComponent } from './component/mentee/mentee.component';
+import { MenteeDashboardComponent } from './component/mentee/mentee-dashboard/mentee-dashboard.component';
 
 // Mentee routes
 const menteeRoutes: Routes = [
   {
     path: 'verify-otp',
-    component: OtpComponent,
+    component: OtpComponent, // Otp verification
     canActivate: [MenteeLoggedInAuth],
   },
   {
     path: 'login',
-    component: MenteeLoginComponent,
+    component: MenteeLoginComponent, // Mentee login
     canActivate: [MenteeLoggedInAuth],
   },
   {
-    path: 'register',
+    path: 'register', // Mentee register
     component: MenteeRegisterComponent,
     canActivate: [MenteeLoggedInAuth],
   },
   {
-    path: 'list-mentors',
+    path: 'list-mentors', // For listing the mentors when the user click on the find a mentor button
     component: ListMentorsComponent,
     canActivate: [MenteeLoginAuthGuard],
+  },
+  {
+    path: '',           // For mentee profile
+    component: MenteeComponent,
+    canActivate: [MenteeLoginAuthGuard],
+    children: [
+      {
+        path: 'dashboard',
+        component: MenteeDashboardComponent,
+      },
+    ],
   },
 ];
 

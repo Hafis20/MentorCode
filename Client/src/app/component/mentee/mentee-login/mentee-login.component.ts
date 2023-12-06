@@ -27,11 +27,6 @@ export class MenteeLoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       form: this.sharedFormGroup.sharedForm(),
     });
-
-    // Calling data from state
-    this.store.select(getMenteeInfo).subscribe((response)=>{
-      console.log(response);
-    })
   }
 
   // form from parent

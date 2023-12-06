@@ -22,6 +22,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
         return res;
       }),
       catchError((error: HttpErrorResponse) => {
+        console.log(error);
         throw error;
       })
     );

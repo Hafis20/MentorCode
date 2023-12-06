@@ -17,4 +17,8 @@ export class MentorComponent implements OnInit{
       localStorage.removeItem('mentorToken');
       this.router.navigate(['/mentor/login']);
    }
+
+   gotoProfile(){
+      this.router.navigate(['/mentor/'])
+   }
 }

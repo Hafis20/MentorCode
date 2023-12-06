@@ -30,8 +30,4 @@ export class CommonService {
     return localStorage.getItem('adminToken') as string;
   }
 
-  //get all mentors for the mentee details page
-  getAvaliableMentors():Observable<void>{
-    return this.http.get<void>(`${environment.adminURL}/getAvaliableMentors`);
-  }
 }

@@ -24,3 +24,11 @@ export interface MenteeList{
    is_blocked:boolean;
 }
 
+// Mentee side home (find a mentor) Mentor data model
+export interface ListMentorsHomeOfMentee{
+   _id:string;
+   name:string;
+   experience:string;
+   fee:number;
+   image:string;
+}

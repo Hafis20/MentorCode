@@ -1,12 +1,12 @@
-<app-header></app-header>
+<app-header (gotoProfileEvent)="gotoProfile()"></app-header>
 <div class="pt-24 font-poppins">
    <div class="bg-sky-100 py-10">
       <div class="container mx-auto px-20">
          <div class="flex justify-center">
             <h2><span class="text-3xl font-bold text-black mb-8">Our Mentors</span></h2>
          </div>
-         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-3xl shadow-lg p-8">
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 py-10">
+            <div  *ngFor="let mentor of mentorsList" class="bg-white rounded-3xl shadow-lg p-8">
                <div class=" flex justify-around">
                   <div>
                      <img class="object-cover w-32 h-32" src="assets/imgs/background/default-profile.jpeg"
@@ -20,96 +20,19 @@
                </div>
 
                <div class="pt-3">
-                  <h3><span class="text-xl font-bold text-gray-900">Mentor Name</span></h3>
+                  <h3><span class="text-xl font-bold text-gray-900">{{mentor.name}}</span></h3>
                </div>
-               <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Experience :</span> 3yr</p>
+               <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Experience :</span> {{mentor.experience}}yr</p>
                <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Domain :</span> JavaScript, NodeJs,
                   MongoDB, NextJs, React</p>
                <div class="flex items-center justify-between mt-4">
-                  <span class="text-gray-900 font-bold text-lg">₹3000 / 1hr</span>
+                  <span class="text-gray-900 font-bold text-lg">₹{{mentor.fee}} / 1hr</span>
                   <button
                      class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">Book
                      Now</button>
                </div>
             </div>
-            <div class="bg-white rounded-3xl shadow-lg p-8">
-               <div class=" flex justify-around">
-                  <div>
-                     <img class="object-cover w-32 h-32" src="assets/imgs/background/python-profile.png"
-                        alt="Profile">
-                  </div>
-                  <div class="inset-0 flex items-center">
-                     <button
-                        class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">View
-                        Profile</button>
-                  </div>
-               </div>
 
-               <div class="pt-3">
-                  <h3><span class="text-xl font-bold text-gray-900">Mentor Name</span></h3>
-               </div>
-               <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Experience :</span> 1yr</p>
-               <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Domain :</span> Python, Django,
-                  MongoDB, NextJs, React</p>
-               <div class="flex items-center justify-between mt-4">
-                  <span class="text-gray-900 font-bold text-lg">₹1500 / 1hr</span>
-                  <button
-                     class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">Book
-                     Now</button>
-               </div>
-            </div>
-            <div class="bg-white rounded-3xl shadow-lg p-8">
-               <div class=" flex justify-around">
-                  <div>
-                     <img class="object-cover w-32 h-32" src="assets/imgs/background/angular-profile.png"
-                        alt="Profile">
-                  </div>
-                  <div class="inset-0 flex items-center">
-                     <button
-                        class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">View
-                        Profile</button>
-                  </div>
-               </div>
-
-               <div class="pt-3">
-                  <h3><span class="text-xl font-bold text-gray-900">Mentor Name</span></h3>
-               </div>
-               <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Experience :</span> 4yr</p>
-               <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Domain :</span> JavaScript, NodeJs,
-                  MongoDB, NextJs, Angular</p>
-               <div class="flex items-center justify-between mt-4">
-                  <span class="text-gray-900 font-bold text-lg">₹3500 / 1hr</span>
-                  <button
-                     class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">Book
-                     Now</button>
-               </div>
-            </div>
-            <div class="bg-white rounded-3xl shadow-lg p-8">
-               <div class=" flex justify-around">
-                  <div>
-                     <img class="object-cover w-32 h-32" src="assets/imgs/background/default-profile.jpeg"
-                        alt="Profile">
-                  </div>
-                  <div class="inset-0 flex items-center">
-                     <button
-                        class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">View
-                        Profile</button>
-                  </div>
-               </div>
-
-               <div class="pt-3">
-                  <h3><span class="text-xl font-bold text-gray-900">Mentor Name</span></h3>
-               </div>
-               <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Experience :</span> 1yr</p>
-               <p class="text-gray-500 text-sm mt-2"><span class="font-bold">Domain :</span> JavaScript, NodeJs,
-                  MongoDB, NextJs, React</p>
-               <div class="flex items-center justify-between mt-4">
-                  <span class="text-gray-900 font-bold text-lg">₹2500 / 1hr</span>
-                  <button
-                     class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">Book
-                     Now</button>
-               </div>
-            </div>
          </div>
 
       </div>

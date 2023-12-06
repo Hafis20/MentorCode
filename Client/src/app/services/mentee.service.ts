@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HttpResponseModel,LoginModel,LoginResponseModel, ValidateOtpModel } from '../model/commonModel';
 
 import { Observable } from 'rxjs';
-import { MenteeModel } from '../model/menteeModel';
+import { ListMentorsHomeOfMentee, MenteeModel } from '../model/menteeModel';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +31,10 @@ export class MenteeService {
   // Login User
   login(data:LoginModel):Observable<LoginResponseModel>{
     return this.http.post<LoginResponseModel>(`${environment.menteeURL}/login`,data);
+  }
+  
+  //get all mentors for the mentee details page
+  getAvaliableMentors():Observable<ListMentorsHomeOfMentee[]>{
+    return this.http.get<ListMentorsHomeOfMentee[]>(`${environment.menteeURL}/getAvailableMentors`);
   }
 }
