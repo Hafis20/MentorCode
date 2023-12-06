@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +30,8 @@ export class CommonService {
     return localStorage.getItem('adminToken') as string;
   }
 
-  //get all mentors for the home page to view
+  //get all mentors for the mentee details page
+  getAvaliableMentors():Observable<void>{
+    return this.http.get<void>(`${environment.adminURL}/getAvaliableMentors`);
+  }
 }

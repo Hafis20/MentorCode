@@ -18,7 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule } from './material.component';
 import { FormComponent } from './shared/form/form.component';
 import { OtpComponent } from './component/otp/otp.component';
-import { PadCounterPipe } from './customPipes/padCounter';
+import { PadCounterPipe } from './customPipes/padCounter.pipe';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { MenteeEffect } from './store/Mentee/mentee.effect';
 import { MenteeReducer } from './store/Mentee/mentee.reducer';
@@ -33,6 +33,7 @@ import { ErrorHandlingInterceptor } from './interceptors/error-handling.intercep
 import { FooterComponent } from './shared/footer/footer.component';
 import { MentorComponent } from './component/mentor/mentor.component';
 import { MentorDashboardComponent } from './component/mentor/mentor-dashboard/mentor-dashboard.component';
+import { ListMentorsComponent } from './component/mentee/list-mentors/list-mentors.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MentorDashboardComponent } from './component/mentor/mentor-dashboard/me
     FooterComponent,
     MentorComponent,
     MentorDashboardComponent,
+    ListMentorsComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,13 +8,38 @@ import { MentorLoginComponent } from './component/mentor/mentor-login/mentor-log
 import { MentorRegisterComponent } from './component/mentor/mentor-register/mentor-register.component';
 import { MentorComponent } from './component/mentor/mentor.component';
 import { MentorDashboardComponent } from './component/mentor/mentor-dashboard/mentor-dashboard.component';
-import { MentorLoggedOutAuthGuard, MentorLoginAuthGuard } from './guard/mentor-guard.guard';
+import {
+  MentorLoggedOutAuthGuard,
+  MentorLoginAuthGuard,
+} from './guard/mentor-guard.guard';
+import { ListMentorsComponent } from './component/mentee/list-mentors/list-mentors.component';
+import {
+  MenteeLoggedInAuth,
+  MenteeLoginAuthGuard,
+} from './guard/mentee-guard.guard';
 
 // Mentee routes
 const menteeRoutes: Routes = [
-  { path: 'verify-otp', component: OtpComponent },
-  { path: 'login', component: MenteeLoginComponent },
-  { path: 'register', component: MenteeRegisterComponent },
+  {
+    path: 'verify-otp',
+    component: OtpComponent,
+    canActivate: [MenteeLoggedInAuth],
+  },
+  {
+    path: 'login',
+    component: MenteeLoginComponent,
+    canActivate: [MenteeLoggedInAuth],
+  },
+  {
+    path: 'register',
+    component: MenteeRegisterComponent,
+    canActivate: [MenteeLoggedInAuth],
+  },
+  {
+    path: 'list-mentors',
+    component: ListMentorsComponent,
+    canActivate: [MenteeLoginAuthGuard],
+  },
 ];
 
 // Mentor routes

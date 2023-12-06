@@ -71,16 +71,12 @@ export class MenteeRegisterComponent implements OnInit {
       this.service.registerMentee(menteeData).subscribe({
         next:(response)=>{
         this.showMessage.showSuccessToastr(response.message);
-          this.registerForm.reset()
           localStorage.setItem('email',menteeData.email); 
           localStorage.setItem('role','mentee'); 
           this.router.navigate(['/mentee/verify-otp']);
         },
         error:(error)=>{
           this.showMessage.showErrorToastr(error.error.message);
-          setTimeout(()=>{
-            // window.location.reload();
-          },3000)
         }
       })
     }

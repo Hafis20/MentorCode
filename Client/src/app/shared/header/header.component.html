@@ -14,20 +14,20 @@
         </li>
       </ul>
     </nav>
-    <div class="pr-5 ">
+    <div class="pr-5">
       <button [routerLink]="['']"
         class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
         Home
       </button>
-      </div>
-    <ng-container *ngIf="!isLogin;">
+    </div>
+    <ng-container *ngIf="!isLogin;else profile">
       <div class="pr-5">
         <button [routerLink]="['/mentor/login']" *ngIf="!currentUser || currentUser === 'mentor'"
           class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
           Become a Mentor
         </button>
       </div>
-      
+
       <div class="pr-5">
         <button [routerLink]="['/mentee/login']" *ngIf="!currentUser || currentUser === 'mentee'"
           class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
@@ -35,5 +35,12 @@
         </button>
       </div>
     </ng-container>
+    <ng-template #profile>
+      <!-- <div 
+        class="m-1 mr-4 w-12 h-12 relative flex justify-center items-center rounded-full cursor-pointer bg-gray-500 text-xl text-white">
+        <img src="assets/imgs/background/default-profile.jpeg" class="rounded-full">
+      </div> -->
+      
+    </ng-template>
   </div>
 </header>
