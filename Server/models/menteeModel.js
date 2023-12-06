@@ -13,9 +13,6 @@ const menteeSchema = new mongoose.Schema({
   password: {
     type: String,
   },
-  fee: {
-    type: Number,
-  },
   otp: {
     type: Number,
     default:500,

@@ -23,6 +23,9 @@ const mentorSchema = new mongoose.Schema({
   otp: {
     type: Number,
   },
+  fee: {
+    type: Number,
+  },
   otp_updated_at: {
     type: Date,
   },
