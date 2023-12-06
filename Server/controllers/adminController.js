@@ -22,11 +22,11 @@ const login = async (req, res) => {
          // making a jwt token
          const accessToken = jwt.sign(data,process.env.JWT_ACCESS_TOKEN);
          // Creating admin details
-         const accessedMentee = {
+         const accessedUser = {
             name:adminData.name,
             role:adminData.role,
          }
-         res.status(201).json({accessToken,accessedMentee,message:'Login success'});
+         res.status(201).json({accessToken,accessedUser,message:'Login success'});
         } else {
           res.status(404).json({ message: "Invalid Credentials" });
         }

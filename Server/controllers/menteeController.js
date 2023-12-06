@@ -113,7 +113,7 @@ const login = async (req, res) => {
           // Generate jwt token
           const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
           // Send the correct mentee details into store
-          const accessedMentee = {
+          const accessedUser = {
             name: menteeData.name,
             email: menteeData.email,
             role: menteeData.role,
@@ -122,7 +122,7 @@ const login = async (req, res) => {
             .status(201)
             .json({
               accessToken,
-              accessedMentee,
+              accessedUser,
               message: "Login successfull",
             });
         }
