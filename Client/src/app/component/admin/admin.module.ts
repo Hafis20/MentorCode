@@ -13,6 +13,7 @@ import { SharedTableComponent } from './component/shared-table/shared-table.comp
 import { ListMenteesComponent } from './component/list-mentees/list-mentees.component';
 import { ListMentorsComponent } from './component/list-mentors/list-mentors.component';
 import { PaginationComponent } from './component/pagination/pagination.component';
+import { SearchbarComponent } from './component/searchbar/searchbar.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { PaginationComponent } from './component/pagination/pagination.component
     ListMenteesComponent,
     ListMentorsComponent,
     PaginationComponent,
+    SearchbarComponent,
   ],
   imports: [
     CommonModule,

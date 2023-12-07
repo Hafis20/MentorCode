@@ -10,16 +10,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-mentors.component.css'],
 })
 export class ListMentorsComponent implements OnInit {
-  totalMentors!:number;
+  totalMentors!: number;
   tableHeaders: string[] = [
     'Name',
     'Email',
     'Mobile',
     'Status',
     'Experience',
+    'Fee',
     'Action',
   ];
   mentors!: MentorData[];
+  searchingMentor!: MentorData[];
   constructor(
     private service: AdminService,
     private showMessage: MessageToastrService,
@@ -29,12 +31,14 @@ export class ListMentorsComponent implements OnInit {
   ngOnInit(): void {
     this.service.getAllMentors().subscribe({
       next: (response) => {
-        this.mentors = response;   // Setting the data into the global variable
-        this.totalMentors = response.length;   
+        this.mentors = response; // Setting the data into the global variable
+        this.searchingMentor = response;
+        this.totalMentors = response.length;
       },
       error: (error) => {
         const errorMessage = error.error.message;
-        if (error.status === 401 && errorMessage === 'Unauthorized') {  // Error handled which is not authorized
+        if (error.status === 401 && errorMessage === 'Unauthorized') {
+          // Error handled which is not authorized
           this.showMessage.showErrorToastr('Unauthorized Admin');
           localStorage.removeItem('adminToken');
           this.router.navigate(['/login']);
@@ -46,7 +50,8 @@ export class ListMentorsComponent implements OnInit {
   }
 
   // Blocking the mentor
-  block(mentorId: string):void {  // Whenever an event occur in the child this button will call
+  block(mentorId: string): void {
+    // Whenever an event occur in the child this button will call
     this.service.blockMentor({ mentorId }).subscribe({
       next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
@@ -59,15 +64,24 @@ export class ListMentorsComponent implements OnInit {
   }
 
   // Unblocking the mentor
-  unblock(mentorId:string):void{
-    this.service.unblockMentor({mentorId}).subscribe({
-      next:(response)=>{
+  unblock(mentorId: string): void {
+    this.service.unblockMentor({ mentorId }).subscribe({
+      next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
       },
       error: (error) => {
         const errorMessage = error.error.message;
         this.service.errorHandler(error.status, errorMessage);
       },
-    })
+    });
+  }
+
+  searchText(text: string) {
+    this.mentors = this.searchingMentor.filter((user) =>
+      user.name.toLowerCase().includes(text.toLowerCase())
+    );
+    this.totalMentors = this.searchingMentor.filter(
+      (user) => user.name.toLowerCase().includes(text.toLowerCase())
+    ).length;
   }
 }

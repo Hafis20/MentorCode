@@ -12,24 +12,30 @@ import { Router } from '@angular/router';
 export class ListMenteesComponent implements OnInit {
   tableHeaders: string[] = ['Name', 'Email', 'Mobile', 'Status', 'Action'];
   mentees!: MenteeData[];
-  totalMentees!:number;
-  constructor(private service: AdminService,private showMessage:MessageToastrService) {}
+  searchingMentee!: MenteeData[];
+  totalMentees!: number;
+  constructor(
+    private service: AdminService,
+    private showMessage: MessageToastrService
+  ) {}
 
   ngOnInit(): void {
     this.service.getAllMentees().subscribe({
       next: (response) => {
-        this.mentees = response;  // Setting data into a global variable
+        this.mentees = response; // Setting data into a global variable
+        this.searchingMentee = response;
         this.totalMentees = response.length;
       },
       error: (error) => {
         const errorMessage = error.error.message;
-        this.service.errorHandler(error.status, errorMessage);  // Handling the 401 and such errors
+        this.service.errorHandler(error.status, errorMessage); // Handling the 401 and such errors
       },
     });
   }
 
   // Blocking the mentee
-  block(menteeId: string):void {  // Whenever an event occur in the child this button will call
+  block(menteeId: string): void {
+    // Whenever an event occur in the child this button will call
     this.service.blockMentee({ menteeId }).subscribe({
       next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
@@ -42,16 +48,25 @@ export class ListMenteesComponent implements OnInit {
   }
 
   // Unblocking the mentee
-  unblock(menteeId:string):void{
-    this.service.unblockMentee({menteeId}).subscribe({
-      next:(response)=>{
+  unblock(menteeId: string): void {
+    this.service.unblockMentee({ menteeId }).subscribe({
+      next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
       },
       error: (error) => {
         const errorMessage = error.error.message;
         this.service.errorHandler(error.status, errorMessage);
       },
-    })
+    });
   }
 
+  // Searching the user when the search box working
+  searchText(searchText: string) {
+    this.mentees = this.searchingMentee.filter((user) =>
+      user.name.toLowerCase().includes(searchText.toLowerCase()) // Converting to the case sensitive
+    );
+    this.totalMentees = this.searchingMentee.filter((user) =>
+      user.name.includes(searchText)
+    ).length;
+  }
 }

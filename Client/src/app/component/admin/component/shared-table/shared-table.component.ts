@@ -29,7 +29,9 @@ export class SharedTableComponent implements OnInit, OnChanges {
   @Output() unblockUser: EventEmitter<string> = new EventEmitter<string>(); // Unblock user emitter
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['usersList']) {

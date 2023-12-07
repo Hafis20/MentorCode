@@ -36,6 +36,7 @@ import { MentorDashboardComponent } from './component/mentor/mentor-dashboard/me
 import { ListMentorsComponent } from './component/mentee/list-mentors/list-mentors.component';
 import { MenteeDashboardComponent } from './component/mentee/mentee-dashboard/mentee-dashboard.component';
 import { MenteeComponent } from './component/mentee/mentee.component';
+import { CardsComponent } from './component/mentee/cards/cards.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { MenteeComponent } from './component/mentee/mentee.component';
     MentorDashboardComponent,
     ListMentorsComponent,
     MenteeDashboardComponent,
-    MenteeComponent
+    MenteeComponent,
+    CardsComponent,
   ],
   imports: [
     BrowserModule,

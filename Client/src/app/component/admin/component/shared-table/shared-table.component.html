@@ -27,6 +27,7 @@
                         </ng-template>
                         <ng-container *ngIf="isMentor(user)">
                            <td class="whitespace-nowrap px-6 py-4">{{user.experience}}</td>
+                           <td class="whitespace-nowrap px-6 py-4">₹{{user.fee}}</td>
                         </ng-container>
                         <ng-container *ngIf="!user.is_blocked; else blocked">
                            <td class="whitespace-nowrap px-6 py-4"><button (click)="block(user._id)"
