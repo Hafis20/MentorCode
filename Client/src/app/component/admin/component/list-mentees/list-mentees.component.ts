@@ -12,13 +12,14 @@ import { Router } from '@angular/router';
 export class ListMenteesComponent implements OnInit {
   tableHeaders: string[] = ['Name', 'Email', 'Mobile', 'Status', 'Action'];
   mentees!: MenteeData[];
-  user: string = 'mentee';
+  totalMentees!:number;
   constructor(private service: AdminService,private showMessage:MessageToastrService) {}
 
   ngOnInit(): void {
     this.service.getAllMentees().subscribe({
       next: (response) => {
         this.mentees = response;  // Setting data into a global variable
+        this.totalMentees = response.length;
       },
       error: (error) => {
         const errorMessage = error.error.message;
@@ -28,8 +29,8 @@ export class ListMenteesComponent implements OnInit {
   }
 
   // Blocking the mentee
-  block(id: string):void {  // Whenever an event occur in the child this button will call
-    this.service.blockMentee({ id }).subscribe({
+  block(menteeId: string):void {  // Whenever an event occur in the child this button will call
+    this.service.blockMentee({ menteeId }).subscribe({
       next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
       },
@@ -41,8 +42,8 @@ export class ListMenteesComponent implements OnInit {
   }
 
   // Unblocking the mentee
-  unblock(id:string):void{
-    this.service.unblockMentee({id}).subscribe({
+  unblock(menteeId:string):void{
+    this.service.unblockMentee({menteeId}).subscribe({
       next:(response)=>{
         this.showMessage.showSuccessToastr(response.message);
       },

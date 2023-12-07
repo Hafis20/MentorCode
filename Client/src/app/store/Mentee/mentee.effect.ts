@@ -25,7 +25,7 @@ export class MenteeEffect {
             if (userData) {
               localStorage.setItem('menteeToken', userData.accessToken);
               this.showMessage.showSuccessToastr(userData.message);
-              this.router.navigate(['home'])
+              this.router.navigate(['/mentee/list-mentors']);
               return loginMenteeSuccess({ mentee: userData.accessedUser });
             } else {
               return;

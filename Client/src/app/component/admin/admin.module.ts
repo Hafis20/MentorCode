@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedTableComponent } from './component/shared-table/shared-table.component';
 import { ListMenteesComponent } from './component/list-mentees/list-mentees.component';
 import { ListMentorsComponent } from './component/list-mentors/list-mentors.component';
+import { PaginationComponent } from './component/pagination/pagination.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ListMentorsComponent } from './component/list-mentors/list-mentors.comp
     SharedTableComponent,
     ListMenteesComponent,
     ListMentorsComponent,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-mentors.component.css'],
 })
 export class ListMentorsComponent implements OnInit {
+  totalMentors!:number;
   tableHeaders: string[] = [
     'Name',
     'Email',
@@ -29,6 +30,7 @@ export class ListMentorsComponent implements OnInit {
     this.service.getAllMentors().subscribe({
       next: (response) => {
         this.mentors = response;   // Setting the data into the global variable
+        this.totalMentors = response.length;   
       },
       error: (error) => {
         const errorMessage = error.error.message;
@@ -44,8 +46,8 @@ export class ListMentorsComponent implements OnInit {
   }
 
   // Blocking the mentor
-  block(id: string):void {  // Whenever an event occur in the child this button will call
-    this.service.blockMentor({ id }).subscribe({
+  block(mentorId: string):void {  // Whenever an event occur in the child this button will call
+    this.service.blockMentor({ mentorId }).subscribe({
       next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
       },
@@ -57,8 +59,8 @@ export class ListMentorsComponent implements OnInit {
   }
 
   // Unblocking the mentor
-  unblock(id:string):void{
-    this.service.unblockMentor({id}).subscribe({
+  unblock(mentorId:string):void{
+    this.service.unblockMentor({mentorId}).subscribe({
       next:(response)=>{
         this.showMessage.showSuccessToastr(response.message);
       },

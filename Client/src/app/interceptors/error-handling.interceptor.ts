@@ -18,11 +18,11 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       map((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       }),
       catchError((error: HttpErrorResponse) => {
-        console.log(error);
+        // console.log(error);
         throw error;
       })
     );

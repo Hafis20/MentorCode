@@ -11,7 +11,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     <tr *ngFor="let user of usersList" class="border-b dark:border-neutral-500">
+                     <tr *ngFor="let user of currentUsers" class="border-b dark:border-neutral-500">
                         <td class="whitespace-nowrap px-6 py-4">{{user.name}}</td>
                         <td class="whitespace-nowrap px-6 py-4">{{user.email}}</td>
                         <td class="whitespace-nowrap px-6 py-4">{{user.mobile}}</td>
@@ -42,6 +42,9 @@
                         </ng-template>
                   </tbody>
                </table>
+               <div class="flex justify-end">
+                  <pagination [total]="totalUsers" [currentPage]="currentPage" (changePageEvent)="changePage($event)"></pagination>
+               </div>
             </div>
          </div>
       </div>
