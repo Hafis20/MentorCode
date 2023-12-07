@@ -11,40 +11,49 @@
                      </tr>
                   </thead>
                   <tbody>
-                     <tr *ngFor="let user of currentUsers" class="border-b dark:border-neutral-500">
-                        <td class="whitespace-nowrap px-6 py-4">{{user.name}}</td>
-                        <td class="whitespace-nowrap px-6 py-4">{{user.email}}</td>
-                        <td class="whitespace-nowrap px-6 py-4">{{user.mobile}}</td>
-                        <ng-container *ngIf="user.is_verified; else notVerified">
-                           <td><span
-                                 class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-700">Verified</span>
-                           </td>
-                        </ng-container>
-                        <ng-template #notVerified>
-                           <td><span
-                                 class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-700">Not
-                                 Verified</span></td>
-                        </ng-template>
-                        <ng-container *ngIf="isMentor(user)">
-                           <td class="whitespace-nowrap px-6 py-4">{{user.experience}}</td>
-                           <td class="whitespace-nowrap px-6 py-4">₹{{user.fee}}</td>
-                        </ng-container>
-                        <ng-container *ngIf="!user.is_blocked; else blocked">
-                           <td class="whitespace-nowrap px-6 py-4"><button (click)="block(user._id)"
-                                 class="bg-red-500 hover:bg-red-700 text-white py-2 px-6 rounded">
-                                 Block
-                              </button></td>
-                        </ng-container>
-                        <ng-template #blocked>
-                           <td class="whitespace-nowrap px-6 py-4"><button (click)="unblock(user._id)"
-                                 class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded">
-                                 UnBlock
-                              </button></td>
-                        </ng-template>
+                     <ng-container *ngIf="currentUsers.length > 0; else showempty">
+                        <tr *ngFor="let user of currentUsers" class="border-b dark:border-neutral-500">
+                           <td class="whitespace-nowrap px-6 py-4">{{user.name}}</td>
+                           <td class="whitespace-nowrap px-6 py-4">{{user.email}}</td>
+                           <td class="whitespace-nowrap px-6 py-4">{{user.mobile}}</td>
+                           <ng-container *ngIf="user.is_verified; else notVerified">
+                              <td><span
+                                    class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-700">Verified</span>
+                              </td>
+                           </ng-container>
+                           <ng-template #notVerified>
+                              <td><span
+                                    class="bg-green-100 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-700">Not
+                                    Verified</span></td>
+                           </ng-template>
+                           <ng-container *ngIf="isMentor(user)">
+                              <td class="whitespace-nowrap px-6 py-4">{{user.experience}}</td>
+                              <td class="whitespace-nowrap px-6 py-4">₹{{user.fee}}</td>
+                           </ng-container>
+                           <ng-container *ngIf="!user.is_blocked; else blocked">
+                              <td class="whitespace-nowrap px-6 py-4"><button (click)="block(user._id)"
+                                    class="bg-red-500 hover:bg-red-700 text-white py-2 px-6 rounded">
+                                    Block
+                                 </button></td>
+                           </ng-container>
+                           <ng-template #blocked>
+                              <td class="whitespace-nowrap px-6 py-4"><button (click)="unblock(user._id)"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded">
+                                    UnBlock
+                                 </button></td>
+                           </ng-template>
+                        </tr>
+                     </ng-container>
+                     <ng-template #showempty>
+                        <div class="flex justify-center pt-10">
+                           <h1>User Not Found</h1>
+                        </div>
+                     </ng-template>
                   </tbody>
                </table>
                <div class="flex justify-end">
-                  <pagination [total]="totalUsers" [currentPage]="currentPage" (changePageEvent)="changePage($event)"></pagination>
+                  <pagination [total]="totalUsers" [currentPage]="currentPage" (changePageEvent)="changePage($event)">
+                  </pagination>
                </div>
             </div>
          </div>

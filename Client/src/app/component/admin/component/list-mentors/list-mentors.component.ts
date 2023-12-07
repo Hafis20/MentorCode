@@ -76,12 +76,35 @@ export class ListMentorsComponent implements OnInit {
     });
   }
 
-  searchText(text: string) {
-    this.mentors = this.searchingMentor.filter((user) =>
-      user.name.toLowerCase().includes(text.toLowerCase())
+  searchText(searchText: string) {
+    const searchTerm = searchText.toLowerCase().trim().replace(/\s+/g, ''); // Replace all spaces with an empty string
+  
+    this.mentors = this.searchingMentor.filter((mentor) =>
+      mentor.name.toLowerCase().replace(/\s+/g, '').includes(searchTerm)
     );
-    this.totalMentors = this.searchingMentor.filter(
-      (user) => user.name.toLowerCase().includes(text.toLowerCase())
+  
+    this.totalMentors = this.searchingMentor.filter((mentor) =>
+      mentor.name.toLowerCase().replace(/\s+/g, '').includes(searchTerm)
     ).length;
   }
+
+  // Filtering based on status
+  // Filter the using status verified or not
+  filter(status:string){
+    if(status === 'verified'){ // Selecting the verified
+      this.mentors = this.searchingMentor.filter((mentor)=>
+      mentor.is_verified === true);
+      this.totalMentors = this.searchingMentor.filter((mentor)=>
+      mentor.is_verified === true).length;
+    }else if(status === 'notverified'){  // Selection the not verified
+      this.mentors = this.searchingMentor.filter((mentor)=>
+      mentor.is_verified === false);
+      this.totalMentors = this.searchingMentor.filter((mentor)=>
+      mentor.is_verified === false).length;
+    }else{
+      this.mentors = this.searchingMentor;
+      this.totalMentors = this.searchingMentor.length
+    }
+  }
+  
 }

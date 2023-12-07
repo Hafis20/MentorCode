@@ -1,7 +1,8 @@
 <div class="flex justify-center mt-3">
    <h1 class="font-bold ">MENTORS LIST</h1>
 </div>
-<div class="pr-10">
-   <searchbar (searchEvent)="searchText($event)"></searchbar>
+<div class="px-10 flex justify-between">
+   <filter (filterEvent)="filter($event)"></filter>
+   <searchbar  (searchEvent)="searchText($event)"></searchbar>
 </div>
 <shared-table [tableHeaders]="tableHeaders" [usersList]="mentors" (totalUsers)="totalMentors" (blockUser)="block($event)" (unblockUser)="unblock($event)"></shared-table>

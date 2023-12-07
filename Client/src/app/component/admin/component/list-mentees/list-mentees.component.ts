@@ -60,13 +60,35 @@ export class ListMenteesComponent implements OnInit {
     });
   }
 
-  // Searching the user when the search box working
+  // Searching the mentee when the search box working
   searchText(searchText: string) {
-    this.mentees = this.searchingMentee.filter((user) =>
-      user.name.toLowerCase().includes(searchText.toLowerCase()) // Converting to the case sensitive
+    const searchTerm = searchText.toLowerCase().trim().replace(/\s+/g, ''); // Replace all spaces with an empty string
+  
+    this.mentees = this.searchingMentee.filter((mentee) =>
+      mentee.name.toLowerCase().replace(/\s+/g, '').includes(searchTerm)
     );
-    this.totalMentees = this.searchingMentee.filter((user) =>
-      user.name.includes(searchText)
+  
+    this.totalMentees = this.searchingMentee.filter((mentee) =>
+      mentee.name.toLowerCase().replace(/\s+/g, '').includes(searchTerm)
     ).length;
+  }
+  
+
+  // Filter the using status verified or not
+  filter(status:string){
+    if(status === 'verified'){ // Selecting the verified
+      this.mentees = this.searchingMentee.filter((mentee)=>
+      mentee.is_verified === true);
+      this.totalMentees = this.searchingMentee.filter((mentee)=>
+      mentee.is_verified === true).length;
+    }else if(status === 'notverified'){  // Selection the not verified
+      this.mentees = this.searchingMentee.filter((mentee)=>
+      mentee.is_verified === false);
+      this.totalMentees = this.searchingMentee.filter((mentee)=>
+      mentee.is_verified === false).length;
+    }else{
+      this.mentees = this.searchingMentee;
+      this.totalMentees = this.searchingMentee.length
+    }
   }
 }
