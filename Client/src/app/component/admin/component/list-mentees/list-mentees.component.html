@@ -1,5 +1,10 @@
-<div class="flex justify-center mt-2">
-   <h1 class="font-bold ">MENTEES LIST</h1>
+<div class="flex justify-center mt-3">
+   <h1 class="font-bold text-2xl">MENTEES LIST</h1>
+</div>
+
+<div class="px-10 flex justify-between">
+   <filter (filterEvent)="filter($event)"></filter>
+   <searchbar (searchEvent)="searchText($event)"></searchbar>
 </div>
 <shared-table [tableHeaders]="tableHeaders" [usersList]="mentees" (blockUser)="block($event)"
    (unblockUser)="unblock($event)" [totalUsers]="totalMentees"></shared-table>

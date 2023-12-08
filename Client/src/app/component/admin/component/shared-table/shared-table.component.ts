@@ -33,6 +33,7 @@ export class SharedTableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['usersList']) {
+      this.currentPage = 1;
       this.currentUsers = this.showUsersInTable();
     }
   }

@@ -18,6 +18,7 @@ export interface MenteeData{
    is_blocked:boolean;
    is_verified:boolean;
    role:string;
+   fee:number;
 }
 
 // Mentor schema

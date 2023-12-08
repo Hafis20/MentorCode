@@ -55,9 +55,13 @@ const resendOtp = async (req, res) => {
         },
       }
     );
-    res.status(201).json({ message: "Successfully send new otp" });
+    if(updateMenteeData){
+      res.status(201).json({ message: "Successfully send new otp" });
+    }else{
+      res.status(404).json({message:'Mentee Not found'});
+    }
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json({message:'Internal Server error'});
   }
 };
 

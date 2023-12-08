@@ -3,6 +3,30 @@ const adminRouter = express.Router();
 const adminController = require('../controllers/adminController');
 const adminAuth = require('../middlewares/adminAuth');
 
+// Admin crud operations swagger
+/**
+ * @swagger
+ * tags:
+ *    name: Admin
+ *    description: Admin crud operations
+ */
+
+// Admin login
+/**
+ * @swagger
+ * /admin/login:
+ *    post:
+ *       summary: Used to admin login
+ *       description: Admin can login to the application
+ *       tags:
+ *          - Admin
+ *       requestBody:
+ *          required: true
+ *          content:
+ *             application/json:
+ *                schema:
+ */
+
 // Login an admin
 adminRouter.post('/login',adminController.login);
 // Getting all the mentees
