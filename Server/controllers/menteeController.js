@@ -55,13 +55,13 @@ const resendOtp = async (req, res) => {
         },
       }
     );
-    if(updateMenteeData){
+    if (updateMenteeData) {
       res.status(201).json({ message: "Successfully send new otp" });
-    }else{
-      res.status(404).json({message:'Mentee Not found'});
+    } else {
+      res.status(404).json({ message: "Mentee Not found" });
     }
   } catch (error) {
-    res.status(500).json({message:'Internal Server error'});
+    res.status(500).json({ message: "Internal Server error" });
   }
 };
 
@@ -107,9 +107,11 @@ const login = async (req, res) => {
       // Checking the user password is match with saved pass
       const matchPass = await comparePass(password, menteeData.password);
       if (matchPass) {
-          // Checking the user is blocked or not if blocked throw error message;
-        if (menteeData.is_blocked) { 
-          return res.status(401).json({message:"Your account is blocked by Admin"});
+        // Checking the user is blocked or not if blocked throw error message;
+        if (menteeData.is_blocked) {
+          return res
+            .status(401)
+            .json({ message: "Your account is blocked by Admin" });
         } else {
           const data = {
             userId: menteeData._id,
@@ -122,13 +124,11 @@ const login = async (req, res) => {
             email: menteeData.email,
             role: menteeData.role,
           };
-          res
-            .status(201)
-            .json({
-              accessToken,
-              accessedUser,
-              message: "Login successfull",
-            });
+          res.status(201).json({
+            accessToken,
+            accessedUser,
+            message: "Login successfull",
+          });
         }
       } else {
         res.status(400).json({ message: "Email or password is invalid" });
@@ -137,13 +137,63 @@ const login = async (req, res) => {
       res.status(404).json({ message: "Email or password is invalid" });
     }
   } catch (error) {
-    res.status(500).json({message:"Server side error"});
+    res.status(500).json({ message: "Server side error" });
   }
 };
+
+// Forgot password for mentee
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const menteeData = await Mentee.findOne({ email: email }); // Checking the mentee is available with this mail
+
+    if (menteeData) {
+      // If available
+      const otp = await generateMail(email); // generate the otp for user verification
+      menteeData.otp = otp;
+      menteeData.otp_updated_at = new Date();
+      menteeData.save(); // Updated the mentee data
+      res.status(201).json({ message: "Otp Sended into your email" });
+    } else {
+      // If mentee data is not available
+      res.status(404).json({ message: "Mentee data is not available" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// change password of the mentee from forgot password
+const changePassword = async(req,res)=>{
+  try {
+    const {email,password} = req.body;
+    if(!email){
+      res.status(400).json({message:'Sorry Password Not changed'});
+    }else{
+      const hashPass = await hashedPass(password);
+      const mentee = await Mentee.findOneAndUpdate({email:email},
+        {
+          $set:{
+            password:hashPass
+          }
+        },
+        {
+          new:true
+        }
+      )
+    }
+    res.status(201).json({message:'Password changed please login'});  // Password is changed
+  } catch (error) {
+    res.status(500).json({message:'Internal Server Error'});
+    console.log(error.message)
+  }
+}
 
 module.exports = {
   register,
   login,
   resendOtp,
   verifyOtp,
+  forgotPassword,
+  changePassword,
 };

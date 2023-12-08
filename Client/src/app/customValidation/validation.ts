@@ -1,9 +1,9 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 // Name validation custom function
-export function nameValidation(control:AbstractControl):ValidationErrors |null{
+export function spaceValidation(control:AbstractControl):ValidationErrors |null{
    if(control.value.trim() === ''){
-      return {nameError:true}
+      return {spaceError:true}
    }
    return null;
 }
@@ -16,4 +16,13 @@ export function negativeValidation(control:AbstractControl):ValidationErrors|nul
    return null;
 }
 
+// For password pattern checking
+export function passwordValidation(control:AbstractControl):ValidationErrors | null{
+   // Validation pattern
+   const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+   if(!pattern.test(control.value)){
+      return { passwordPatternError : true}
+   }
+   return null;
+}
 

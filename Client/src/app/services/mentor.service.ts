@@ -31,4 +31,9 @@ export class MentorService {
     console.log('Mentor login called',data);
     return this.http.post<LoginResponseModel>(`${environment.mentorURL}/login`,data);
   }
+
+  // Forgot password
+  mentorForgotPassword(email:object):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.mentorURL}/forgot-password`,email);
+  }
 }

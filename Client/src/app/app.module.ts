@@ -37,6 +37,12 @@ import { ListMentorsComponent } from './component/mentee/list-mentors/list-mento
 import { MenteeDashboardComponent } from './component/mentee/mentee-dashboard/mentee-dashboard.component';
 import { MenteeComponent } from './component/mentee/mentee.component';
 import { CardsComponent } from './component/mentee/cards/cards.component';
+import { SharedForgotPasswordComponent } from './component/shared-forgot-password/shared-forgot-password.component';
+import { MenteeForgotPasswordComponent } from './component/mentee/mentee-forgot-password/mentee-forgot-password.component';
+import { SharedNewPasswordComponent } from './component/shared-new-password/shared-new-password.component';
+import { MenteeNewPasswordComponent } from './component/mentee/mentee-new-password/mentee-new-password.component';
+import { MentorNewPasswordComponent } from './component/mentor/mentor-new-password/mentor-new-password.component';
+import { MentorForgotPasswordComponent } from './component/mentor/mentor-forgot-password/mentor-forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +64,12 @@ import { CardsComponent } from './component/mentee/cards/cards.component';
     MenteeDashboardComponent,
     MenteeComponent,
     CardsComponent,
+    SharedForgotPasswordComponent,
+    MenteeForgotPasswordComponent,
+    SharedNewPasswordComponent,
+    MenteeNewPasswordComponent,
+    MentorNewPasswordComponent,
+    MentorForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

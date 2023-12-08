@@ -176,4 +176,45 @@ menteeRouter.post("/verifyOtp", menteeController.verifyOtp); // For verifying th
  *                      $ref: '#components/schemas/LoginResponse'
  */
 menteeRouter.post("/login", menteeController.login); // mentee login
+
+/**
+ * @swagger
+ * /mentee/forgot-password:
+ *    post:
+ *       summary: Used to forgot password
+ *       description: When the mentee click on the forgot password we will get one email and send an otp
+ *       tags:
+ *          - Mentee
+ *       requestBody:
+ *          required: true
+ *          content:
+ *             application/json:
+ *                schema:
+ *                   type: object
+ *                   properties:
+ *                      email:
+ *                         type: string
+ *       responses:
+ *          201:
+ *             description: Otp sended to your email
+ *             content:
+ *                application/json:
+ *                   schema:
+ *                      $ref: '#components/schemas/ResponseMessage'
+ *          404:
+ *             description: Mentee data is not found
+ *             content:
+ *                application/json:
+ *                   schema:
+ *                      $ref: '#components/schemas/ResponseMessage'
+ *          500:
+ *             description: Internal Server error
+ *             content:
+ *                application/json:
+ *                   schema:
+ *                      $ref: '#components/schemas/ResponseMessage'
+ */
+
+menteeRouter.post('/forgot-password',menteeController.forgotPassword);   // Mentee forgot password
+menteeRouter.patch('/change-password',menteeController.changePassword);
 module.exports = menteeRouter;

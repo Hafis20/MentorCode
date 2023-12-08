@@ -37,4 +37,14 @@ export class MenteeService {
   getAvaliableMentors():Observable<ListMentorsHomeOfMentee[]>{
     return this.http.get<ListMentorsHomeOfMentee[]>(`${environment.menteeURL}/getAvailableMentors`);
   }
+
+  // Forgot password call
+  menteeForgotPassword(email:object):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.menteeURL}/forgot-password`,email);
+  }
+
+  // Forgot password new password call
+  changePassword(data:LoginModel):Observable<HttpResponseModel>{
+    return this.http.patch<HttpResponseModel>(`${environment.menteeURL}/change-password`,data);
+  }
 }

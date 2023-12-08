@@ -14,28 +14,41 @@ import {
 } from './guard/mentor-guard.guard';
 import { ListMentorsComponent } from './component/mentee/list-mentors/list-mentors.component';
 import {
-  MenteeLoggedInAuth,
+  MenteeLoggedOutAuth,
   MenteeLoginAuthGuard,
 } from './guard/mentee-guard.guard';
 import { MenteeComponent } from './component/mentee/mentee.component';
 import { MenteeDashboardComponent } from './component/mentee/mentee-dashboard/mentee-dashboard.component';
+import { MenteeForgotPasswordComponent } from './component/mentee/mentee-forgot-password/mentee-forgot-password.component';
+import { MenteeNewPasswordComponent } from './component/mentee/mentee-new-password/mentee-new-password.component';
+import { MentorNewPasswordComponent } from './component/mentor/mentor-new-password/mentor-new-password.component';
 
 // Mentee routes
 const menteeRoutes: Routes = [
   {
     path: 'verify-otp',
     component: OtpComponent, // Otp verification
-    canActivate: [MenteeLoggedInAuth],
+    canActivate: [MenteeLoggedOutAuth],
+  },
+  {
+    path:'new-password',                  // Create new password
+    component: MenteeNewPasswordComponent,
+    canActivate:[MenteeLoggedOutAuth]
+  },
+  {
+    path:'forgot-password',              // Forgot password
+    component: MenteeForgotPasswordComponent,
+    canActivate:[MenteeLoggedOutAuth],
   },
   {
     path: 'login',
     component: MenteeLoginComponent, // Mentee login
-    canActivate: [MenteeLoggedInAuth],
+    canActivate: [MenteeLoggedOutAuth],
   },
   {
-    path: 'register', // Mentee register
+    path: 'register',                 // Mentee register
     component: MenteeRegisterComponent,
-    canActivate: [MenteeLoggedInAuth],
+    canActivate: [MenteeLoggedOutAuth],
   },
   {
     path: 'list-mentors', // For listing the mentors when the user click on the find a mentor button
@@ -57,6 +70,21 @@ const menteeRoutes: Routes = [
 
 // Mentor routes
 const mentorRoutes: Routes = [
+  {
+    path: 'verify-otp',
+    component: OtpComponent, // Otp verification
+    canActivate: [MentorLoggedOutAuthGuard],
+  },
+  {
+    path:'new-password',                  // Create new password
+    component: MentorNewPasswordComponent,
+    canActivate:[MentorLoggedOutAuthGuard]
+  },
+  // {
+  //   path:'forgot-password',              // Forgot password
+  //   component: MentorFo,
+  //   canActivate:[MentorLoggedOutAuthGuard],
+  // },
   {
     path: '',
     component: MentorComponent,
