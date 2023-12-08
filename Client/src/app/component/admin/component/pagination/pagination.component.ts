@@ -28,7 +28,6 @@ export class PaginationComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['total'] || changes['limit']) {
-      console.log(this.pages.length);
       this.calculatePageCount();
     }
   }
@@ -48,6 +47,5 @@ export class PaginationComponent implements OnInit {
   calculatePageCount() {
     const pageCount = Math.ceil(this.total / this.limit);
     this.pages = this.range(1, pageCount);
-    console.log(this.pages);
   }
 }

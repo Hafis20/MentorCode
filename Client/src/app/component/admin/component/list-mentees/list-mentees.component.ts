@@ -14,6 +14,7 @@ export class ListMenteesComponent implements OnInit {
   mentees!: MenteeData[];
   searchingMentee!: MenteeData[];
   totalMentees!: number;
+  currentPage:number = 1;
   constructor(
     private service: AdminService,
     private showMessage: MessageToastrService
@@ -71,6 +72,7 @@ export class ListMenteesComponent implements OnInit {
     this.totalMentees = this.searchingMentee.filter((mentee) =>
       mentee.name.toLowerCase().replace(/\s+/g, '').includes(searchTerm)
     ).length;
+
   }
   
 
