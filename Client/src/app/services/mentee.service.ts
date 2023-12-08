@@ -44,7 +44,7 @@ export class MenteeService {
   }
 
   // Forgot password new password call
-  changePassword(data:LoginModel):Observable<HttpResponseModel>{
+  changePasswordMentee(data:LoginModel):Observable<HttpResponseModel>{
     return this.http.patch<HttpResponseModel>(`${environment.menteeURL}/change-password`,data);
   }
 }

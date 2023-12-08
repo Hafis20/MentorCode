@@ -20,8 +20,8 @@ export class MenteeNewPasswordComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  changePassword(data: LoginModel) {
-    this.service.changePassword(data).subscribe({
+  changePasswordMentee(data: LoginModel) {
+    this.service.changePasswordMentee(data).subscribe({
       next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
       },

@@ -36,4 +36,9 @@ export class MentorService {
   mentorForgotPassword(email:object):Observable<HttpResponseModel>{
     return this.http.post<HttpResponseModel>(`${environment.mentorURL}/forgot-password`,email);
   }
+
+  // change password mentor side
+  changePasswordMentor(data:LoginModel):Observable<HttpResponseModel>{
+    return this.http.patch<HttpResponseModel>(`${environment.mentorURL}/change-password`,data);
+  }
 }

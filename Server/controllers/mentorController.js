@@ -127,9 +127,65 @@ const login = async (req, res) => {
   }
 };
 
+// Forgot password
+// Forgot password for mentee
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const menteeData = await Mentor.findOne({ email: email }); // Checking the mentee is available with this mail
+
+    if (menteeData) {
+      // If available
+      const otp = await generateMail(email); // generate the otp for user verification
+      menteeData.otp = otp;
+      menteeData.otp_updated_at = new Date();
+      menteeData.save(); // Updated the mentee data
+      res.status(201).json({ message: "Otp Sended into your email" });
+    } else {
+      // If mentee data is not available
+      res.status(404).json({ message: "Mentee data is not available" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// For changing the mentor password
+const changePassword = async(req,res)=>{
+  try {
+    const {email,password} = req.body;
+    if(!email){
+      return res.status(400).json({message:'Sorry Password Not changed'});
+    }else{
+      const hashPass = await hashedPass(password);
+      const mentor = await Mentor.findOneAndUpdate({email:email},
+        {
+          $set:{
+            password:hashPass
+          }
+        },
+        {
+          new:true
+        }
+      )
+      if(mentor){
+        return res.status(201).json({message:'Password changed please login'});  // Password is changed
+      }else{
+        return res.status(404).json({message:'Mentor data not found'});   // If there is no data
+      }
+    }
+
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+    console.log(error.message);
+  }
+}
+
 module.exports = {
   register,
   login,
   verifyOtp,
   resendOtp,
+  forgotPassword,
+  changePassword
 };
