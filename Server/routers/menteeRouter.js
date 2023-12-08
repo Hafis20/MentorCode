@@ -3,12 +3,25 @@ const menteeRouter = express.Router();
 const menteeController = require("../controllers/menteeController");
 const homeController = require("../controllers/homeController");
 
+// Tag name definition
+/**
+ * @swagger
+ * tags:
+ *    name: Mentee
+ *    description: Mentee crud operations
+ */
+
 // Components schema defining
 /**
  * @swagger
  * components:
  *    schemas:
- *       LoginMentee:
+ *       ResponseMessage:
+ *          type: object
+ *          properties:
+ *             message:
+ *                type: string
+ *       RegisterMentee:
  *          type: object
  *          properties:
  *             name:
@@ -30,6 +43,29 @@ const homeController = require("../controllers/homeController");
  *                type: string
  *             fee:
  *                type: integer
+ *       LoginMentee:
+ *          type: object
+ *          properties:
+ *             email:
+ *                type: string
+ *             password:
+ *                type: string
+ *       LoginResponse:
+ *          type: object
+ *          properties:
+ *             accessedToken:
+ *                type: string
+ *             accessedUser:
+ *                type: object
+ *                properties:
+ *                   name:
+ *                      type: string
+ *                   email:
+ *                      type: string
+ *                   role:
+ *                      type: string
+ *             message:
+ *                type: string
  */
 
 /**
@@ -38,6 +74,8 @@ const homeController = require("../controllers/homeController");
  *    get:
  *       summary: Used to Fetch mentor data
  *       description: Fetch the mentor data for showing the mentee side
+ *       tags:
+ *          - Mentee
  *       responses:
  *          200:
  *             description: Fetch Success
@@ -57,6 +95,72 @@ menteeRouter.get("/getAvailableMentors", homeController.getAvailableMentors); //
  *    post:
  *       summary: Used to register mentee
  *       description: Register the mentee and store the data into mongdb
+ *       tags:
+ *          - Mentee
+ *       requestBody:
+ *          required: true
+ *          content:
+ *             application/json:
+ *                schema:
+ *                   $ref: '#components/schemas/RegisterMentee'
+ *       responses:
+ *          201:
+ *             description: Check your mail...verify your otp
+ *             content:
+ *                application/json:
+ *                   schema:
+ *                      $ref: '#components/schemas/ResponseMessage'
+ */
+menteeRouter.post("/register", menteeController.register); // For registering a mentee
+
+/**
+ * @swagger
+ * /mentee/resendOtp:
+ *    post:
+ *       summary: Used to resend mentee otp
+ *       description: When the mentee clicks on resend otp we should provide them 
+ *       tags:
+ *          - Mentee
+ *       requestBody:
+ *          required: true
+ *          content:
+ *             application/json:
+ *                schema:
+ *                   type: object
+ *                   properties:
+ *                      email:
+ *                         type: string
+ *       responses:
+ *          201:
+ *             description: Successfully send new otp
+ *             content:
+ *                application/json:
+ *                   schema:
+ *                      $ref: '#components/schemas/ResponseMessage'
+ *          404:
+ *             description: Mentee data not found
+ *             content:
+ *                application/json:
+ *                   schema:
+ *                      $ref: '#components/schemas/ResponseMessage'
+ *          500:
+ *             description: Internal Server
+ *             content:
+ *                application/json:
+ *                   schema:
+ *                      $ref: '#components/schemas/ResponseMessage'
+ */
+menteeRouter.post("/resendOtp", menteeController.resendOtp); // For resending the otp
+menteeRouter.post("/verifyOtp", menteeController.verifyOtp); // For verifying the mentee otp
+
+/**
+ * @swagger
+ * /mentee/login:
+ *    post:
+ *       summary: Used to Mentee Login
+ *       description: Mentee can login using with email and password
+ *       tags:
+ *          - Mentee
  *       requestBody:
  *          required: true
  *          content:
@@ -65,17 +169,11 @@ menteeRouter.get("/getAvailableMentors", homeController.getAvailableMentors); //
  *                   $ref: '#components/schemas/LoginMentee'
  *       responses:
  *          201:
- *             description: Check your mail...verify your otp
+ *             description: Successfull Login
  *             content:
  *                application/json:
  *                   schema:
- *                      type: object
- *                      properties:
- *                         message:
- *                            type: string
+ *                      $ref: '#components/schemas/LoginResponse'
  */
-menteeRouter.post("/register", menteeController.register); // For registering a mentee
-menteeRouter.post("/resendOtp", menteeController.resendOtp); // For resending the otp
-menteeRouter.post("/verifyOtp", menteeController.verifyOtp); // For verifying the mentee otp
 menteeRouter.post("/login", menteeController.login); // mentee login
 module.exports = menteeRouter;
