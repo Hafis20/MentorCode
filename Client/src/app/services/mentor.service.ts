@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MentorModel } from '../model/mentorModel';
+import { CreateSlot, MentorModel } from '../model/mentorModel';
 import {Observable} from 'rxjs';
 import { HttpResponseModel, LoginModel, LoginResponseModel, ValidateOtpModel } from '../model/commonModel';
 import { environment } from 'src/environments/environment';
@@ -40,5 +40,10 @@ export class MentorService {
   // change password mentor side
   changePasswordMentor(data:LoginModel):Observable<HttpResponseModel>{
     return this.http.patch<HttpResponseModel>(`${environment.mentorURL}/change-password`,data);
+  }
+
+  // mentor can create slots
+  mentorCreateSlot(data:CreateSlot):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.mentorslotURL}/createSlot`,data);
   }
 }

@@ -35,11 +35,13 @@ app.use(express.json());
 const adminRouter = require("./routers/adminRouter");
 const menteeRouter = require("./routers/menteeRouter");
 const mentorRouter = require("./routers/mentorRouter");
+const mentorSlotRouter = require("./routers/mentorSlotRouter");
 
 // calling application middleware for routers
-app.use("/admin", adminRouter);
-app.use("/mentee", menteeRouter);
-app.use("/mentor", mentorRouter);
+app.use("/admin", adminRouter);           // For admin operations
+app.use("/mentee", menteeRouter);        // For mentee operations
+app.use("/mentor", mentorRouter);       // For mentor operations
+app.use('/mentorslot',mentorSlotRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);

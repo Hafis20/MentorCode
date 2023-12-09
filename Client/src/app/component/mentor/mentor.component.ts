@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
    styleUrls:['./mentor.component.css']   
 })
 export class MentorComponent implements OnInit{
+   userType:string = 'mentor';
    constructor(private router:Router){}
 
    ngOnInit(): void {

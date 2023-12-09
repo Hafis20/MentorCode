@@ -10,8 +10,15 @@ export interface MentorModel{
 // State model
 export interface MentorState{
    mentorInfo:{
+      _id:string;
       name:string;
       email:string;
       role:string;
    }
+}
+
+// Create slot data model
+export interface CreateSlot{
+   date:Date;
+   time:string;
 }

@@ -109,6 +109,7 @@ const login = async (req, res) => {
   
           const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
           const accessedUser = {
+            _id:mentorData._id,
             name: mentorData.name,
             email: mentorData.email,
             role: mentorData.role,

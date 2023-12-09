@@ -5,7 +5,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/header/header.component';
 import { MenteeLoginComponent } from './component/mentee/mentee-login/mentee-login.component';
 import { MentorLoginComponent } from './component/mentor/mentor-login/mentor-login.component';
@@ -43,6 +43,9 @@ import { SharedNewPasswordComponent } from './component/shared-new-password/shar
 import { MenteeNewPasswordComponent } from './component/mentee/mentee-new-password/mentee-new-password.component';
 import { MentorNewPasswordComponent } from './component/mentor/mentor-new-password/mentor-new-password.component';
 import { MentorForgotPasswordComponent } from './component/mentor/mentor-forgot-password/mentor-forgot-password.component';
+import { SlotManagementComponent } from './component/mentor/slot-management/slot-management.component';
+import { MentorCalenderComponent } from './component/mentor/mentor-calender/mentor-calender.component';
+import { AvailableSlotsComponent } from './component/mentor/available-slots/available-slots.component';
 
 @NgModule({
   declarations: [
@@ -70,11 +73,15 @@ import { MentorForgotPasswordComponent } from './component/mentor/mentor-forgot-
     MenteeNewPasswordComponent,
     MentorNewPasswordComponent,
     MentorForgotPasswordComponent,
+    SlotManagementComponent,
+    MentorCalenderComponent,
+    AvailableSlotsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,

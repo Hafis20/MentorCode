@@ -1,0 +1,8 @@
+<div class="flex justify-between">
+   <div class="w-1/2">
+      <mentor-calender (dateEvent)="slotDate($event)"></mentor-calender>
+   </div>
+   <div class="w-full flex justify-center pt-10">
+      <available-slots (slotEvent)="slotAddEvent($event)" [currentDate]="currentDate"></available-slots>
+   </div>
+</div>
