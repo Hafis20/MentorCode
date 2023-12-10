@@ -13,5 +13,5 @@ export const loginMentor = createAction(LOGIN_MENTOR,props<{data:LoginModel}>())
 export const loginMentorSuccess = createAction(LOGIN_MENTOR_SUCCESS,props<{mentor:UserInfo}>());
 
 // get the user
-export const getMentor = createAction(GET_MENTOR,props<{token:string}>()); 
-export const getMentorSuccess = createAction(GET_MENTOR_SUCCESS,props<{mentor:UserInfo}>);
+export const getMentor = createAction(GET_MENTOR); 
+export const getMentorSuccess = createAction(GET_MENTOR_SUCCESS,props<{mentor:UserInfo}>());

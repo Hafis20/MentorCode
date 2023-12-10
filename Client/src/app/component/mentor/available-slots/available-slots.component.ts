@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { CreateSlot } from 'src/app/model/mentorModel';
+import { Store } from '@ngrx/store';
+import { SlotModel } from 'src/app/model/mentorModel';
+import { getMentorInfo } from 'src/app/store/Mentor/mentor.selector';
 
 @Component({
   selector: 'available-slots',
@@ -8,25 +10,26 @@ import { CreateSlot } from 'src/app/model/mentorModel';
 })
 export class AvailableSlotsComponent implements OnInit {
   @Input() currentDate!: Date;
-  @Output() slotEvent: EventEmitter<CreateSlot> = new EventEmitter<CreateSlot>();
+  @Input() timeSlots!:string[];
+  @Output() createSlotEvent: EventEmitter<SlotModel> = new EventEmitter<SlotModel>();
+  mentorId!:string;
 
-  timeSlots: string[] = [
-    '09:00 AM to 10:00 AM',
-    '10:00 AM to 11:00 AM',
-    '11:00 AM to 12:00 PM',
-    '01:00 PM to 02:00 PM',
-    '02:00 PM to 03:00 PM',
-    '03:00 PM to 04:00 PM',
-    '04:00 PM to 05:00 PM',
-  ];
-  constructor() {}
-  ngOnInit(): void {}
+  
+  constructor(private store:Store) {}
+  ngOnInit(): void {
+    this.store.select(getMentorInfo).subscribe({
+      next:(response)=>{
+        this.mentorId = response._id;
+      }
+    })
+  }
 
   addSlot(time: string) {
-    const data:CreateSlot = {
+    const data:SlotModel = {
+      mentorId:this.mentorId,
       date: this.currentDate,
       time: time,
     };
-    this.slotEvent.emit(data);
+    this.createSlotEvent.emit(data);
   }
 }

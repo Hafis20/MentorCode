@@ -18,7 +18,19 @@ export interface MentorState{
 }
 
 // Create slot data model
-export interface CreateSlot{
+export interface SlotModel{
+   mentorId:string;
    date:Date;
    time:string;
+}
+
+//Response model of slot creationg 201
+export interface SlotResponse{
+   message:string;
+   responseTimeArray:string[];
+}
+
+export interface GetSlotByDate{
+   mentorId:string;
+   date:Date;
 }

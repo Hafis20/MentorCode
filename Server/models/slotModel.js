@@ -7,7 +7,7 @@ const slotSchema = new mongoose.Schema(
       ref: "mentor",
     },
     slot_date: {
-      type: Date,
+      type: String,
     },
     added_slots: [
       {
@@ -16,7 +16,6 @@ const slotSchema = new mongoose.Schema(
         },
         is_booked:{
           type:Boolean,
-          default:false
         }
       },
     ],

@@ -29,6 +29,7 @@ export class MentorCalenderComponent implements OnInit {
   year!: number;
   no_of_days = [] as number[];
   blankdays = [] as number[];
+  isclicked:boolean = false;
 
   ngOnInit(): void {
     this.initDate();

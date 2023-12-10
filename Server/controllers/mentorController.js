@@ -182,11 +182,34 @@ const changePassword = async(req,res)=>{
   }
 }
 
+// Getting the mentor data
+const getMentorDetails = async(req,res)=>{
+  try {
+    const mentorId =  req.mentorId;
+    const mentor = await Mentor.findById(mentorId);
+    if(mentor){
+      const mentorData = {
+        _id:mentor._id,
+        name:mentor.name,
+        email:mentor.email,
+        role:mentor.role,
+      }
+      res.status(201).json(mentorData);
+    }else{
+      res.status(404).json({message:'Mentor Data not found'})
+    }
+  } catch (error) {
+    res.status(500).json({message:'Internal server error'});
+    console.log(error.message);
+  }
+}
+
 module.exports = {
   register,
   login,
   verifyOtp,
   resendOtp,
   forgotPassword,
-  changePassword
+  changePassword,
+  getMentorDetails
 };

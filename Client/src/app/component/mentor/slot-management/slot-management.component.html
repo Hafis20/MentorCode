@@ -2,7 +2,13 @@
    <div class="w-1/2">
       <mentor-calender (dateEvent)="slotDate($event)"></mentor-calender>
    </div>
-   <div class="w-full flex justify-center pt-10">
-      <available-slots (slotEvent)="slotAddEvent($event)" [currentDate]="currentDate"></available-slots>
+   <div class="w-full flex-col gap-2  pt-10" >
+      <div class="flex justify-center">
+         <available-slots (createSlotEvent)="slotCreateEvent($event)" [timeSlots]="unbookedSlots" [currentDate]="currentDate"></available-slots>
+      </div>
+      <div class="flex justify-center" >
+         <booked-slots (deleteSlotEvent)="slotDeleteEvent($event)" [bookedSlots]="bookedSlots" [currentDate]="currentDate"></booked-slots>
+      </div>
    </div>
+   
 </div>
