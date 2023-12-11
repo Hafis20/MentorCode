@@ -46,7 +46,10 @@ import { MentorForgotPasswordComponent } from './component/mentor/mentor-forgot-
 import { SlotManagementComponent } from './component/mentor/slot-management/slot-management.component';
 import { MentorCalenderComponent } from './component/mentor/mentor-calender/mentor-calender.component';
 import { AvailableSlotsComponent } from './component/mentor/available-slots/available-slots.component';
-import { BookedSlotsComponent } from './component/mentor/booked-slots/booked-slots.component';
+import { BookedSlotsComponent } from './component/mentor/created-slots/created-slots.component';
+import { MentorProfileComponent } from './component/mentor/mentor-profile/mentor-profile.component';
+import { ViewMentorComponent } from './component/mentee/view-mentor/view-mentor.component';
+import { DateDirective } from './customDirectives/date.directive';
 
 @NgModule({
   declarations: [
@@ -78,6 +81,9 @@ import { BookedSlotsComponent } from './component/mentor/booked-slots/booked-slo
     MentorCalenderComponent,
     AvailableSlotsComponent,
     BookedSlotsComponent,
+    MentorProfileComponent,
+    ViewMentorComponent,
+    DateDirective,
   ],
   imports: [
     BrowserModule,

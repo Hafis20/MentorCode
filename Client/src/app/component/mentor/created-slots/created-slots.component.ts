@@ -1,16 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { SlotModel } from 'src/app/model/mentorModel';
 import { getMentorInfo } from 'src/app/store/Mentor/mentor.selector';
 
 @Component({
-  selector: 'booked-slots',
-  templateUrl: './booked-slots.component.html',
-  styleUrls: ['./booked-slots.component.css'],
+  selector: 'created-slots',
+  templateUrl: './created-slots.component.html',
+  styleUrls: ['./created-slots.component.css'],
 })
 export class BookedSlotsComponent implements OnInit {
   @Input() currentDate!: Date;
-  @Input() bookedSlots!: string[];
+  @Input() createdSlots!: string[];
   @Output() deleteSlotEvent: EventEmitter<SlotModel> = new EventEmitter<SlotModel>();
   mentorId!:string;
 
@@ -23,6 +23,12 @@ export class BookedSlotsComponent implements OnInit {
         this.mentorId = response._id;
       }
     })
+  }
+
+  ngOnChanges(changes:SimpleChanges){
+    if(changes['createdSlots']){
+      this.createdSlots = this.createdSlots;
+    }
   }
 
   cancelbtn(time:string) {

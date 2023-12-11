@@ -1,13 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'mentor-calender',
   templateUrl: './mentor-calender.component.html',
   styleUrls: ['./mentor-calender.component.css'],
 })
-export class MentorCalenderComponent implements OnInit {
+export class MentorCalenderComponent implements OnInit, OnChanges {
   @Output() dateEvent: EventEmitter<Date> = new EventEmitter<Date>();
-
+  @Input() createdSlotDates!:string[];
   MONTH_NAMES = [
     'January',
     'February',
@@ -27,6 +27,7 @@ export class MentorCalenderComponent implements OnInit {
   datepickerValue!: string;
   month!: number; // !: mean promis it will not be null, and it will definitely be assigned
   year!: number;
+  date!:number;
   no_of_days = [] as number[];
   blankdays = [] as number[];
   isclicked:boolean = false;
@@ -34,6 +35,12 @@ export class MentorCalenderComponent implements OnInit {
   ngOnInit(): void {
     this.initDate();
     this.getNoOfDays();
+  }
+
+  ngOnChanges(changes:SimpleChanges){
+    if(changes['createdSlotDates']){
+      this.createdSlotDates = this.createdSlotDates;
+    }
   }
 
   initDate() {
@@ -49,11 +56,14 @@ export class MentorCalenderComponent implements OnInit {
 
   isToday(date: any) {
     const today = new Date();
+    this.date = date;
     const d = new Date(this.year, this.month, date);
     return today.toDateString() === d.toDateString() ? true : false;
   }
 
   getDateValue(date: any) {
+    this.date = date;
+    console.log(`Get date value`,date)
     let selectedDate = new Date(this.year, this.month, date);
     this.datepickerValue = selectedDate.toDateString();
     this.dateEvent.emit(selectedDate);

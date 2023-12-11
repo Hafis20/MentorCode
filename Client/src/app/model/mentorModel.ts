@@ -30,7 +30,14 @@ export interface SlotResponse{
    responseTimeArray:string[];
 }
 
+// Slot from db by date fetching
 export interface GetSlotByDate{
    mentorId:string;
    date:Date;
+}
+
+// Get the date array from db for the mentor calender
+export interface GetMentorSlots{
+   createdSlotDates:string[];
+   message:string;
 }

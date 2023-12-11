@@ -24,6 +24,8 @@ import { MenteeNewPasswordComponent } from './component/mentee/mentee-new-passwo
 import { MentorNewPasswordComponent } from './component/mentor/mentor-new-password/mentor-new-password.component';
 import { MentorForgotPasswordComponent } from './component/mentor/mentor-forgot-password/mentor-forgot-password.component';
 import { SlotManagementComponent } from './component/mentor/slot-management/slot-management.component';
+import { MentorProfileComponent } from './component/mentor/mentor-profile/mentor-profile.component';
+import { ViewMentorComponent } from './component/mentee/view-mentor/view-mentor.component';
 
 // Mentee routes
 const menteeRoutes: Routes = [
@@ -58,14 +60,16 @@ const menteeRoutes: Routes = [
     canActivate: [MenteeLoginAuthGuard],
   },
   {
+    path: 'view-mentor',
+    component: ViewMentorComponent,
+    canActivate: [MenteeLoginAuthGuard]
+  },
+  {
     path: '', // For mentee profile
     component: MenteeComponent,
     canActivate: [MenteeLoginAuthGuard],
     children: [
-      {
-        path: 'dashboard',
-        component: MenteeDashboardComponent,
-      },
+      { path: 'dashboard', component: MenteeDashboardComponent },
     ],
   },
 ];
@@ -109,6 +113,7 @@ const mentorRoutes: Routes = [
     children: [
       { path: 'dashboard', component: MentorDashboardComponent },
       { path: 'slot-management', component: SlotManagementComponent },
+      { path: 'profile', component: MentorProfileComponent },
     ],
   },
 ];

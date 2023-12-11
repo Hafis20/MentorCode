@@ -26,12 +26,16 @@ export class SlotManagementComponent implements OnInit {
   bookedSlots: string[] = [];
   unbookedSlots: string[] = [];
   mentorDetails!: UserInfo;
+  createdSlotDates!:string[];
 
   constructor(private service: MentorSlotService, private store: Store,private showMessage:MessageToastrService) {}
 
   ngOnInit(): void {
     this.currentDate = new Date();
-    this.store.dispatch(getMentor());
+
+    this.getSlotsOfMentor();
+
+    this.store.dispatch(getMentor());             // Dispatching the method for storing the mentor data in store
     this.store.select(getMentorInfo).subscribe({
       next: (response) => {
         this.mentorDetails = response;
@@ -57,10 +61,19 @@ export class SlotManagementComponent implements OnInit {
     });
   }
 
+  getSlotsOfMentor(){
+    this.service.getSlotsOfMentor().subscribe({
+      next:(response)=>{
+        this.createdSlotDates = response.createdSlotDates;
+      }
+    })
+  }
+
   slotCreateEvent(data: SlotModel) {  // For creating slot whenever the event occur
     this.service.mentorCreateSlot(data).subscribe({
       next: (response) => {
         this.showMessage.showSuccessToastr(response.message);
+        this.getSlotsOfMentor();
         this.bookedSlots = response.responseTimeArray;
         this.unbookedSlots = this.timeSlots.filter((time) => {
           return !response.responseTimeArray.includes(time);
@@ -73,10 +86,12 @@ export class SlotManagementComponent implements OnInit {
     this.service.mentorDeleteSlot(data).subscribe({
       next:(response)=>{
         this.showMessage.showSuccessToastr(response.message);
+        this.getSlotsOfMentor();
         this.bookedSlots = response.responseTimeArray;
         this.unbookedSlots = this.timeSlots.filter((time) => {
           return !response.responseTimeArray.includes(time);
         });
+        console.log(this.unbookedSlots);
       }
     })
   }

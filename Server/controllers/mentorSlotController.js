@@ -79,8 +79,23 @@ const getSlotsByDate = async (req, res) => {
   }
 };
 
+// Get the all slots of the mentor while render the calender
+const getSlotsOfMentor = async(req,res) =>{
+  try {
+    const mentorId =  req.mentorId;
+    const mentorSlots = await Slot.find({mentor_id:mentorId});
+    const mentorDocs = mentorSlots.filter((doc)=>doc.added_slots.length > 0);
+    const mentorSlotDates = mentorDocs.map((date)=>date.slot_date);
+    res.status(201).json({message:'Success',createdSlotDates:mentorSlotDates});
+  } catch (error) {
+    res.status(500).json({message:'Internal server error'});
+    console.log(error.message)
+  }
+}
+
 module.exports = {
   createSlot,
   getSlotsByDate,
-  deleteSlot
+  deleteSlot,
+  getSlotsOfMentor
 };
