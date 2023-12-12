@@ -60,7 +60,7 @@ const menteeRoutes: Routes = [
     canActivate: [MenteeLoginAuthGuard],
   },
   {
-    path: 'view-mentor',
+    path: 'view-mentor/:id',
     component: ViewMentorComponent,
     canActivate: [MenteeLoginAuthGuard]
   },

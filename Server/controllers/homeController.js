@@ -1,4 +1,5 @@
 const Mentor = require('../models/mentorModel');
+const Slot = require('../models/slotModel');
 
 // Take the data from db and send to the home of (find a mentor) mentee
 const getAvailableMentors = async(req,res)=>{
@@ -25,6 +26,32 @@ const getAvailableMentors = async(req,res)=>{
    }
 }
 
+// Get the mentee prefered mentor
+const getMentor = async(req,res)=>{
+   try {
+      const mentorId = req.query.id;
+      const mentorData = await Mentor.findById(mentorId,{name:1,fee:1,experience:1});
+      res.status(201).json(mentorData);
+   } catch (error) {
+      res.status(500).json({message:'Internal Server Error'});
+      console.log(error.message);
+   }
+}
+
+// Get the available slots of the mentor
+const getMentorSlots = async(req,res) =>{
+   try {
+      const mentorId = req.query.id;   // Getting the mentor id from query
+      const mentorSlots = await Slot.find({mentor_id:mentorId},{_id:0,mentor_id:0,createdAt:0,updatedAt:0});
+      const filterSlots = mentorSlots.filter((slots)=>slots.added_slots.length > 0)
+      res.status(201).json(filterSlots);
+   } catch (error) {
+      res.status(500).json({message:'Internal server error'});
+   }
+}
+
 module.exports = {
    getAvailableMentors,
+   getMentor,
+   getMentorSlots,
 }

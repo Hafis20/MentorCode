@@ -4,7 +4,7 @@ const slotSchema = new mongoose.Schema(
   {
     mentor_id: {
       type: mongoose.Schema.ObjectId,
-      ref: "mentor",
+      ref: "Mentor",
     },
     slot_date: {
       type: String,

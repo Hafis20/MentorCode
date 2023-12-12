@@ -72,8 +72,8 @@ export class SlotManagementComponent implements OnInit {
   slotCreateEvent(data: SlotModel) {  // For creating slot whenever the event occur
     this.service.mentorCreateSlot(data).subscribe({
       next: (response) => {
-        this.showMessage.showSuccessToastr(response.message);
         this.getSlotsOfMentor();
+        this.showMessage.showSuccessToastr(response.message);
         this.bookedSlots = response.responseTimeArray;
         this.unbookedSlots = this.timeSlots.filter((time) => {
           return !response.responseTimeArray.includes(time);
@@ -85,8 +85,8 @@ export class SlotManagementComponent implements OnInit {
   slotDeleteEvent(data:SlotModel){   // Deleted fucntionality code 
     this.service.mentorDeleteSlot(data).subscribe({
       next:(response)=>{
-        this.showMessage.showSuccessToastr(response.message);
         this.getSlotsOfMentor();
+        this.showMessage.showSuccessToastr(response.message);
         this.bookedSlots = response.responseTimeArray;
         this.unbookedSlots = this.timeSlots.filter((time) => {
           return !response.responseTimeArray.includes(time);

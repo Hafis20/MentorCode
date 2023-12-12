@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HttpResponseModel,LoginModel,LoginResponseModel, ValidateOtpModel } from '../model/commonModel';
 
 import { Observable } from 'rxjs';
-import { ListMentorsHomeOfMentee, MenteeModel } from '../model/menteeModel';
+import { ListMentorsHomeOfMentee, MenteeModel, ShowMenteeCalenderData } from '../model/menteeModel';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +46,15 @@ export class MenteeService {
   // Forgot password new password call
   changePasswordMentee(data:LoginModel):Observable<HttpResponseModel>{
     return this.http.patch<HttpResponseModel>(`${environment.menteeURL}/change-password`,data);
+  }
+
+  // When the mentee clicks on the mentor details 
+  getMentor(id:string):Observable<ListMentorsHomeOfMentee>{
+    return this.http.get<ListMentorsHomeOfMentee>(`${environment.menteeURL}/getMentor/?id=${id}`);
+  }
+
+  // Take the mentor slots to view page
+  getMentorSlots(id:string):Observable<ShowMenteeCalenderData[]>{
+    return this.http.get<ShowMenteeCalenderData[]>(`${environment.menteeURL}/getMentorSlots/?id=${id}`);
   }
 }

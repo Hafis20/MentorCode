@@ -22,8 +22,14 @@ export class DateDirective implements OnChanges{
   }
 
   private updateCalender(){
+    const today = new Date();
     const selectedDate = new Date(this.year,this.month,this.date);
 
+    if(today >= selectedDate){
+      this.renderer.addClass(this.element.nativeElement,'opacity-30')
+    }else{
+      this.renderer.removeClass(this.element.nativeElement,'opacity-30')
+    }
 
     if(this.createdSlotDates){
       const dateMatch = this.createdSlotDates.some(date=>this.compareDates(new Date(date),selectedDate));
@@ -34,13 +40,15 @@ export class DateDirective implements OnChanges{
         this.renderer.removeClass(this.element.nativeElement,'bg-green-500');
       }
     }
+
+    
   }
 
   // For comparing the dates
   private compareDates(date1: Date, date2: Date): boolean {
-    // console.log(date1);
-    console.log(date1.toDateString())
-    console.log(date2.toDateString())
+    // // console.log(date1);
+    // console.log(date1.toDateString())
+    // console.log(date2.toDateString())
     return date1.toDateString() === date2.toDateString()
   }
 }

@@ -216,5 +216,7 @@ menteeRouter.post("/login", menteeController.login); // mentee login
  */
 
 menteeRouter.post('/forgot-password',menteeController.forgotPassword);   // Mentee forgot password
-menteeRouter.patch('/change-password',menteeController.changePassword);
+menteeRouter.patch('/change-password',menteeController.changePassword); // For changing the password
+menteeRouter.get('/getMentor',homeController.getMentor);  // Get the mentor for mentee
+menteeRouter.get('/getMentorSlots',homeController.getMentorSlots); // For getting the slots of the particular user
 module.exports = menteeRouter;

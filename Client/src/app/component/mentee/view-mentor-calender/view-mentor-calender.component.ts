@@ -1,13 +1,28 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MenteeService } from 'src/app/services/mentee.service';
 
 @Component({
-  selector: 'mentor-calender',
-  templateUrl: './mentor-calender.component.html',
-  styleUrls: ['./mentor-calender.component.css'],
+  selector: 'view-mentor-calender',
+  templateUrl: './view-mentor-calender.component.html',
+  styleUrls: ['./view-mentor-calender.component.css'],
 })
-export class MentorCalenderComponent implements OnInit, OnChanges {
-  @Output() dateEvent: EventEmitter<Date> = new EventEmitter<Date>();
-  @Input() createdSlotDates!:string[];
+export class ViewMentorCalenderComponent implements OnInit {
+
+  @Input() slotDates!:string[];
+  @Output() dateEvent:EventEmitter<Date> = new EventEmitter<Date>();
+  constructor(private service:MenteeService,private route:ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.initDate();
+    this.getNoOfDays();
+    
+  }
+
+
+
+
+  // Calender things
   MONTH_NAMES = [
     'January',
     'February',
@@ -24,24 +39,16 @@ export class MentorCalenderComponent implements OnInit, OnChanges {
   ];
   DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  showDatepicker = false;
   datepickerValue!: string;
   month!: number; // !: mean promis it will not be null, and it will definitely be assigned
   year!: number;
-  date!:number;
+  date!:number
   no_of_days = [] as number[];
   blankdays = [] as number[];
-  isclicked:boolean = false;
 
-  ngOnInit(): void {
-    this.initDate();
-    this.getNoOfDays();
-  }
 
-  ngOnChanges(changes:SimpleChanges){
-    if(changes['createdSlotDates']){
-      this.createdSlotDates = this.createdSlotDates;
-    }
-  }
+  
 
   initDate() {
     let today = new Date();
@@ -56,15 +63,15 @@ export class MentorCalenderComponent implements OnInit, OnChanges {
 
   isToday(date: any) {
     const today = new Date();
-    this.date = date;
     const d = new Date(this.year, this.month, date);
     return today.toDateString() === d.toDateString() ? true : false;
   }
 
-  getDateValue(date: any) {
-    this.date = date;
+  getDateValue(date: number) {
+    this.date = date
     let selectedDate = new Date(this.year, this.month, date);
     this.datepickerValue = selectedDate.toDateString();
+    this.showDatepicker = false;
     this.dateEvent.emit(selectedDate);
   }
 
