@@ -4,21 +4,27 @@ const BookedSlot = require("../models/bookingModel");
 const bookSlot = async (req, res) => {// Booking slot as a mentee
   try {
     const menteeId = req.menteeId;
+    // console.log(menteeId);
     const { mentorId, slotDate, slotTime } = req.body;
+    // const { menteeId,mentorId, slotDate, slotTime } = req.body;
     let bookedSlot = await BookedSlot.findOne({ menteeId: menteeId }); // We are checking the mentee have already a doc
-    let slot = await Slot.findOneAndUpdate({
-      mentor_id: mentorId,
-      slot_date: slotDate,
-    }); //Taking the slot
-    if (slot) {
-      slot.added_slots.map((date) => {
-        // We are taking the slot to change the feild of is_booked into true;
-        if (date.time === slotTime) {
-          date.is_booked = true;
-        }
-      });
-      await slot.save();
-    } else {
+
+    let slot = await Slot.findOneAndUpdate(
+      {
+        mentor_id: mentorId,
+        slot_date: slotDate,
+        "added_slots.time": slotTime,
+      },
+      {
+        $set: {
+          "added_slots.$.is_booked": true,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    if(!slot){
       return res.status(404).json({ message: "Slot not available" });
     }
     const data = {
