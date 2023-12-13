@@ -9,14 +9,15 @@ export class DateDirective implements OnChanges{
   @Input() month!:number;
   @Input() year!:number;
   @Input() createdSlotDates!:string[];
+  @Input() bookedSlots!:any[];
 
   constructor(private element:ElementRef, private renderer:Renderer2) {
-      // this.updateCalender();
+      this.updateCalender();
   }
 
 
   ngOnChanges(changes:SimpleChanges):void{
-    if(changes['date'] || changes['month'] || changes['year'] || changes['createdSlotDates']){
+    if(changes['date'] || changes['month'] || changes['year'] || changes['createdSlotDates']|| changes['bookedSlots']){
       this.updateCalender();
     }
   }
@@ -41,6 +42,16 @@ export class DateDirective implements OnChanges{
       }
     }
 
+  // If the condition is true the color of the selected date will be change
+    if(this.bookedSlots){
+      const dateMatch = this.bookedSlots.some(date=>this.compareDates(new Date(date),selectedDate));
+
+      if(dateMatch){
+        this.renderer.removeClass(this.element.nativeElement,'bg-green-500');
+      }else{
+        
+      }
+    }
     
   }
 

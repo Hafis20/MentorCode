@@ -1,8 +1,16 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ListMentorsHomeOfMentee, ShowMenteeCalenderData } from 'src/app/model/menteeModel';
+import { Store } from '@ngrx/store';
+import {
+  ListMentorsHomeOfMentee,
+  ShowMenteeCalenderData,
+} from 'src/app/model/menteeModel';
+import { GetMentorSlots } from 'src/app/model/mentorModel';
+import { BookSlot, MenteeShowSlots } from 'src/app/model/slotModel';
+import { MenteeSlotService } from 'src/app/services/mentee-slot.service';
 import { MenteeService } from 'src/app/services/mentee.service';
-import { MentorSlotService } from 'src/app/services/mentor-slot.service';
+import { MessageToastrService } from 'src/app/services/message-toastr.service';
+import { getMentee } from 'src/app/store/Mentee/mentee.action';
 
 @Component({
   selector: 'view-mentor',
@@ -12,38 +20,77 @@ import { MentorSlotService } from 'src/app/services/mentor-slot.service';
 export class ViewMentorComponent implements OnInit {
   userType: string = 'mentee';
   mentorDetails!: ListMentorsHomeOfMentee;
-  slotDates!:string[];
-  calenderResponse!:ShowMenteeCalenderData[];
-  slotTimes!:[];
-  currentDate!:Date;
-  constructor(private route: ActivatedRoute, private service: MenteeService,private mentorService:MentorSlotService) {}
+  slotDates!: string[];
+  calenderResponse!: GetMentorSlots;
+  slotTimes!: MenteeShowSlots[];
+  currentDate!: Date;
+  mentorId!: string;
+  bookedDates!:string[];
+  constructor(
+    private route: ActivatedRoute,
+    private service: MenteeService,
+    private store: Store,
+    private slotService: MenteeSlotService,
+    private showMessage: MessageToastrService
+  ) {}
 
   ngOnInit(): void {
-
     this.currentDate = new Date();
-    const mentorId = this.route.snapshot.paramMap.get('id') as string;
-    this.service.getMentor(mentorId).subscribe({
+    this.mentorId = this.route.snapshot.paramMap.get('id') as string;
+    this.service.getMentor(this.mentorId).subscribe({
       next: (response) => {
         this.mentorDetails = response;
       },
+      error:error=>{
+        this.showMessage.showErrorToastr(error.error.message);
+      }
     });
 
-    this.service.getMentorSlots(mentorId).subscribe({
+    this.calenderData();  // For getting the data into the calender;
+
+    // Dispatch an action for getting menteee data in to the store
+    this.store.dispatch(getMentee());
+  }
+
+
+  calenderData(){
+    this.service.getMentorSlots(this.mentorId).subscribe({
       next: (response) => {
-        this.slotDates = response.map((data) => data.slot_date);
+        this.slotDates = response.response.map((doc)=>doc.slot_date);   // which shows the mentor available slots
         this.calenderResponse = response;
         this.slotsOfTheDay(this.currentDate);
+        this.bookedDates = response.response
+        .filter((mentorSlotDate) => mentorSlotDate.slots.every((slot) => slot.is_booked))
+        .map((mentorSlotDate) => mentorSlotDate.slot_date);
       },
+      error:error=>{
+        this.showMessage.showErrorToastr(error.error.message);
+      }
     });
   }
-  
 
-  slotsOfTheDay(date:Date){
+  slotsOfTheDay(date: Date) {
     const day = date.toDateString();
-    const dateTime = this.calenderResponse.find((data)=>data.slot_date === day);
-    this.slotTimes = dateTime?.added_slots as [];
+    this.currentDate = date;
+    const dateTime = this.calenderResponse.response.find((doc)=>doc.slot_date === day);
+     this.slotTimes = dateTime?.slots  as MenteeShowSlots[] // Passing the data in to cards of slot
+  }
+
+  bookingTime(time: string) {
+    const data:BookSlot = {
+      mentorId: this.mentorId,
+      slotDate: this.currentDate.toDateString(),
+      slotTime: time,
+    };
+    this.slotService.bookSlot(data).subscribe({
+      next:(response)=>{
+        this.calenderData();     // For refreshing the calender data
+        this.slotsOfTheDay(this.currentDate);  // Passing the this.current date times into the slot component
+        this.showMessage.showSuccessToastr(response.message);
+      },
+      error:error=>{
+        this.showMessage.showErrorToastr(error.error.message);
+      }
+    })
   }
 }
-
-
-

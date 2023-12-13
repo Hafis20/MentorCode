@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { HttpResponseModel,LoginModel,LoginResponseModel, ValidateOtpModel } from '../model/commonModel';
+import { HttpResponseModel,LoginModel,LoginResponseModel, UserInfo, ValidateOtpModel } from '../model/commonModel';
 
 import { Observable } from 'rxjs';
 import { ListMentorsHomeOfMentee, MenteeModel, ShowMenteeCalenderData } from '../model/menteeModel';
+import { GetMentorSlots } from '../model/mentorModel';
 
 @Injectable({
   providedIn: 'root'
@@ -53,8 +54,13 @@ export class MenteeService {
     return this.http.get<ListMentorsHomeOfMentee>(`${environment.menteeURL}/getMentor/?id=${id}`);
   }
 
+  // Get mentee for storing in the store
+  getMentee():Observable<UserInfo>{
+    return this.http.get<UserInfo>(`${environment.menteeURL}/getMentee`);
+  }
+
   // Take the mentor slots to view page
-  getMentorSlots(id:string):Observable<ShowMenteeCalenderData[]>{
-    return this.http.get<ShowMenteeCalenderData[]>(`${environment.menteeURL}/getMentorSlots/?id=${id}`);
+  getMentorSlots(id:string):Observable<GetMentorSlots>{
+    return this.http.get<GetMentorSlots>(`${environment.menteeURL}/getMentorSlots/?id=${id}`);
   }
 }

@@ -111,8 +111,8 @@
                         <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
                      </div> -->
                   </div>
-                  <view-mentor-calender [slotDates]="slotDates" (dateEvent)="slotsOfTheDay($event)"></view-mentor-calender>
-                  <view-slots [slotTimes]="slotTimes"></view-slots>
+                  <view-mentor-calender [slots]="bookedDates" [slotDates]="slotDates" (dateEvent)="slotsOfTheDay($event)"></view-mentor-calender>
+                  <view-slots [slotTimes]="slotTimes" (bookingTimeEvent)="bookingTime($event)"></view-slots>
                </div>
             </div>
          </div>

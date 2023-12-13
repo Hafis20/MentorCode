@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'view-slots',
@@ -7,6 +7,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 })
 export class ViewSlotsComponent implements OnInit, OnChanges{
     @Input() slotTimes!:any[];
+    @Output() bookingTimeEvent:EventEmitter<string> = new EventEmitter<string>();
 
     constructor(){}
 
@@ -16,7 +17,11 @@ export class ViewSlotsComponent implements OnInit, OnChanges{
     ngOnChanges(changes:SimpleChanges){
       if(changes['slotTimes']){
         this.slotTimes = this.slotTimes;
+        // console.log('Its working')
       }
-      console.log('Slot times', this.slotTimes)
+    }
+
+    bookMentor(slotTime:string){
+      this.bookingTimeEvent.emit(slotTime);
     }
 }

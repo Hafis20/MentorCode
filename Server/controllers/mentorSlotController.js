@@ -25,10 +25,11 @@ const createSlot = async (req, res) => {
       });
     }
     const updatedSlot = await mentorSlot.save();
-    const responseTimeArray = updatedSlot.added_slots.map(
-      (times) => times.time
-    ); // To provide as array;
-    res.status(201).json({ message: "Slot Added", responseTimeArray });
+    const response = {
+      slot_date:updatedSlot.slot_date,
+      slots:updatedSlot.added_slots,
+    };
+    res.status(201).json({ message: "Slot Added", response });  // Passing the response 
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
     console.log(error.message);
@@ -48,11 +49,15 @@ const deleteSlot = async (req,res)=>{
       mentorSlot.added_slots = slots;
       mentorSlot.save(); 
     }
-    const responseTimeArray = mentorSlot.added_slots.map((times)=>times.time);
-    res.status(201).json({message:'Slot deleted',responseTimeArray});
+    const response = {
+      slot_date:mentorSlot.slot_date,
+      slots:mentorSlot.added_slots,
+    };
+    res.status(201).json({message:'Slot deleted',response});
 
   } catch (error) {
     res.status(500).json({message:'Internal server error'});
+    console.log('Delete Slot : ',error.message);      // slot deletion error
   }
 }
 
@@ -67,11 +72,17 @@ const getSlotsByDate = async (req, res) => {
       slot_date: exact_date,
     });
     if (mentorSlots) {
-      const responseTimeArray = mentorSlots.added_slots.map((times) => times.time);
-      return res.status(201).json({ responseTimeArray, message: "Successfully found" });
+      const response = {
+        slot_date : mentorSlots.slot_date,
+        slots:mentorSlots.added_slots,
+      }
+      return res.status(201).json({ response, message: "Successfully found" });
     } else {
-      const responseTimeArray = [];
-      return res.status(201).json({ responseTimeArray, message: "Successfully found" });
+      const response = {
+        slot_date : '',
+        slots:[],
+      }
+      return res.status(201).json({ response, message: "Successfully found" });
     }
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
@@ -85,8 +96,10 @@ const getSlotsOfMentor = async(req,res) =>{
     const mentorId =  req.mentorId;
     const mentorSlots = await Slot.find({mentor_id:mentorId});
     const mentorDocs = mentorSlots.filter((doc)=>doc.added_slots.length > 0);
-    const mentorSlotDates = mentorDocs.map((date)=>date.slot_date);
-    res.status(201).json({message:'Success',createdSlotDates:mentorSlotDates});
+    const response = mentorDocs.map((data)=>{
+      return {slot_date:data.slot_date,slots:data.added_slots}
+    });
+    res.status(201).json({message:'Success',response});
   } catch (error) {
     res.status(500).json({message:'Internal server error'});
     console.log(error.message)

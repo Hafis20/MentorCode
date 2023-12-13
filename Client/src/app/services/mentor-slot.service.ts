@@ -12,7 +12,7 @@ export class MentorSlotService {
   constructor(private http:HttpClient) { }
 
    // mentor can create slots
-   mentorCreateSlot(data:SlotModel):Observable<SlotResponse>{
+  mentorCreateSlot(data:SlotModel):Observable<SlotResponse>{
     return this.http.post<SlotResponse>(`${environment.mentorslotURL}/createSlot`,data);
   }
 

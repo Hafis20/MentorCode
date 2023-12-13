@@ -74,8 +74,8 @@
                         </ng-container>
                         <ng-container *ngFor="let date of no_of_days; let dateIndex = index; trackBy: trackByIdentity">
                            <div style="width: 14.28%" class="px-1 mb-1">
-                              <div (click)="getDateValue(date)" appDate [year]="year" [month]="month" [date]="date"
-                                 [createdSlotDates]="slotDates"
+                              <div (click)="getDateValue(date)" appDate [year]="year" [month]="month" [date]="date" 
+                                 [createdSlotDates]="slotDates" [bookedSlots]="slots"
                                  class=" cursor-pointer text-center text-sm rounded-full leading-loose transition ease-in-out duration-100 "
                                  [ngClass]="{ 'bg-blue-500 text-white': isToday(date) === true, 'text-gray-700 hover:bg-blue-200': isToday(date) === false }">
                                  {{ date }}

@@ -16,6 +16,10 @@ const slotSchema = new mongoose.Schema(
         },
         is_booked:{
           type:Boolean,
+        },
+        booked_user:{
+          type:mongoose.Schema.ObjectId,
+          ref:'Mentee'
         }
       },
     ],

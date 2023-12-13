@@ -189,6 +189,24 @@ const changePassword = async(req,res)=>{
   }
 }
 
+// Get mentee data
+const getMenteeDetails = async(req,res)=>{
+  try {
+    const menteeId = req.menteeId;
+    const menteeData = await Mentee.findById(menteeId);
+    // console.log(menteeData);
+    const mentee = {
+      _id:menteeData._id,
+      name:menteeData.name,
+      email:menteeData.email,
+      role:menteeData.role
+    }
+    res.status(201).json(mentee);
+  } catch (error) {
+    res.status(500).json({message:'Internal Server Error'});
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -196,4 +214,5 @@ module.exports = {
   verifyOtp,
   forgotPassword,
   changePassword,
+  getMenteeDetails,
 };

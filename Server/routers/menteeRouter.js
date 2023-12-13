@@ -2,6 +2,7 @@ const express = require("express");
 const menteeRouter = express.Router();
 const menteeController = require("../controllers/menteeController");
 const homeController = require("../controllers/homeController");
+const menteeAuth  = require('../middlewares/menteeAuth');
 
 // Tag name definition
 /**
@@ -68,6 +69,7 @@ const homeController = require("../controllers/homeController");
  *                type: string
  */
 
+// Get available mentors doc
 /**
  * @swagger
  * /mentee/getAvailableMentors:
@@ -89,6 +91,7 @@ const homeController = require("../controllers/homeController");
 
 menteeRouter.get("/getAvailableMentors", homeController.getAvailableMentors); // Getting whole data into mentee page
 
+// Mentee register doc
 /**
  * @swagger
  * /mentee/register:
@@ -113,6 +116,7 @@ menteeRouter.get("/getAvailableMentors", homeController.getAvailableMentors); //
  */
 menteeRouter.post("/register", menteeController.register); // For registering a mentee
 
+// Mentee Resend otp doc
 /**
  * @swagger
  * /mentee/resendOtp:
@@ -153,6 +157,7 @@ menteeRouter.post("/register", menteeController.register); // For registering a 
 menteeRouter.post("/resendOtp", menteeController.resendOtp); // For resending the otp
 menteeRouter.post("/verifyOtp", menteeController.verifyOtp); // For verifying the mentee otp
 
+// Mentee Login doc
 /**
  * @swagger
  * /mentee/login:
@@ -177,6 +182,7 @@ menteeRouter.post("/verifyOtp", menteeController.verifyOtp); // For verifying th
  */
 menteeRouter.post("/login", menteeController.login); // mentee login
 
+// Forgot password doc
 /**
  * @swagger
  * /mentee/forgot-password:
@@ -219,4 +225,5 @@ menteeRouter.post('/forgot-password',menteeController.forgotPassword);   // Ment
 menteeRouter.patch('/change-password',menteeController.changePassword); // For changing the password
 menteeRouter.get('/getMentor',homeController.getMentor);  // Get the mentor for mentee
 menteeRouter.get('/getMentorSlots',homeController.getMentorSlots); // For getting the slots of the particular user
+menteeRouter.get('/getMentee',menteeAuth,menteeController.getMenteeDetails);  // Get mentor details for store
 module.exports = menteeRouter;

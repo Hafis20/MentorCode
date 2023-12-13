@@ -44,7 +44,10 @@ const getMentorSlots = async(req,res) =>{
       const mentorId = req.query.id;   // Getting the mentor id from query
       const mentorSlots = await Slot.find({mentor_id:mentorId},{_id:0,mentor_id:0,createdAt:0,updatedAt:0});
       const filterSlots = mentorSlots.filter((slots)=>slots.added_slots.length > 0)
-      res.status(201).json(filterSlots);
+      const response = filterSlots.map((doc)=>{
+         return {slot_date:doc.slot_date,slots:doc.added_slots}
+      })
+      res.status(201).json({message:'Successfull find data',response});
    } catch (error) {
       res.status(500).json({message:'Internal server error'});
    }

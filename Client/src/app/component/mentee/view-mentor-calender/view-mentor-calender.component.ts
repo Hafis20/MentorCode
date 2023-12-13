@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MenteeShowSlots } from 'src/app/model/slotModel';
 import { MenteeService } from 'src/app/services/mentee.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { MenteeService } from 'src/app/services/mentee.service';
 export class ViewMentorCalenderComponent implements OnInit {
 
   @Input() slotDates!:string[];
+  @Input() slots!:string[]  // Which is for whenever the whole data is booked at that time we don't want to show the green color in calender
   @Output() dateEvent:EventEmitter<Date> = new EventEmitter<Date>();
   constructor(private service:MenteeService,private route:ActivatedRoute) {}
 
@@ -18,7 +20,6 @@ export class ViewMentorCalenderComponent implements OnInit {
     this.getNoOfDays();
     
   }
-
 
 
 
