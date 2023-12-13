@@ -26,6 +26,7 @@ import { MentorForgotPasswordComponent } from './component/mentor/mentor-forgot-
 import { SlotManagementComponent } from './component/mentor/slot-management/slot-management.component';
 import { MentorProfileComponent } from './component/mentor/mentor-profile/mentor-profile.component';
 import { ViewMentorComponent } from './component/mentee/view-mentor/view-mentor.component';
+import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.component';
 
 // Mentee routes
 const menteeRoutes: Routes = [
@@ -70,6 +71,7 @@ const menteeRoutes: Routes = [
     canActivate: [MenteeLoginAuthGuard],
     children: [
       { path: 'dashboard', component: MenteeDashboardComponent },
+      { path: 'mybookings', component: MyBookingsComponent },
     ],
   },
 ];

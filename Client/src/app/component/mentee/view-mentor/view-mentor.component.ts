@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   ListMentorsHomeOfMentee,
-  ShowMenteeCalenderData,
 } from 'src/app/model/menteeModel';
 import { GetMentorSlots } from 'src/app/model/mentorModel';
 import { BookSlot, ShowSlots } from 'src/app/model/slotModel';
@@ -84,6 +83,7 @@ export class ViewMentorComponent implements OnInit {
     };
     this.slotService.bookSlot(data).subscribe({
       next:(response)=>{
+        console.log(response);
         this.calenderData();     // For refreshing the calender data
         this.slotsOfTheDay(this.currentDate);  // Passing the this.current date times into the slot component
         this.showMessage.showSuccessToastr(response.message);

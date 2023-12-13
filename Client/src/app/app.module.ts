@@ -53,6 +53,9 @@ import { DateDirective } from './customDirectives/date.directive';
 import { ViewMentorCalenderComponent } from './component/mentee/view-mentor-calender/view-mentor-calender.component';
 import { ViewSlotsComponent } from './component/mentee/view-slots/view-slots.component';
 import { BookedslotsDirective } from './customDirectives/bookedslots.directive';
+import { TableComponent } from './shared/table/table.component';
+import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.component';
+import { SharedTableDirective } from './customDirectives/shared-table.directive';
 
 @NgModule({
   declarations: [
@@ -90,6 +93,9 @@ import { BookedslotsDirective } from './customDirectives/bookedslots.directive';
     ViewMentorCalenderComponent,
     ViewSlotsComponent,
     BookedslotsDirective,
+    TableComponent,
+    MyBookingsComponent,
+    SharedTableDirective,
   ],
   imports: [
     BrowserModule,
