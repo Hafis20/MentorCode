@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MenteeShowSlots } from 'src/app/model/slotModel';
+import { ShowSlots } from 'src/app/model/slotModel';
 import { MenteeService } from 'src/app/services/mentee.service';
 
 @Component({

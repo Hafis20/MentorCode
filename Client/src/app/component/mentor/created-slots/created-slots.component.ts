@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { SlotModel } from 'src/app/model/mentorModel';
+import { ShowSlots } from 'src/app/model/slotModel';
 import { getMentorInfo } from 'src/app/store/Mentor/mentor.selector';
 
 @Component({
@@ -10,7 +11,7 @@ import { getMentorInfo } from 'src/app/store/Mentor/mentor.selector';
 })
 export class BookedSlotsComponent implements OnInit {
   @Input() currentDate!: Date;
-  @Input() createdSlots!: string[];
+  @Input() createdSlots!: ShowSlots[];
   @Output() deleteSlotEvent: EventEmitter<SlotModel> = new EventEmitter<SlotModel>();
   mentorId!:string;
 

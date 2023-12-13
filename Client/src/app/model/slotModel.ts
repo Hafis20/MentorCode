@@ -6,7 +6,7 @@ export interface BookSlot{
 }
 
 // Showing menteeside slot type
-export interface MenteeShowSlots{
+export interface ShowSlots{
    time:string;
    is_booked:boolean;
 }

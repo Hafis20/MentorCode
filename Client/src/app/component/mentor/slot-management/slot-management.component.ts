@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserInfo } from 'src/app/model/commonModel';
 import { SlotModel, GetSlotByDate } from 'src/app/model/mentorModel';
+import { ShowSlots } from 'src/app/model/slotModel';
 import { MentorSlotService } from 'src/app/services/mentor-slot.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 import { getMentor } from 'src/app/store/Mentor/mentor.action';
@@ -23,7 +24,7 @@ export class SlotManagementComponent implements OnInit {
     '03:00 PM to 04:00 PM',
     '04:00 PM to 05:00 PM',
   ];
-  createdSlots: string[] = [];
+  createdSlots: ShowSlots[] = [];
   unbookedSlots: string[] = [];
   mentorDetails!: UserInfo;
   createdSlotDates!:string[];
@@ -53,7 +54,7 @@ export class SlotManagementComponent implements OnInit {
     };
     this.service.getSlotsByDate(data).subscribe({
       next: (response) => {
-        this.createdSlots = response.response.slots.map((doc)=>doc.time);
+        this.createdSlots = response.response.slots;
         this.timeSlots = this.timeSlots.filter((time) => {
           return !response.response.slots.map((doc)=>doc.time).includes(time);
         });
@@ -75,7 +76,7 @@ export class SlotManagementComponent implements OnInit {
       next: (response) => {
         this.getSlotsOfMentor();
         this.showMessage.showSuccessToastr(response.message);
-        this.createdSlots = response.response.slots.map((doc)=>doc.time);
+        this.createdSlots = response.response.slots;
         this.unbookedSlots = this.timeSlots.filter((time) => {
           return !response.response.slots.map((doc)=>doc.time).includes(time);
         });
@@ -88,7 +89,7 @@ export class SlotManagementComponent implements OnInit {
       next:(response)=>{
         this.getSlotsOfMentor();
         this.showMessage.showSuccessToastr(response.message);
-        this.createdSlots = response.response.slots.map((doc)=>doc.time);
+        this.createdSlots = response.response.slots;
         this.unbookedSlots = this.timeSlots.filter((time) => {
           return !response.response.slots.map((doc)=>doc.time).includes(time);
         });
@@ -105,7 +106,7 @@ export class SlotManagementComponent implements OnInit {
     };
     this.service.getSlotsByDate(data).subscribe({
       next: (response) => {
-        this.createdSlots = response.response.slots.map((doc)=>doc.time);
+        this.createdSlots = response.response.slots;
         if(this.createdSlots.length > 0){
           this.unbookedSlots = this.timeSlots.filter((time) => {
             return !response.response.slots.map((doc)=>doc.time).includes(time);

@@ -6,7 +6,7 @@ import {
   ShowMenteeCalenderData,
 } from 'src/app/model/menteeModel';
 import { GetMentorSlots } from 'src/app/model/mentorModel';
-import { BookSlot, MenteeShowSlots } from 'src/app/model/slotModel';
+import { BookSlot, ShowSlots } from 'src/app/model/slotModel';
 import { MenteeSlotService } from 'src/app/services/mentee-slot.service';
 import { MenteeService } from 'src/app/services/mentee.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
@@ -22,7 +22,7 @@ export class ViewMentorComponent implements OnInit {
   mentorDetails!: ListMentorsHomeOfMentee;
   slotDates!: string[];
   calenderResponse!: GetMentorSlots;
-  slotTimes!: MenteeShowSlots[];
+  slotTimes!: ShowSlots[];
   currentDate!: Date;
   mentorId!: string;
   bookedDates!:string[];
@@ -73,7 +73,7 @@ export class ViewMentorComponent implements OnInit {
     const day = date.toDateString();
     this.currentDate = date;
     const dateTime = this.calenderResponse.response.find((doc)=>doc.slot_date === day);
-     this.slotTimes = dateTime?.slots  as MenteeShowSlots[] // Passing the data in to cards of slot
+     this.slotTimes = dateTime?.slots  as ShowSlots[] // Passing the data in to cards of slot
   }
 
   bookingTime(time: string) {

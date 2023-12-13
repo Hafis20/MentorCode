@@ -52,6 +52,7 @@ import { ViewMentorComponent } from './component/mentee/view-mentor/view-mentor.
 import { DateDirective } from './customDirectives/date.directive';
 import { ViewMentorCalenderComponent } from './component/mentee/view-mentor-calender/view-mentor-calender.component';
 import { ViewSlotsComponent } from './component/mentee/view-slots/view-slots.component';
+import { BookedslotsDirective } from './customDirectives/bookedslots.directive';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { ViewSlotsComponent } from './component/mentee/view-slots/view-slots.com
     DateDirective,
     ViewMentorCalenderComponent,
     ViewSlotsComponent,
+    BookedslotsDirective,
   ],
   imports: [
     BrowserModule,
