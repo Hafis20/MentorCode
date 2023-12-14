@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { GetMentorSlots, GetSlotByDate, SlotModel, SlotResponse } from '../model/mentorModel';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { MentorBookingDetails } from '../model/bookingsModel';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,10 @@ export class MentorSlotService {
   // Whenever the mentor took the calender we want to show the slots they created
   getSlotsOfMentor():Observable<GetMentorSlots>{
     return this.http.get<GetMentorSlots>(`${environment.mentorslotURL}/getSlotsOfMentor`);
+  }
+
+  // If any one booked the slots of the mentor it will shows in the mentor side
+  getBookedSlots():Observable<MentorBookingDetails[]>{
+    return this.http.get<MentorBookingDetails[]>(`${environment.mentorslotURL}/getBookedSlots`);
   }
 }

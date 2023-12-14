@@ -10,3 +10,16 @@ export interface MenteeBookingsDetails {
   time: string;
   status: string;
 }
+
+
+export interface MentorBookingDetails {
+  details: {
+    date: string;
+    time: string;
+    status: string;
+  };
+  menteeDetails: {
+    name: string;
+    image:string;
+  };
+}

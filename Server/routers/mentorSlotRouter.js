@@ -92,7 +92,7 @@ mentorSlotRouter.post('/deleteSlot',mentorSlotController.deleteSlot); // For men
  */
 
 mentorSlotRouter.post('/getSlotsByDate',mentorSlotController.getSlotsByDate);  // Get the date in begining
-mentorSlotRouter.get('/getSlotsOfMentor',mentorAuth,mentorSlotController.getSlotsOfMentor);
-
+mentorSlotRouter.get('/getSlotsOfMentor',mentorAuth,mentorSlotController.getSlotsOfMentor);  // getting the slots of mentor 
+mentorSlotRouter.get('/getBookedSlots',mentorAuth,mentorSlotController.getBookedSlots);
 
 module.exports = mentorSlotRouter;

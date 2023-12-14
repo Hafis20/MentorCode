@@ -56,6 +56,7 @@ import { BookedslotsDirective } from './customDirectives/bookedslots.directive';
 import { TableComponent } from './shared/table/table.component';
 import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.component';
 import { SharedTableDirective } from './customDirectives/shared-table.directive';
+import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { SharedTableDirective } from './customDirectives/shared-table.directive'
     TableComponent,
     MyBookingsComponent,
     SharedTableDirective,
+    ViewBookingsComponent,
   ],
   imports: [
     BrowserModule,

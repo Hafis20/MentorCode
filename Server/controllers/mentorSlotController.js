@@ -1,4 +1,6 @@
 const Slot = require("../models/slotModel");
+const BookedSlot = require('../models/bookingModel');
+const { default: mongoose } = require("mongoose");
 
 // Creating a slot for mentor
 const createSlot = async (req, res) => {
@@ -106,9 +108,54 @@ const getSlotsOfMentor = async(req,res) =>{
   }
 }
 
+// Get the booked slots
+const getBookedSlots = async(req,res) =>{
+   try {
+    const mentorId = req.mentorId;     // Data will get from token
+    const mentorDetails = await BookedSlot.aggregate([
+      {
+        $unwind: "$details",
+      },
+      {
+        $match:{
+          'details.mentorId':new mongoose.Types.ObjectId(mentorId)
+        }
+      },
+      {
+        $lookup:{
+          from:'mentees',
+          localField:'menteeId',
+          foreignField:'_id',
+          as:'menteeDetails'
+        }
+      },
+      {
+        $unwind:'$menteeDetails'
+      },
+      {
+        $project:{
+          "details.time":1,
+          "details.date":1,
+          "details.status":1,
+          "menteeDetails.name":1,
+          "menteeDetails.image":1
+        }
+      }
+    ]);
+    if(mentorDetails){
+      res.status(201).json(mentorDetails);
+    }else{
+      return res.status(404).json({message:'No Booking Yet'});
+    }
+   } catch (error) {
+    res.status(500).json({message:'Internal Server error'});
+    console.log(error.message);
+   }
+}
 module.exports = {
   createSlot,
   getSlotsByDate,
   deleteSlot,
-  getSlotsOfMentor
+  getSlotsOfMentor,
+  getBookedSlots,
 };

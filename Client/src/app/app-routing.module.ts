@@ -27,6 +27,7 @@ import { SlotManagementComponent } from './component/mentor/slot-management/slot
 import { MentorProfileComponent } from './component/mentor/mentor-profile/mentor-profile.component';
 import { ViewMentorComponent } from './component/mentee/view-mentor/view-mentor.component';
 import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.component';
+import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
 
 // Mentee routes
 const menteeRoutes: Routes = [
@@ -63,7 +64,7 @@ const menteeRoutes: Routes = [
   {
     path: 'view-mentor/:id',
     component: ViewMentorComponent,
-    canActivate: [MenteeLoginAuthGuard]
+    canActivate: [MenteeLoginAuthGuard],
   },
   {
     path: '', // For mentee profile
@@ -116,6 +117,7 @@ const mentorRoutes: Routes = [
       { path: 'dashboard', component: MentorDashboardComponent },
       { path: 'slot-management', component: SlotManagementComponent },
       { path: 'profile', component: MentorProfileComponent },
+      { path: 'bookings', component: ViewBookingsComponent },
     ],
   },
 ];

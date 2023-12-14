@@ -10,9 +10,9 @@ import { MenteeSlotService } from 'src/app/services/mentee-slot.service';
 export class MyBookingsComponent implements OnInit{
   TableHeaders:string[] = [  // Passing to the table component for showing the table header
     "Mentor",
-    "Status",
+    "Date",
     "Time",
-    "Date"
+    "Status",
   ]
 
   BookingDetails!:MenteeBookingsDetails[];   // Setting and passing the data about booking details of the user

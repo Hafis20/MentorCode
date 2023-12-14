@@ -24,7 +24,7 @@ export class MentorEffect {
             const mentorData = data;
             localStorage.setItem('mentorToken', mentorData.accessToken); // Setting the jwt token inside the  local storage
             this.showMessage.showSuccessToastr(mentorData.message);
-            this.router.navigate(['/mentor/']);
+            this.router.navigate(['/mentor/dashboard']);
             return loginMentorSuccess({ mentor: mentorData.accessedUser });
           }),
           catchError((error) => {
