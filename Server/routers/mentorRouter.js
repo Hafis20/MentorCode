@@ -2,6 +2,7 @@ const express = require('express');
 const mentorRouter = express.Router();
 const mentorController = require('../controllers/mentorController');
 const mentorAuth = require('../middlewares/mentorAuth');
+const upload = require('../Helper/multer');
 
 /**
  * @swagger
@@ -70,5 +71,8 @@ mentorRouter.post('/login',mentorController.login); // Login the mentor
 mentorRouter.post('/forgot-password',mentorController.forgotPassword);
 mentorRouter.patch('/change-password',mentorController.changePassword);
 mentorRouter.get('/getMentor',mentorAuth,mentorController.getMentorDetails);
+mentorRouter.get('/getMentorProfile',mentorAuth,mentorController.getMentorProfile);
+mentorRouter.post('/editProfile',mentorAuth, upload.single('image'), mentorController.editProfile);
+
 
 module.exports = mentorRouter;

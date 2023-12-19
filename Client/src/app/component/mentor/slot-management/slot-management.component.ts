@@ -36,7 +36,6 @@ export class SlotManagementComponent implements OnInit {
 
     this.getSlotsOfMentor();
 
-    this.store.dispatch(getMentor());             // Dispatching the method for storing the mentor data in store
     this.store.select(getMentorInfo).subscribe({
       next: (response) => {
         this.mentorDetails = response;

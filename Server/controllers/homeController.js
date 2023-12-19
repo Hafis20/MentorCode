@@ -1,5 +1,6 @@
 const Mentor = require('../models/mentorModel');
 const Slot = require('../models/slotModel');
+const Skill =require('../models/skillsModel');
 
 // Take the data from db and send to the home of (find a mentor) mentee
 const getAvailableMentors = async(req,res)=>{
@@ -12,13 +13,27 @@ const getAvailableMentors = async(req,res)=>{
             }
          },
          {
-            $project:{
-               name:1,
-               experience:1,
-               fee:1,
-               image:1
+            $lookup:{
+               from:'skills',
+               localField:'_id',
+               foreignField:'mentor_id',
+               as:'skills'
             }
-         }
+         },
+         {
+            $unwind:{
+               path:'$skills',
+               preserveNullAndEmptyArrays:true
+            }
+         },
+         // {
+         //    $project:{
+         //       name:1,
+         //       fee:1,
+         //       image:1,
+         //       experience:1
+         //    }
+         // }
       ]);
       res.status(200).json(mentors);
    } catch (error) {

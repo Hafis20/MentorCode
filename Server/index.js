@@ -30,7 +30,6 @@ app.use('/docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec));
 app.use(express.json());
 
 
-
 // Application routers
 const adminRouter = require("./routers/adminRouter");
 const menteeRouter = require("./routers/menteeRouter");

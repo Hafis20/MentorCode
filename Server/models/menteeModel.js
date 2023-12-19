@@ -32,6 +32,10 @@ const menteeSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  image:{
+    type:String,
+    default:''
+  }
 });
 
 module.exports = mongoose.model("Mentee", menteeSchema);

@@ -12,6 +12,7 @@ const _mentorReducer = createReducer(
         _id: mentorData._id,
         name: mentorData.name,
         email: mentorData.email,
+        image:mentorData.image,
         role: mentorData.role,
       },
     };
@@ -24,6 +25,7 @@ const _mentorReducer = createReducer(
             _id:mentorData._id,
             name:mentorData.name,
             email:mentorData.email,
+            image:mentorData.image,
             role:mentorData.role,
          }
       }

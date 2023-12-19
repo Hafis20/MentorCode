@@ -13,6 +13,7 @@ export interface MentorState {
     _id: string;
     name: string;
     email: string;
+    image:string;
     role: string;
   };
 }
@@ -60,4 +61,16 @@ export interface SlotResponse {
       }
     ];
   };
+}
+
+// Mentor profile data model
+export interface MentorProfile {
+  skills: string[]; 
+  about:string;
+  mentor_id?: string;
+  name: string;
+  experience: string;
+  image: string;
+  mobile: string;
+  fee: number; 
 }

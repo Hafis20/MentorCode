@@ -2,7 +2,7 @@ import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 // Name validation custom function
 export function spaceValidation(control:AbstractControl):ValidationErrors |null{
-   if(control.value.trim() === ''){
+   if(typeof control.value === 'string' && control.value.trim() === ''){
       return {spaceError:true}
    }
    return null;
@@ -10,7 +10,7 @@ export function spaceValidation(control:AbstractControl):ValidationErrors |null{
 
 // Negative value custom validation
 export function negativeValidation(control:AbstractControl):ValidationErrors|null{
-   if(control.value < 1){
+   if(control.value && control.value < 1){
       return {negativeError:true}
    }
    return null;
@@ -26,3 +26,11 @@ export function passwordValidation(control:AbstractControl):ValidationErrors | n
    return null;
 }
 
+// Mobile number validation
+export function mobileNumberValidation(control:AbstractControl):ValidationErrors | null{
+  const pattern =  /^[0-9]{10}$/;
+  if(!pattern.test(control.value)){
+   return {mobileNumberError:true}
+  }
+  return null;
+}
