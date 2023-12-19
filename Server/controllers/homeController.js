@@ -1,6 +1,7 @@
 const Mentor = require('../models/mentorModel');
 const Slot = require('../models/slotModel');
 const Skill =require('../models/skillsModel');
+const { default: mongoose } = require('mongoose');
 
 // Take the data from db and send to the home of (find a mentor) mentee
 const getAvailableMentors = async(req,res)=>{
@@ -26,14 +27,22 @@ const getAvailableMentors = async(req,res)=>{
                preserveNullAndEmptyArrays:true
             }
          },
-         // {
-         //    $project:{
-         //       name:1,
-         //       fee:1,
-         //       image:1,
-         //       experience:1
-         //    }
-         // }
+         {
+            $addFields: {
+              skills: '$skills.skills',
+              about: '$skills.about',
+            },
+          },
+         {
+            $project:{
+               name:1,
+               fee:1,
+               image:1,
+               experience:1,
+               skills:1,
+               about:1
+            }
+         }
       ]);
       res.status(200).json(mentors);
    } catch (error) {
@@ -45,7 +54,43 @@ const getAvailableMentors = async(req,res)=>{
 const getMentor = async(req,res)=>{
    try {
       const mentorId = req.query.id;
-      const mentorData = await Mentor.findById(mentorId,{name:1,fee:1,experience:1});
+      const mentorData = await Mentor.aggregate([
+         {
+            $match:{
+               _id:new mongoose.Types.ObjectId(mentorId)
+            }
+         },
+         {
+            $lookup:{
+               from:'skills',
+               localField:'_id',
+               foreignField:'mentor_id',
+               as:'skills'
+            }
+         },
+         {
+            $unwind:{
+               path:'$skills',
+               preserveNullAndEmptyArrays:true
+            }
+         },
+         {
+            $addFields: {
+              skills: '$skills.skills',
+              about: '$skills.about',
+            },
+          },
+         {
+            $project:{
+               name:1,
+               fee:1,
+               image:1,
+               experience:1,
+               skills:1,
+               about:1
+            }
+         }
+      ]);
       res.status(201).json(mentorData);
    } catch (error) {
       res.status(500).json({message:'Internal Server Error'});

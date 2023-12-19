@@ -38,7 +38,7 @@ export class ViewMentorComponent implements OnInit {
     this.mentorId = this.route.snapshot.paramMap.get('id') as string;
     this.service.getMentor(this.mentorId).subscribe({
       next: (response) => {
-        this.mentorDetails = response;
+        this.mentorDetails = response[0];
       },
       error:error=>{
         this.showMessage.showErrorToastr(error.error.message);

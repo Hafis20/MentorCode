@@ -50,8 +50,8 @@ export class MenteeService {
   }
 
   // When the mentee clicks on the mentor details 
-  getMentor(id:string):Observable<ListMentorsHomeOfMentee>{
-    return this.http.get<ListMentorsHomeOfMentee>(`${environment.menteeURL}/getMentor/?id=${id}`);
+  getMentor(id:string):Observable<ListMentorsHomeOfMentee[]>{
+    return this.http.get<ListMentorsHomeOfMentee[]>(`${environment.menteeURL}/getMentor/?id=${id}`);
   }
 
   // Get mentee for storing in the store

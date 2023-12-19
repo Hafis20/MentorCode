@@ -31,6 +31,8 @@ export interface ListMentorsHomeOfMentee {
   experience: string;
   fee: number;
   image: string;
+  skills:string[];
+  about:string
 }
 
 // Slot model when we call depend on the user
