@@ -23,7 +23,7 @@ export class OtpComponent implements OnInit {
     private mentorService: MentorService,
     private fb: FormBuilder,
     private showMessage: MessageToastrService,
-    private router:Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -49,33 +49,36 @@ export class OtpComponent implements OnInit {
     this.counter = 30;
     clearInterval(this.timerInterval);
     this.counterFtn();
-    if (this.role === 'mentee') {
-      this.menteeService.resendOtp({email:this.email}).subscribe({
+    if (this.role === 'mentee' || this.role === 'menteeForgot') {
+      this.menteeService.resendOtp({ email: this.email }).subscribe({
         next: (response) => {
           this.showMessage.showSuccessToastr(response.message);
           this.otpForm.reset();
         },
       });
     } else if (this.role === 'mentor') {
-      this.mentorService.resendOtp({email:this.email}).subscribe({
-        next:(response)=>{
+      this.mentorService.resendOtp({ email: this.email }).subscribe({
+        next: (response) => {
           this.showMessage.showSuccessToastr(response.message);
           this.otpForm.reset();
         },
-      })
+      });
     } else {
-      return
+      return;
     }
   }
 
   // Submitting the otp form
-  onSubmit() { 
-    if (this.otpForm.invalid) { // If the form is not valid go to the following actions
+  onSubmit() {
+    if (this.otpForm.invalid) {
+      // If the form is not valid go to the following actions
       if (this.otpError()) {
         this.showMessage.showWarningToastr(this.otpError());
       }
-    } else { // If the form is valid then go to the following actions
-      if (this.role === 'mentee') {
+    } else {
+      // If the form is valid then go to the following actions
+      if (this.role === 'mentee' || this.role === 'menteeForgot') {
+        // We are checking which purpose they are comming to the otp page
         const data = {
           email: this.email,
           otp: this.otpForm.value.otp as string,
@@ -83,16 +86,23 @@ export class OtpComponent implements OnInit {
 
         this.menteeService.validateOtp(data).subscribe({
           next: (response) => {
-            this.showMessage.showSuccessToastr(response.message);
-            localStorage.clear();
-            this.router.navigate(['/mentee/login']);
+            if (this.role === 'mentee') {
+              // Its is normal account verification
+              this.showMessage.showSuccessToastr(response.message);
+              this.router.navigate(['/mentee/login']);
+              localStorage.removeItem('email'); // In this case we just clear the mail
+            } else {
+              // It is for forgot password purpose
+              this.showMessage.showSuccessToastr('Create your new password');
+              this.router.navigate(['/mentee/new-password']);
+            }
+            localStorage.removeItem('role');
           },
-          error:(error)=>{
+          error: (error) => {
             this.showMessage.showErrorToastr(error.error.message);
           },
         });
-      }else if(this.role === 'mentor'){
-        console.log('Mentor working')
+      } else if (this.role === 'mentor' || this.role === 'mentorForgot') {
         const data = {
           email: this.email,
           otp: this.otpForm.value.otp as string,
@@ -100,11 +110,17 @@ export class OtpComponent implements OnInit {
 
         this.mentorService.validateOtp(data).subscribe({
           next: (response) => {
-            this.showMessage.showSuccessToastr(response.message);
-            localStorage.clear();
-            this.router.navigate(['/mentor/login']);
+            if (this.role === 'mentor') {
+              this.showMessage.showSuccessToastr(response.message);
+              this.router.navigate(['/mentor/login']);
+              localStorage.removeItem('email');
+            }else{
+              this.showMessage.showSuccessToastr('Create your new password');
+              this.router.navigate(['/mentor/new-password']);
+            }
+            localStorage.removeItem('role');
           },
-          error:(error)=>{
+          error: (error) => {
             this.showMessage.showErrorToastr(error.error.message);
           },
         });

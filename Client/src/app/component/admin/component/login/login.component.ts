@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { loginAdmin } from '../../store/admin.action';
+import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private store: Store
+    private store: Store,
+    private showMessage: MessageToastrService
   ) {}
 
   ngOnInit(): void {}
@@ -33,19 +35,11 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       // Handling email error
       if (this.emailError()) {
-        this.toastr.warning(this.emailError(), '', {
-          timeOut: 2000,
-          progressAnimation: 'increasing',
-          progressBar: true,
-        });
+        this.showMessage.showWarningToastr(this.emailError());
       }
       // Handling password error
       if (this.passwordError()) {
-        this.toastr.warning(this.passwordError(), '', {
-          timeOut: 2000,
-          progressAnimation: 'increasing',
-          progressBar: true,
-        });
+        this.showMessage.showWarningToastr(this.passwordError());
       }
     } else {
       const data ={

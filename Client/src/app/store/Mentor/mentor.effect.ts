@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { loginMentor, loginMentorSuccess } from './mentor.action';
+import { getMentor, getMentorSuccess, loginMentor, loginMentorSuccess } from './mentor.action';
 import { exhaustMap, map, catchError, of } from 'rxjs';
 import { MentorService } from 'src/app/services/mentor.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
@@ -24,7 +24,7 @@ export class MentorEffect {
             const mentorData = data;
             localStorage.setItem('mentorToken', mentorData.accessToken); // Setting the jwt token inside the  local storage
             this.showMessage.showSuccessToastr(mentorData.message);
-            this.router.navigate(['/mentor/']);
+            this.router.navigate(['/mentor/dashboard']);
             return loginMentorSuccess({ mentor: mentorData.accessedUser });
           }),
           catchError((error) => {
@@ -35,4 +35,24 @@ export class MentorEffect {
       })
     )
   );
+
+
+  // Get mentor data while reloading
+  _getMentor$ = createEffect(()=>
+      this.action$.pipe(
+        ofType(getMentor),
+        exhaustMap((action)=>{
+          return this.mentorService.getMentorDetails().pipe(
+            map((data)=>{
+              const mentorData = data;
+              return getMentorSuccess({mentor:mentorData});
+            }),
+            catchError((error) => {
+              this.showMessage.showErrorToastr(error.error.message);
+              return of(error.error.message);
+            })
+          )
+        })
+      )
+  )
 }

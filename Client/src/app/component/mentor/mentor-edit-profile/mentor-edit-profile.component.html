@@ -1,0 +1,104 @@
+<div class="pr-5 pb-5" *ngIf="MentorData">
+  <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="space-y-10">
+
+      <div class="border-b border-gray-900/10 pb-8">
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
+
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
+            <div class="mt-2">
+              <input type="text"  formControlName="fullName" name="fullName" id="first-name" autocomplete="given-name"
+                class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Mobile</label>
+            <div class="mt-2">
+              <input type="text" name="last-name" formControlName="mobile" id="last-name" autocomplete="family-name"
+                class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Fees</label>
+            <div class="mt-2">
+              <input type="text" name="last-name" id="last-name" formControlName="fee" autocomplete="family-name"
+                class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+
+          <!-- Image Upload -->
+          <div class="sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Upload Image</label>
+            <div class="mt-2">
+              <input type="file"  (change)="onFileUpload($event)" 
+                class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md  file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" />
+            </div>
+          </div>
+
+          
+
+          <!-- Adding Skills -->
+          <div class="sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Add Skills</label>
+            <div class="mt-2 relative">
+              <input type="text" name="" id="" autocomplete="family-name" #skill formControlName="skills"
+                class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <button type="button" (click)="addSkill(skill.value)"
+                class="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-500 bg-transparent border-none hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Experience</label>
+            <div class="mt-2">
+              <input type="text" name="last-name" formControlName="experience" value={{MentorData.mobile}} id="last-name" autocomplete="family-name"
+                class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+
+          <!-- Added Skills showing -->
+          <div class="sm:col-span-3" *ngIf="MentorData.skills">
+            <div *ngFor="let skill of MentorData.skills; let i = index" class="sm:col-span-4 bg-indigo-500 shadow rounded-lg mb-2">
+              <div class="flex justify-between pl-5 py-1 cursor-pointer" >
+                <p style="margin-bottom: 0; color: #fff;">{{skill}}</p>
+                <button (click)="removeSkill(i)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 10-1.414-1.414L10 8.586l-1.293-1.293a1 1 0 00-1.414 1.414L8.586 10z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-full">
+            <label for="about" class="block text-sm font-medium leading-6 text-gray-900">About</label>
+            <div class="mt-2">
+              <textarea id="about" name="about" rows="3" formControlName="about"
+                class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6 flex items-center justify-end gap-x-6">
+      <button [routerLink]="['/mentor/profile']" type="button"
+        class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+      <button type="submit" 
+        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+    </div>
+  </form>
+</div>

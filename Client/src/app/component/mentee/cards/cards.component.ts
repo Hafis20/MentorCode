@@ -9,7 +9,7 @@ import { ListMentorsHomeOfMentee } from 'src/app/model/menteeModel';
 export class CardsComponent implements OnInit {
 
   @Input() mentorDetails!:ListMentorsHomeOfMentee[];
-
+  mentorSkills!:string;
   constructor() {}
 
   ngOnInit(): void {}

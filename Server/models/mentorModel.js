@@ -28,7 +28,8 @@ const mentorSchema = new mongoose.Schema({
     default:500,
   },
   image:{
-    type: String
+    type: String,
+    default:''
   },
   otp_updated_at: {
     type: Date,

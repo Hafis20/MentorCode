@@ -5,7 +5,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/header/header.component';
 import { MenteeLoginComponent } from './component/mentee/mentee-login/mentee-login.component';
 import { MentorLoginComponent } from './component/mentor/mentor-login/mentor-login.component';
@@ -37,6 +37,27 @@ import { ListMentorsComponent } from './component/mentee/list-mentors/list-mento
 import { MenteeDashboardComponent } from './component/mentee/mentee-dashboard/mentee-dashboard.component';
 import { MenteeComponent } from './component/mentee/mentee.component';
 import { CardsComponent } from './component/mentee/cards/cards.component';
+import { SharedForgotPasswordComponent } from './component/shared-forgot-password/shared-forgot-password.component';
+import { MenteeForgotPasswordComponent } from './component/mentee/mentee-forgot-password/mentee-forgot-password.component';
+import { SharedNewPasswordComponent } from './component/shared-new-password/shared-new-password.component';
+import { MenteeNewPasswordComponent } from './component/mentee/mentee-new-password/mentee-new-password.component';
+import { MentorNewPasswordComponent } from './component/mentor/mentor-new-password/mentor-new-password.component';
+import { MentorForgotPasswordComponent } from './component/mentor/mentor-forgot-password/mentor-forgot-password.component';
+import { SlotManagementComponent } from './component/mentor/slot-management/slot-management.component';
+import { MentorCalenderComponent } from './component/mentor/mentor-calender/mentor-calender.component';
+import { AvailableSlotsComponent } from './component/mentor/available-slots/available-slots.component';
+import { BookedSlotsComponent } from './component/mentor/created-slots/created-slots.component';
+import { MentorProfileComponent } from './component/mentor/mentor-profile/mentor-profile.component';
+import { ViewMentorComponent } from './component/mentee/view-mentor/view-mentor.component';
+import { DateDirective } from './customDirectives/date.directive';
+import { ViewMentorCalenderComponent } from './component/mentee/view-mentor-calender/view-mentor-calender.component';
+import { ViewSlotsComponent } from './component/mentee/view-slots/view-slots.component';
+import { BookedslotsDirective } from './customDirectives/bookedslots.directive';
+import { TableComponent } from './shared/table/table.component';
+import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.component';
+import { SharedTableDirective } from './customDirectives/shared-table.directive';
+import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
+import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profile/mentor-edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -58,11 +79,33 @@ import { CardsComponent } from './component/mentee/cards/cards.component';
     MenteeDashboardComponent,
     MenteeComponent,
     CardsComponent,
+    SharedForgotPasswordComponent,
+    MenteeForgotPasswordComponent,
+    SharedNewPasswordComponent,
+    MenteeNewPasswordComponent,
+    MentorNewPasswordComponent,
+    MentorForgotPasswordComponent,
+    SlotManagementComponent,
+    MentorCalenderComponent,
+    AvailableSlotsComponent,
+    BookedSlotsComponent,
+    MentorProfileComponent,
+    ViewMentorComponent,
+    DateDirective,
+    ViewMentorCalenderComponent,
+    ViewSlotsComponent,
+    BookedslotsDirective,
+    TableComponent,
+    MyBookingsComponent,
+    SharedTableDirective,
+    ViewBookingsComponent,
+    MentorEditProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,

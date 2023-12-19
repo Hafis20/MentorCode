@@ -1,0 +1,14 @@
+<div class="flex justify-between">
+   <div class="w-1/2">
+      <mentor-calender [createdSlotDates]="createdSlotDates" (dateEvent)="slotDate($event)"></mentor-calender>
+   </div>
+   <div class="w-full flex-col gap-2  pt-10" >
+      <div class="flex justify-center">
+         <available-slots (createSlotEvent)="slotCreateEvent($event)" [timeSlots]="unbookedSlots" [currentDate]="currentDate"></available-slots>
+      </div>
+      <div class="flex justify-center" >
+         <created-slots (deleteSlotEvent)="slotDeleteEvent($event)" [createdSlots]="createdSlots" [currentDate]="currentDate"></created-slots>
+      </div>
+   </div>
+   
+</div>

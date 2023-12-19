@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { getMentor } from "src/app/store/Mentor/mentor.action";
 
 @Component({
    selector:'app-mentor',
@@ -7,10 +9,11 @@ import { Router } from "@angular/router";
    styleUrls:['./mentor.component.css']   
 })
 export class MentorComponent implements OnInit{
-   constructor(private router:Router){}
+   userType:string = 'mentor';
+   constructor(private router:Router,private store:Store){}
 
    ngOnInit(): void {
-      
+      this.store.dispatch(getMentor());             // Dispatching the method for storing the mentor data in store
    }
 
    logout(){

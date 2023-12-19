@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { loginMentee, loginMenteeSuccess } from './mentee.action';
+import { getMentee, getMenteeSuccess, loginMentee, loginMenteeSuccess } from './mentee.action';
 import { MenteeService } from 'src/app/services/mentee.service';
 import { exhaustMap, map, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -39,4 +39,22 @@ export class MenteeEffect {
       })
     )
   );
+
+  _getMentee$ = createEffect(()=>
+      this.action$.pipe(
+        ofType(getMentee),
+        exhaustMap((action)=>{
+          return this.menteeService.getMentee().pipe(
+            map((data)=>{
+              console.log(data);
+              return getMenteeSuccess({mentee:data});
+            }),
+            catchError((err)=>{
+              this.showMessage.showErrorToastr(err.error.message);
+              return of(err.message);
+            })
+          )
+        })
+      )
+  )
 }

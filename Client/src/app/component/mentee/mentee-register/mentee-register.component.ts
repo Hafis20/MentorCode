@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { nameValidation } from 'src/app/customValidation/validation';
+import { spaceValidation } from 'src/app/customValidation/validation';
 import { MenteeService } from 'src/app/services/mentee.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 import { SharedFormService } from 'src/app/services/sharedForm.service';
@@ -25,7 +24,7 @@ export class MenteeRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3),nameValidation]],
+      name: ['', [Validators.required, Validators.minLength(3),spaceValidation]],
       mobile: [
         '',
         [Validators.required, Validators.pattern(this.mobilePattern)],
@@ -89,7 +88,7 @@ export class MenteeRegisterComponent implements OnInit {
     if (name?.invalid) {
       if (name.errors?.['required']) {
         return `Name is required`;
-      }else if(name.errors?.['nameError']){
+      }else if(name.errors?.['spaceError']){
         return `Enter a valid name`
       } else if (name.errors?.['minlength']) {
         return `Name should contain minimum 3 letters`;

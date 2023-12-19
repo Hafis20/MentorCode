@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="flex h-screen">
    <div class="w-1/6 bg-slate-200" style="margin-top: 95px;">
-      <app-sidebar (logoutEvent)="logout()"></app-sidebar>
+      <app-sidebar [userType]="userType" (logoutEvent)="logout()"></app-sidebar>
    </div>
    <div class="flex-1" style="margin-top: 95px;">
       <router-outlet></router-outlet>

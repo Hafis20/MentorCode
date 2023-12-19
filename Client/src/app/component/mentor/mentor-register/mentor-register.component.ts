@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  nameValidation,
+  spaceValidation,
   negativeValidation,
 } from 'src/app/customValidation/validation';
 import { MentorService } from 'src/app/services/mentor.service';
@@ -27,7 +27,7 @@ export class MentorRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required, nameValidation]],
+      name: ['', [Validators.required, spaceValidation ]],
       form: this.sharedForm.sharedForm(),
       mobile: [
         '',
@@ -96,7 +96,7 @@ export class MentorRegisterComponent implements OnInit {
     if (name?.invalid) {
       if (name.errors?.['required']) {
         return `Name is required`;
-      } else if (name.errors?.['nameError']) {
+      } else if (name.errors?.['spaceError']) {
         return `Enter a valid name`;
       } else if (name.errors?.['minlength']) {
         return `Name should contain minimum 3 letters`;

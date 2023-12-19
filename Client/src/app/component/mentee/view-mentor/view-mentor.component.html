@@ -1,0 +1,83 @@
+<div>
+   <app-header></app-header>
+</div>
+<div class="p-24 font-poppins" *ngIf="mentorDetails">
+   <div class="sm:flex">
+      <div class="bg-gray-100">
+         <div class="container mx-auto py-8">
+            <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
+
+               <div class="col-span-4 sm:col-span-9">
+                  <div class="bg-white shadow rounded-lg p-6">
+                     <img src="assets/imgs/background/angular-profile.png"
+                        class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" alt="">
+                     <h1><span class="text-3xl font-bold mb-4">{{mentorDetails.name}} <span
+                              class="text-gray-500 text-lg">(₹ {{mentorDetails.fee}}/ 1h)</span></span></h1>
+                     <h2 class="text-xl font-bold mb-4">About Me</h2>
+                     <p class="text-gray-700">{{mentorDetails.about}}
+                     </p>
+
+                     <div class="mb-6 mt-10">
+                        <div class="flex justify-between flex-wrap gap-2 w-full">
+                           <span class="text-gray-700 text-2xl font-bold">From Our Mentees</span>
+                        </div>
+                        <!-- Comment sessioin -->
+
+                        <div class="mx-auto border px-6 py-4 rounded-lg my-4">
+                           <div class="flex items-center mb-6">
+                              <img src="https://randomuser.me/api/portraits/men/97.jpg" alt="Avatar"
+                                 class="w-12 h-12 rounded-full mr-4">
+                              <div>
+                                 <div class="text-lg font-medium text-gray-800">John Doe</div>
+                                 <div class="text-gray-500">2 hours ago</div>
+                              </div>
+                           </div>
+                           <p class="text-lg leading-relaxed mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Sed sit amet lorem
+                              nulla. Donec consequat urna a tortor sagittis lobortis.</p>
+
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="mx-auto border px-6 py-4 rounded-lg my-4">
+                           <div class="flex items-center mb-6">
+                              <img src="https://randomuser.me/api/portraits/men/97.jpg" alt="Avatar"
+                                 class="w-12 h-12 rounded-full mr-4">
+                              <div>
+                                 <div class="text-lg font-medium text-gray-800">John Doe</div>
+                                 <div class="text-gray-500">2 hours ago</div>
+                              </div>
+                           </div>
+                           <p class="text-lg leading-relaxed mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Sed sit amet lorem
+                              nulla. Donec consequat urna a tortor sagittis lobortis.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Comments end -->
+               <div class="col-span-4 sm:col-span-3">
+                  <div class="bg-white shadow rounded-lg p-6">
+                     <div class="flex flex-col items-center">
+
+                     </div>
+                     <div class="flex flex-col">
+                        <span class="text-gray-700 uppercase font-bold tracking-wider mb-2">Skills</span>
+                        <ul>
+                           <li *ngFor="let skill of mentorDetails.skills" class="mb-2">{{skill}}</li>
+                        </ul>
+                     </div>
+                     <!-- <hr class="my-6 border-t border-gray-300">
+                     <div class="mt-6 flex flex-wrap gap-4 justify-center">
+                        <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
+                     </div> -->
+                  </div>
+                  <view-mentor-calender [slots]="bookedDates" [slotDates]="slotDates"
+                     (dateEvent)="slotsOfTheDay($event)"></view-mentor-calender>
+                  <view-slots [slotTimes]="slotTimes" (bookingTimeEvent)="bookingTime($event)"></view-slots>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

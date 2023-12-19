@@ -16,7 +16,7 @@ export const MenteeLoginAuthGuard: CanActivateFn = (route, state) => {
 };
 
 // Checking if the user is logged out or not
-export const MenteeLoggedInAuth: CanActivateFn = (route, state) => {
+export const MenteeLoggedOutAuth: CanActivateFn = (route, state) => {
   const menteeAuth = inject(AuthServiceService);
   const router = inject(Router);
 
