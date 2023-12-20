@@ -13,6 +13,11 @@ export class MenteeSlotService {
 
   constructor(private http:HttpClient) { }
 
+
+  bookingPayment(fee:object):Observable<any>{
+    return this.http.post(`${environment.menteeslotURL}/bookingPayment`,fee);
+  }
+
   // For booking the slot
   bookSlot(data:BookSlot):Observable<HttpResponseModel>{
     return this.http.post<HttpResponseModel>(`${environment.menteeslotURL}/bookSlot`,data);

@@ -1,6 +1,7 @@
 // For booking the slot
 export interface BookSlot{
    mentorId:string;
+   fee:number;
    slotDate:string;
    slotTime:string;
 }

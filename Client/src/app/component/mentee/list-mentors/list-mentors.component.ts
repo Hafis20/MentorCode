@@ -11,12 +11,14 @@ import { MessageToastrService } from 'src/app/services/message-toastr.service';
 })
 export class ListMentorsComponent implements OnInit{
   mentorsList!:ListMentorsHomeOfMentee[];
+  searchList!:ListMentorsHomeOfMentee[];
     constructor(private router:Router,private service:MenteeService,private showMessage:MessageToastrService){}
 
     ngOnInit(): void {
       this.service.getAvaliableMentors().subscribe({
         next:(response)=>{
           this.mentorsList = response;
+          this.searchList = response;
         },
         error:(error)=>{
           this.showMessage.showErrorToastr(error.error.message);
@@ -26,5 +28,12 @@ export class ListMentorsComponent implements OnInit{
 
     gotoProfile(){
       this.router.navigate(['/mentee/']);
+    }
+    
+    // Searching a mentor
+    searchMentor(value:string){
+      // this.mentorsList = this.searchList.filter((mentor)=>{
+      //   return mentor.skills.some((skill)=>skill.toLowerCase() === value.toLowerCase());
+      // })
     }
 }
