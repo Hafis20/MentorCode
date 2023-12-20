@@ -1,11 +1,13 @@
 const Slot = require("../models/slotModel");
 const BookedSlot = require("../models/bookingModel");
 
+
+
 const bookSlot = async (req, res) => {// Booking slot as a mentee
   try {
     const menteeId = req.menteeId;
     // console.log(menteeId);
-    const { mentorId, slotDate, slotTime } = req.body;
+    const { mentorId, slotDate, slotTime,fee } = req.body;
     // const { menteeId,mentorId, slotDate, slotTime } = req.body;
     let bookedSlot = await BookedSlot.findOne({ menteeId: menteeId }); // We are checking the mentee have already a doc
 
@@ -32,6 +34,7 @@ const bookSlot = async (req, res) => {// Booking slot as a mentee
       mentorId: mentorId,
       date: slotDate,
       time: slotTime,
+      fee:fee
     };
 
     if (bookedSlot) {
