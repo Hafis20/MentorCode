@@ -27,4 +27,9 @@ export class MenteeSlotService {
   getMenteeBookingDetails():Observable<MenteeBookingsDetails[]>{
     return this.http.get<MenteeBookingsDetails[]>(`${environment.menteeslotURL}/getBookingDetails`);
   }
+
+  // Mentoring completed
+  completeMentorShip(data:object):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.menteeslotURL}/completeMentorShip`,data);
+  }
 }

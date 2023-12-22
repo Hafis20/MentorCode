@@ -1,3 +1,28 @@
-<div class="pt-5">
-   <button [routerLink]="['/mentor/edit-profile']" class="px-10 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Edit Profile</button>
+
+<div *ngIf="mentor">
+   <div class="w-full h-auto px-10 pt-10">
+      <div class=" w-full flex justify-between px-10 shadow-lg">
+         <div class="card h-96 w-auto my-3  py-3">
+           <div class="profile-image flex justify-center">
+            <ng-container *ngIf="mentor.image;else defaultImage">
+               <img class="object-contain w-25 h-32" [src]="mentor.image" alt="">
+            </ng-container>
+            <ng-template #defaultImage>
+               <img class="object-contain w-25 h-32" src="assets/imgs/background/default-profile.jpeg" alt="">
+            </ng-template>
+         </div>
+           <div class="card-body py-3 ">
+            <p class="text-xl font-sans text-gray-400">Name : <span class="font-bold text-gray-600"> {{mentor.name}}</span></p>
+            <p class="text-xl font-sans text-gray-400">Experience : <span class="font-bold text-gray-600"> {{mentor.experience}} Yrs</span></p>
+            <p class="text-xl font-sans text-gray-400">Mobile : <span class="font-bold  text-gray-600"> {{mentor.mobile}}</span></p>
+            <p class="text-xl font-sans text-gray-400">My Fees : <span class="font-bold text-gray-600">₹ {{mentor.fee}}</span></p>
+           </div>
+         </div>
+         <div class="button">
+            <div>
+               <button [routerLink]="['/mentor/edit-profile']" class="px-10 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Edit Profile</button>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>

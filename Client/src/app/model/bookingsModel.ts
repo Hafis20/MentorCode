@@ -9,6 +9,7 @@ export interface MenteeBookingsDetails {
   date: string;
   time: string;
   status: string;
+  _id:string;
 }
 
 

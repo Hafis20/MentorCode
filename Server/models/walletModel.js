@@ -5,7 +5,7 @@ const walletSchema = new mongoose.Schema({
       type:mongoose.Types.ObjectId,
    },
    balance:{
-      type:String
+      type:Number
    },
    transaction_history:[]
 })

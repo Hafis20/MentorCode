@@ -13,6 +13,7 @@ export class MyBookingsComponent implements OnInit{
     "Date",
     "Time",
     "Status",
+    "Action"
   ]
 
   BookingDetails!:MenteeBookingsDetails[];   // Setting and passing the data about booking details of the user
@@ -20,9 +21,21 @@ export class MyBookingsComponent implements OnInit{
   constructor(private service:MenteeSlotService){}
 
   ngOnInit(): void {
+    this.getMenteeBookingDetails();
+  }
+
+  getMenteeBookingDetails(){
     this.service.getMenteeBookingDetails().subscribe({    // For getting the mentee booking details service
       next:(response)=>{
         this.BookingDetails = response;  // Setting the data of details
+      }
+    })
+  }
+  completeAction(data:object){
+    this.service.completeMentorShip(data).subscribe({
+      next:(response)=>{
+        console.log(response);
+        this.getMenteeBookingDetails();
       }
     })
   }
