@@ -28,7 +28,8 @@ export class ViewMentorComponent implements OnInit {
   currentDate!: Date;
   mentorId!: string;
   bookedDates!:string[];
-  bookingTime!:string;
+  slot_id!:string;
+  slotTime!:string;
   constructor(
     private route: ActivatedRoute,
     private service: MenteeService,
@@ -79,8 +80,10 @@ export class ViewMentorComponent implements OnInit {
      this.slotTimes = dateTime?.slots  as ShowSlots[] // Passing the data in to cards of slot
   }
 
-  bookingTimePayment(time: string) {    // For booking
-    this.bookingTime = time;
+  bookingTimePayment(data:any) {    // For booking
+    this.slot_id = data.slot_id;
+    this.slotTime = data.slotTime;
+    
     this.paymentService.bookingPayment({fee:this.mentorDetails.fee}).subscribe({   // For payment 
       next:(response)=>{
         this.razorpayPopUp(response);
@@ -101,7 +104,7 @@ export class ViewMentorComponent implements OnInit {
       name:'MentorCode',
       key:res.key_id,
       order_id:res.order_id,
-      image:'assets/imgs/logo/Logo.png',
+      image:'https://imgs.search.brave.com/bmhZt0Gh9CjW_Wk8CCob0T2V4PS_bHQYW3lfF_Ptlso/rs:fit:500:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA0LzM3LzM1LzA2/LzM2MF9GXzQzNzM1/MDY3Nl85Y1VibE1k/N29zNnNrZzA0VmE1/dUhhTWY1VFRaaEhX/Zy5qcGc',
       prefill:{
         name:'Hafis',
         email:'hafis@gmail.com',
@@ -112,7 +115,7 @@ export class ViewMentorComponent implements OnInit {
       },
       modal:{
         ondismiss:()=>{
-          alert('Payment fail')
+          this.showMessage.showWarningToastr('Payment Failed');
         }
       },
       handler:this.paymentSuccess.bind(this)
@@ -125,8 +128,10 @@ export class ViewMentorComponent implements OnInit {
      const data:BookSlot = {
       mentorId: this.mentorId,
       fee:this.mentorDetails.fee,
+      payment_id:options.razorpay_payment_id,
       slotDate: this.currentDate.toDateString(),
-      slotTime: this.bookingTime,
+      slot_id: this.slot_id,
+      slotTime:this.slotTime,
     };
     this.slotService.bookSlot(data).subscribe({
       next:(response)=>{

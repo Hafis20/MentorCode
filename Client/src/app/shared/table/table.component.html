@@ -28,10 +28,14 @@
                     <tr *ngFor="let booking of MenteeBookingDetails;let i=index" class="border-b border-dashed last:border-b-0">
                       <td class="p-3 pl-0">
                         <div class="flex items-center">
-                          <div class="relative inline-block shrink-0 rounded-2xl me-3">
-                            <img src="assets/imgs/background/angular-profile.png"
+                          <ng-container *ngIf="booking.mentorId.image;else defaultImage" class="relative inline-block shrink-0 rounded-2xl me-3">
+                            <img [src]="booking.mentorId.image"
                               class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="">
-                          </div>
+                          </ng-container>
+                          <ng-template #defaultImage class="relative inline-block shrink-0 rounded-2xl me-3">
+                            <img src="assets/imgs/background/defualt-profile.jpeg"
+                            class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="">
+                          </ng-template>
                           <div class="flex flex-col justify-start">
                             <a href="javascript:void(0)"
                               class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary">
@@ -69,7 +73,7 @@
                                 Completed</a>
                             </div>
                             <div class="" role="none">
-                              <a class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-400 " role="menuitem" tabindex="-1"
+                              <a (click)="cancel(booking._id)" class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-400 " role="menuitem" tabindex="-1"
                                 id="menu-item-2"><i class="fa fa-trash" aria-hidden="true"></i>
                                 Cancel Booking</a>
                             </div>

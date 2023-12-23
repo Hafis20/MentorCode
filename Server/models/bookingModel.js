@@ -8,8 +8,12 @@ const bookingSchema = new mongoose.Schema({
    details:[
       {
          mentorId:{
-            type:mongoose.Schema.ObjectId,
+            type:mongoose.Types.ObjectId,
             ref: 'Mentor'
+         },
+         slot_id:{
+            type:mongoose.Types.ObjectId,
+            ref:'slots.added_slots'
          },
          date:{
             type:String
@@ -19,6 +23,9 @@ const bookingSchema = new mongoose.Schema({
          },
          fee:{
             type:Number
+         },
+         payment_id:{
+            type:String
          },
          status:{
             type:String,

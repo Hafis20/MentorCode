@@ -24,3 +24,8 @@ export interface MentorBookingDetails {
     image:string;
   };
 }
+
+export interface MenteeSlotAction{
+  bookingId:string;
+  status:'completed'|'cancelled';
+}

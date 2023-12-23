@@ -4,7 +4,7 @@ import { BookSlot } from '../model/slotModel';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpResponseModel } from '../model/commonModel';
-import { MenteeBookingsDetails } from '../model/bookingsModel';
+import { MenteeBookingsDetails, MenteeSlotAction } from '../model/bookingsModel';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,12 @@ export class MenteeSlotService {
   }
 
   // Mentoring completed
-  completeMentorShip(data:object):Observable<HttpResponseModel>{
+  completeMentorShip(data:MenteeSlotAction):Observable<HttpResponseModel>{
     return this.http.post<HttpResponseModel>(`${environment.menteeslotURL}/completeMentorShip`,data);
+  }
+
+  // Mentor booking cancelled
+  cancelMentorShip(data:MenteeSlotAction):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.menteeslotURL}/cancelMentorShip`,data);
   }
 }

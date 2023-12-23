@@ -9,7 +9,7 @@
             <p style="margin: 0;">{{slot.time}}</p>
          </div>
          <div class="flex justify-end">
-            <button (click)="bookMentor(slot.time)"
+            <button (click)="bookMentor(slot._id,slot.time)"
                class="border border-blue-900 hover:bg-blue-900 text-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
                Book
             </button>
