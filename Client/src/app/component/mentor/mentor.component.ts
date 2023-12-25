@@ -22,6 +22,6 @@ export class MentorComponent implements OnInit{
    }
 
    gotoProfile(){
-      this.router.navigate(['/mentor/'])
+      this.router.navigate(['/mentor/dashboard'])
    }
 }

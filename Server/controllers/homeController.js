@@ -46,6 +46,7 @@ const getAvailableMentors = async(req,res)=>{
       ]);
       res.status(200).json(mentors);
    } catch (error) {
+      console.log(error.message)
       res.status(500).json({message:'Server side error'});
    }
 }

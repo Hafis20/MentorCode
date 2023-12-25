@@ -23,7 +23,7 @@ export const MentorLoggedOutAuthGuard:CanActivateFn= (route,state)=>{
 
    // checking
    if(mentorAuth.checkMentorLoggedIn()){
-    router.navigate(['/mentor/']);
+    router.navigate(['/mentor/dashboard']);
     return false;
    }else{
     return true;

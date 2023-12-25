@@ -27,7 +27,7 @@ export class ListMentorsComponent implements OnInit{
     }
 
     gotoProfile(){
-      this.router.navigate(['/mentee/']);
+      this.router.navigate(['/mentee/dashboard']);
     }
     
     // Searching a mentor

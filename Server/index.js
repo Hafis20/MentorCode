@@ -38,6 +38,7 @@ const mentorRouter = require("./routers/mentorRouter");
 const mentorSlotRouter = require("./routers/mentorSlotRouter");
 const menteeSlotRouter = require("./routers/menteeSlotRouter");
 const paymentRouter = require('./routers/paymentRouter');
+const walletRouter = require("./routers/walletRouter");
 
 // calling application middleware for routers
 app.use("/admin", adminRouter);           // For admin operations
@@ -46,6 +47,7 @@ app.use("/mentor", mentorRouter);       // For mentor operations
 app.use('/mentorslot',mentorSlotRouter); // For mentor slot operations
 app.use('/menteeslot',menteeSlotRouter); // For mentee slot operations
 app.use('/payment',paymentRouter);     // For user payment operations
+app.use('/wallet',walletRouter);    // For wallet operations
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);

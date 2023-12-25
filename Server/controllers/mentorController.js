@@ -315,6 +315,15 @@ const editProfile = async(req,res)=>{
     console.log(error.message)
   }
 }
+
+// Data for mentor dashboard
+const dashboardData = async(req,res)=>{
+   try {
+    
+   } catch (error) {
+    res.status(500).json({message:'Internal server error'});
+   }
+}
 module.exports = {
   register,
   login,

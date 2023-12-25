@@ -25,16 +25,18 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let booking of MenteeBookingDetails;let i=index" class="border-b border-dashed last:border-b-0">
+                    <tr *ngFor="let booking of MenteeBookingDetails;let i=index"
+                      class="border-b border-dashed last:border-b-0">
                       <td class="p-3 pl-0">
-                        <div class="flex items-center">
-                          <ng-container *ngIf="booking.mentorId.image;else defaultImage" class="relative inline-block shrink-0 rounded-2xl me-3">
+                        <div class="flex items-center gap-3">
+                          <ng-container *ngIf="booking.mentorId.image;else defaultImage"
+                            class="relative inline-block shrink-0 rounded-2xl me-3">
                             <img [src]="booking.mentorId.image"
                               class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="">
                           </ng-container>
                           <ng-template #defaultImage class="relative inline-block shrink-0 rounded-2xl me-3">
                             <img src="assets/imgs/background/defualt-profile.jpeg"
-                            class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="">
+                              class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="">
                           </ng-template>
                           <div class="flex flex-col justify-start">
                             <a href="javascript:void(0)"
@@ -50,34 +52,40 @@
                         <span class="font-semibold text-light-inverse text-md/normal">{{booking.time}}</span>
                       </td>
 
-                      <td class="p-3 pr-0 text-center" >
-                        <span class="inline-block border border-blue rounded-full py-1 px-3 bg-blue-500  text-white" Bookedslots [bookingStatus]="booking.status">
+                      <td class="p-3 pr-0 text-center">
+                        <span class="inline-block border border-blue rounded-full py-1 px-3 bg-blue-500  text-white"
+                          Bookedslots [bookingStatus]="booking.status">
                           {{booking.status}} </span>
                       </td>
 
                       <!-- Dropdown -->
                       <td class="p-3 pr-0 text-center">
                         <div class="dropdown inline-block relative">
-                          <button (click)="toggleMenu(i)" [disabled]="booking.status === 'completed' || booking.status === 'cancelled'"
+                          <button (click)="toggleMenu(i)"
+                            [disabled]="booking.status === 'completed' || booking.status === 'cancelled'"
                             class=" bg-indigo-400 text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
                             <span class="">Change Status</span>
                           </button>
 
                           <ng-container *ngIf="booking.status !== 'completed'">
                             <div *ngIf="isMenuOpened[i] "
-                            class="dropdown-menu  absolute right-0 z-10 mt-0 w-56 origin-top-right divide-y divide-gray-300 rounded-md bg-indigo-300 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                            <div class=""  role="none">
-                              <a (click)="completed(booking._id)" class="text-gray-700  hover:bg-gray-400 block  px-4 py-2 text-sm cursor-pointer" role="menuitem"
-                                tabindex="-1" id="menu-item-2"><i class="fa fa-trash" aria-hidden="true"></i>
-                                Completed</a>
+                              class="dropdown-menu  absolute right-0 z-10 mt-0 w-56 origin-top-right divide-y divide-gray-300 rounded-md bg-indigo-300 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                              role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                              <div class="" role="none">
+                                <a (click)="completed(booking._id)"
+                                  class="text-gray-700  hover:bg-gray-400 block  px-4 py-2 text-sm cursor-pointer"
+                                  role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa fa-trash"
+                                    aria-hidden="true"></i>
+                                  Completed</a>
+                              </div>
+                              <div class="" role="none">
+                                <a (click)="cancel(booking._id)"
+                                  class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-400 "
+                                  role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa fa-trash"
+                                    aria-hidden="true"></i>
+                                  Cancel Booking</a>
+                              </div>
                             </div>
-                            <div class="" role="none">
-                              <a (click)="cancel(booking._id)" class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-400 " role="menuitem" tabindex="-1"
-                                id="menu-item-2"><i class="fa fa-trash" aria-hidden="true"></i>
-                                Cancel Booking</a>
-                            </div>
-                          </div>
                           </ng-container>
                         </div>
                       </td>
@@ -87,6 +95,9 @@
               </div>
             </div>
           </div>
+
+
+
           <!-- Mentor Details -->
           <div *ngIf="MentorBookingDetails">
             <div *ngIf="MentorBookingDetails;else emptyBookings" class="flex-auto block py-8 pt-6 px-9">
@@ -124,6 +135,21 @@
                         <span
                           class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg">
                           {{booking.details.status}} </span>
+                      </td>
+
+                      <td class="p-3 pr-0 text-center">
+                        <ng-container *ngIf="booking.details.status === 'pending';else cancelled">
+                          <button (click)="cancelByMentor(booking.details._id,booking.menteeDetails._id)"
+                            class=" bg-red-500 text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
+                            <span class="">Cancel Booking</span>
+                          </button>
+                        </ng-container>
+                        <ng-template #cancelled>
+                          <button
+                            class=" bg-red-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
+                            <span class="">Booking cancelled</span>
+                          </button>
+                        </ng-template>
                       </td>
                     </tr>
                   </tbody>

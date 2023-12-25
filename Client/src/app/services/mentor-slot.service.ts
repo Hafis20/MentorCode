@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GetMentorSlots, GetSlotByDate, SlotModel, SlotResponse } from '../model/mentorModel';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { MentorBookingDetails } from '../model/bookingsModel';
+import { MenteeSlotAction, MentorBookingDetails } from '../model/bookingsModel';
+import { HttpResponseModel } from '../model/commonModel';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class MentorSlotService {
   // If any one booked the slots of the mentor it will shows in the mentor side
   getBookedSlots():Observable<MentorBookingDetails[]>{
     return this.http.get<MentorBookingDetails[]>(`${environment.mentorslotURL}/getBookedSlots`);
+  }
+
+  cancelMenteeBooking(data:MenteeSlotAction):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.mentorslotURL}/cancelMenteeBooking`,data);
   }
 }

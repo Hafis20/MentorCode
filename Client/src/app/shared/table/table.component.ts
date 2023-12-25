@@ -42,7 +42,7 @@ export class TableComponent implements OnInit, OnChanges {
     }
 
     if (changes['MentorBookingDetails']) {
-      // console.log(this.MentorBookingDetails);
+      console.log(this.MentorBookingDetails);
     }
   }
 
@@ -59,4 +59,10 @@ export class TableComponent implements OnInit, OnChanges {
   cancel(bookingId:string){
     this.changeStatusEvent.emit({ bookingId: bookingId, status: 'cancelled' });
   }
+  
+  // Cancellation from mentor side
+  cancelByMentor(bookingId:string,menteeId:string){
+    this.changeStatusEvent.emit({bookingId:bookingId,menteeId:menteeId,status:'Mentor cancelled'});
+  }
+  
 }
