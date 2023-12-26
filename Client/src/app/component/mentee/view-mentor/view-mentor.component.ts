@@ -9,7 +9,10 @@ import { BookSlot, ShowSlots } from 'src/app/model/slotModel';
 import { MenteeSlotService } from 'src/app/services/mentee-slot.service';
 import { MenteeService } from 'src/app/services/mentee.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
+import { PaymentService } from 'src/app/services/payment.service';
 import { getMentee } from 'src/app/store/Mentee/mentee.action';
+
+declare var Razorpay:any;
 
 @Component({
   selector: 'view-mentor',
@@ -25,11 +28,14 @@ export class ViewMentorComponent implements OnInit {
   currentDate!: Date;
   mentorId!: string;
   bookedDates!:string[];
+  slot_id!:string;
+  slotTime!:string;
   constructor(
     private route: ActivatedRoute,
     private service: MenteeService,
     private store: Store,
     private slotService: MenteeSlotService,
+    private paymentService:PaymentService,
     private showMessage: MessageToastrService
   ) {}
 
@@ -46,7 +52,6 @@ export class ViewMentorComponent implements OnInit {
     });
 
     this.calenderData();  // For getting the data into the calender;
-
     // Dispatch an action for getting menteee data in to the store
     this.store.dispatch(getMentee());
   }
@@ -75,11 +80,58 @@ export class ViewMentorComponent implements OnInit {
      this.slotTimes = dateTime?.slots  as ShowSlots[] // Passing the data in to cards of slot
   }
 
-  bookingTime(time: string) {
-    const data:BookSlot = {
+  bookingTimePayment(data:any) {    // For booking
+    this.slot_id = data.slot_id;
+    this.slotTime = data.slotTime;
+    
+    this.paymentService.bookingPayment({fee:this.mentorDetails.fee}).subscribe({   // For payment 
+      next:(response)=>{
+        this.razorpayPopUp(response);
+      },
+      error:(error)=>{
+        alert(error.message);
+        console.log(error.message)
+      }
+    })
+    
+  }
+
+  razorpayPopUp(res:any){
+    const RazorpayOptions = {
+      description:'Mentor code Razorpay payment',
+      currency:'INR',
+      amount:res.fee,
+      name:'MentorCode',
+      key:res.key_id,
+      order_id:res.order_id,
+      image:'https://imgs.search.brave.com/bmhZt0Gh9CjW_Wk8CCob0T2V4PS_bHQYW3lfF_Ptlso/rs:fit:500:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA0LzM3LzM1LzA2/LzM2MF9GXzQzNzM1/MDY3Nl85Y1VibE1k/N29zNnNrZzA0VmE1/dUhhTWY1VFRaaEhX/Zy5qcGc',
+      prefill:{
+        name:'Hafis',
+        email:'hafis@gmail.com',
+        phone:'8585858585'
+      },
+      theme:{
+        color:'#6466e3'
+      },
+      modal:{
+        ondismiss:()=>{
+          this.showMessage.showWarningToastr('Payment Failed');
+        }
+      },
+      handler:this.paymentSuccess.bind(this)
+    }
+    const rpz = new Razorpay(RazorpayOptions);
+    rpz.open()
+  }
+
+  paymentSuccess(options:any){
+     const data:BookSlot = {
       mentorId: this.mentorId,
+      fee:this.mentorDetails.fee,
+      payment_id:options.razorpay_payment_id,
       slotDate: this.currentDate.toDateString(),
-      slotTime: time,
+      slot_id: this.slot_id,
+      slotTime:this.slotTime,
     };
     this.slotService.bookSlot(data).subscribe({
       next:(response)=>{

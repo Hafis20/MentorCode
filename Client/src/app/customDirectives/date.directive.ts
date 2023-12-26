@@ -28,8 +28,10 @@ export class DateDirective implements OnChanges{
 
     if(today >= selectedDate){
       this.renderer.addClass(this.element.nativeElement,'opacity-30')
+      this.renderer.addClass(this.element.nativeElement,'pointer-events-none')
     }else{
       this.renderer.removeClass(this.element.nativeElement,'opacity-30')
+      this.renderer.removeClass(this.element.nativeElement,'pointer-events-none')
     }
 
     if(this.createdSlotDates){

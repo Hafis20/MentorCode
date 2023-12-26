@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MentorBookingDetails } from 'src/app/model/bookingsModel';
+import { MenteeSlotAction, MentorBookingDetails } from 'src/app/model/bookingsModel';
 import { MentorSlotService } from 'src/app/services/mentor-slot.service';
+import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
 @Component({
   selector: 'app-view-bookings',
@@ -13,18 +14,32 @@ export class ViewBookingsComponent implements OnInit{
     'Date',
     'Time',
     'Status',
+    'Action',
   ]
 
   BookingDetails!:MentorBookingDetails[];
-    constructor(private service:MentorSlotService){}
+    constructor(private service:MentorSlotService,private showMessage:MessageToastrService){}
 
     ngOnInit(): void {
+      this.getBookedSlots()
+    }
+
+    getBookedSlots(){
       this.service.getBookedSlots().subscribe({
         next:(response)=>{
           this.BookingDetails = response
         },
         error:(error)=>{
           console.log(error.error.message);
+        }
+      })
+    }
+
+    cancelBooking(data:MenteeSlotAction){
+      this.service.cancelMenteeBooking(data).subscribe({
+        next:(response)=>{
+          this.getBookedSlots();
+          this.showMessage.showSuccessToastr(response.message);
         }
       })
     }

@@ -73,6 +73,7 @@ mentorRouter.patch('/change-password',mentorController.changePassword);
 mentorRouter.get('/getMentor',mentorAuth,mentorController.getMentorDetails);
 mentorRouter.get('/getMentorProfile',mentorAuth,mentorController.getMentorProfile);
 mentorRouter.post('/editProfile',mentorAuth, upload.single('image'), mentorController.editProfile);
+mentorRouter.get('/dashboardData',mentorAuth,)
 
 
 module.exports = mentorRouter;

@@ -7,7 +7,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitte
 })
 export class ViewSlotsComponent implements OnInit, OnChanges{
     @Input() slotTimes!:any[];
-    @Output() bookingTimeEvent:EventEmitter<string> = new EventEmitter<string>();
+    @Output() bookingTimeEvent:EventEmitter<object> = new EventEmitter<object>();
 
     constructor(){}
 
@@ -21,7 +21,7 @@ export class ViewSlotsComponent implements OnInit, OnChanges{
       }
     }
 
-    bookMentor(slotTime:string){
-      this.bookingTimeEvent.emit(slotTime);
+    bookMentor(slot_id:string,slotTime:string){
+      this.bookingTimeEvent.emit({slot_id,slotTime});
     }
 }

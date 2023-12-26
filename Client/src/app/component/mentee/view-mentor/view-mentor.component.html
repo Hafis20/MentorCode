@@ -9,8 +9,15 @@
 
                <div class="col-span-4 sm:col-span-9">
                   <div class="bg-white shadow rounded-lg p-6">
-                     <img src="assets/imgs/background/angular-profile.png"
-                        class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" alt="">
+                     <ng-container *ngIf="mentorDetails.image;else defaultImg">
+                        <img [src]="mentorDetails.image" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
+                           alt="">
+                     </ng-container>
+                     <ng-template #defaultImg>
+                        <img src="assets/imgs/background/default-profile.jpeg"
+                           class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" alt="">
+                     </ng-template>
+
                      <h1><span class="text-3xl font-bold mb-4">{{mentorDetails.name}} <span
                               class="text-gray-500 text-lg">(₹ {{mentorDetails.fee}}/ 1h)</span></span></h1>
                      <h2 class="text-xl font-bold mb-4">About Me</h2>
@@ -74,7 +81,7 @@
                   </div>
                   <view-mentor-calender [slots]="bookedDates" [slotDates]="slotDates"
                      (dateEvent)="slotsOfTheDay($event)"></view-mentor-calender>
-                  <view-slots [slotTimes]="slotTimes" (bookingTimeEvent)="bookingTime($event)"></view-slots>
+                  <view-slots [slotTimes]="slotTimes" (bookingTimeEvent)="bookingTimePayment($event)"></view-slots>
                </div>
             </div>
          </div>

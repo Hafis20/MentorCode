@@ -14,8 +14,8 @@ const slotSchema = new mongoose.Schema(
         time: {
           type: String,
         },
-        is_booked:{
-          type:Boolean,
+        is_booked: {
+          type: Boolean,
         },
       },
     ],
@@ -23,4 +23,7 @@ const slotSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("slot", slotSchema);
+// Register the model
+const Slot = mongoose.model("slot", slotSchema);
+
+module.exports = Slot;

@@ -9,6 +9,7 @@ export interface MenteeBookingsDetails {
   date: string;
   time: string;
   status: string;
+  _id:string;
 }
 
 
@@ -17,9 +18,17 @@ export interface MentorBookingDetails {
     date: string;
     time: string;
     status: string;
+    _id:string;
   };
   menteeDetails: {
+    _id:string;
     name: string;
     image:string;
   };
+}
+
+export interface MenteeSlotAction{
+  bookingId:string;
+  status:'completed'|'cancelled'|'Mentor cancelled';
+  menteeId?:string;  // This is for mentor side cancellation because we want to find which mentor slot is cancelled
 }

@@ -28,7 +28,6 @@ export class MentorService {
 
   //Login 
   login(data:LoginModel):Observable<LoginResponseModel>{
-    console.log('Mentor login called',data);
     return this.http.post<LoginResponseModel>(`${environment.mentorURL}/login`,data);
   }
 
