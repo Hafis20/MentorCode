@@ -9,12 +9,12 @@ const adminAuth = async (req, res, next) => {
       const decoded = jwt.verify(   // Verifying the token
         token,
         process.env.JWT_ACCESS_TOKEN,
-        (err, adminId) => {
+        (err, admin) => {
           if (err) {
             console.log(err.message);
             return res.status(401).json({ message: "Unauthorized" });
           } else {
-            req.adminId = adminId;
+            req.adminId = admin.userId;
             next();
           }
         }

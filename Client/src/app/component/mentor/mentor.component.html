@@ -1,11 +1,11 @@
-<div>
-   <app-header (gotoProfileEvent)="gotoProfile()"></app-header>
-</div>
-<div class="flex h-screen gap-10">
-   <div class="w-1/6 bg-slate-200" style="margin-top: 95px;">
-      <app-sidebar [userType]="userType"  (logoutEvent)="logout()"></app-sidebar>
-   </div>
-   <div class="flex-1" style="margin-top: 95px;">
-      <router-outlet></router-outlet>
+<app-header (gotoProfileEvent)="gotoProfile()"></app-header>
+<div class="min-h-screen bg-gray-200 flex flex-col ">
+   <div class='relative flex flex-grow'>
+      <div class="w-1/6 bg-slate-200">
+         <app-sidebar [userType]="userType"  (logoutEvent)="logout()"></app-sidebar>
+      </div>
+      <div class="flex-1 p-4">
+         <router-outlet></router-outlet>
+      </div>
    </div>
 </div>

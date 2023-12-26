@@ -1,7 +1,7 @@
 <ng-container>
   <!-- component -->
   <div class="flex flex-wrap  mb-5 font-poppins">
-    <div class="w-full max-w-full px-3 mb-6 mx-auto">
+    <div class="w-full max-w-full px-5 mb-6 mx-auto">
       <div
         class="relative  flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem]  bg-gray-100 m-5">
         <div
@@ -27,7 +27,7 @@
                   <tbody>
                     <tr *ngFor="let booking of MenteeBookingDetails;let i=index"
                       class="border-b border-dashed last:border-b-0">
-                      <td class="p-3 pl-0">
+                      <td class="p-3 px-10 pl-0">
                         <div class="flex items-center gap-3">
                           <ng-container *ngIf="booking.mentorId.image;else defaultImage"
                             class="relative inline-block shrink-0 rounded-2xl me-3">
@@ -45,21 +45,21 @@
                           </div>
                         </div>
                       </td>
-                      <td class="pr-0 text-center">
+                      <td class="pr-0  px-10 text-center">
                         <span class="font-semibold text-light-inverse text-md/normal">{{booking.date}}</span>
                       </td>
-                      <td class="p-3 pr-0 text-center">
+                      <td class="p-3  px-10 pr-0 text-center">
                         <span class="font-semibold text-light-inverse text-md/normal">{{booking.time}}</span>
                       </td>
 
-                      <td class="p-3 pr-0 text-center">
+                      <td class="p-3  px-10 pr-0 text-center">
                         <span class="inline-block border border-blue rounded-full py-1 px-3 bg-blue-500  text-white"
                           Bookedslots [bookingStatus]="booking.status">
                           {{booking.status}} </span>
                       </td>
 
                       <!-- Dropdown -->
-                      <td class="p-3 pr-0 text-center">
+                      <td class="p-3  px-10 pr-0 text-center">
                         <div class="dropdown inline-block relative">
                           <button (click)="toggleMenu(i)"
                             [disabled]="booking.status === 'completed' || booking.status === 'cancelled'|| booking.status === 'Mentor cancelled'"

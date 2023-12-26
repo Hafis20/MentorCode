@@ -1,7 +1,7 @@
-import { extend } from "jquery";
 
 export interface AdminState{
    adminInfo:{
+      _id:string;
       name:string,
       role:string;
    }

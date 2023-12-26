@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MenteeData, MentorData } from 'src/app/model/adminModel';
 import {
+  AdminInfo,
   HttpResponseModel,
   LoginModel,
   LoginResponseModel,
@@ -42,6 +43,11 @@ export class AdminService {
   // Login admin
   login(data: LoginModel): Observable<LoginResponseModel> {
     return this.http.post<LoginResponseModel>(`${environment.adminURL}/login`,data);
+  }
+
+  // get admin details for store
+  getAdmin():Observable<AdminInfo>{
+    return this.http.get<AdminInfo>(`${environment.adminURL}/getAdminData`);
   }
 
   // Getting all Mentees

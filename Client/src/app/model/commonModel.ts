@@ -28,6 +28,7 @@ export interface UserInfo{
 }
 
 export interface AdminInfo{
+   _id:string;
    name:string;
    role:string;
 }

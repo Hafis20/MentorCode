@@ -59,6 +59,7 @@ import { SharedTableDirective } from './customDirectives/shared-table.directive'
 import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
 import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profile/mentor-edit-profile.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { WalletAmountCardComponent } from './shared/wallet-amount-card/wallet-amount-card.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     ViewBookingsComponent,
     MentorEditProfileComponent,
     PaginationComponent,
+    WalletAmountCardComponent,
   ],
   imports: [
     BrowserModule,

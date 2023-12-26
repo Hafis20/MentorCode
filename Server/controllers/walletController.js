@@ -13,9 +13,11 @@ const getUserWallet = async (req, res) => {
         balance: 0,
         transaction_history: [],
       });
+      await wallet.save();
     }
     res.status(200).json(wallet);   // Send the wallet amount
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };

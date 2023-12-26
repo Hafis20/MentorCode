@@ -1,45 +1,43 @@
-<header
-  class="fixed top-0 w-full font-poppins bg-white bg-opacity-95 text-blue-900 shadow-lg z-10 hidden md:block sm:block transition-all ease-in-out duration-300">
-  <div class="container mx-auto flex items-center h-24">
-    <a routerLink="/home" class="flex items-center justify-center">
-      <img class="h-16 px-5" src="assets/imgs/logo/Logo.png" alt="" />
-      <span class="text-4xl headerColor"><b>M</b>entor<b>C</b>ode</span>
-    </a>
-    <nav class="contents font-semibold text-base lg:text-lg">
-      <ul class="ml-auto flex items-center">
-        <li class="p-5 xl:p-8">
-          <a routerLink="/mentee/login">
-            <span></span>
+<header class="sticky top-0 z-50 w-full">
+  <div class="relative">
+    <nav class="bg-white h-24 flex shadow-lg ">
+      <div class="flex w-full justify-between items-center">
+        <div class="bg-white h-auto">
+          <a routerLink="/home" class="flex items-center justify-center">
+            <img class="h-16 px-5" src="assets/imgs/logo/Logo.png" alt="" />
+            <span class="text-4xl headerColor"><b>M</b>entor<b>C</b>ode</span>
           </a>
-        </li>
-      </ul>
+        </div>
+        <div class="bg-white h-auto flex items-center justify-between">
+          <div class="pr-5">
+            <button [routerLink]="['']"
+              class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
+              Home
+            </button>
+          </div>
+          <ng-container *ngIf="!isLogin;else profile">
+            <div class="pr-5">
+              <button [routerLink]="['/mentor/login']" *ngIf="!currentUser || currentUser === 'mentor'"
+                class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
+                Become a Mentor
+              </button>
+            </div>
+          
+            <div class="pr-5">
+              <button [routerLink]="['/mentee/login']" *ngIf="!currentUser || currentUser === 'mentee'"
+                class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
+                Sign In
+              </button>
+            </div>
+          </ng-container>
+          <ng-template #profile>
+            <div (click)="gotoProfile()" 
+              class="m-1 hidden  mr-4 w-12 h-12 relative md:flex justify-center items-center rounded-full cursor-pointer bg-gray-500 text-xl text-white">
+              <img src="assets/imgs/background/default-profile.jpeg" class="rounded-full">
+            </div>
+          </ng-template>
+        </div>
+      </div>
     </nav>
-    <div class="pr-5">
-      <button [routerLink]="['']"
-        class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
-        Home
-      </button>
-    </div>
-    <ng-container *ngIf="!isLogin;else profile">
-      <div class="pr-5">
-        <button [routerLink]="['/mentor/login']" *ngIf="!currentUser || currentUser === 'mentor'"
-          class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
-          Become a Mentor
-        </button>
-      </div>
-
-      <div class="pr-5">
-        <button [routerLink]="['/mentee/login']" *ngIf="!currentUser || currentUser === 'mentee'"
-          class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
-          Sign In
-        </button>
-      </div>
-    </ng-container>
-    <ng-template #profile>
-      <div (click)="gotoProfile()"
-        class="m-1 mr-4 w-12 h-12 relative flex justify-center items-center rounded-full cursor-pointer bg-gray-500 text-xl text-white">
-        <img src="assets/imgs/background/default-profile.jpeg" class="rounded-full">
-      </div>
-    </ng-template>
   </div>
 </header>

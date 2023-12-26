@@ -29,6 +29,8 @@ const adminAuth = require('../middlewares/adminAuth');
 
 // Login an admin
 adminRouter.post('/login',adminController.login);
+// Get admin details to store
+adminRouter.get('/getAdminData',adminAuth,adminController.getAdminData);
 // Getting all the mentees
 adminRouter.get('/getAllMentees',adminAuth,adminController.getAllMentees);
 // Getting all the mentors

@@ -11,6 +11,7 @@ import { getMentorInfo } from 'src/app/store/Mentor/mentor.selector';
 export class AvailableSlotsComponent implements OnInit {
   @Input() currentDate!: Date;
   @Input() timeSlots!:string[];
+  @Input() from!:string;
   @Output() createSlotEvent: EventEmitter<SlotModel> = new EventEmitter<SlotModel>();
   mentorId!:string;
 
@@ -31,5 +32,9 @@ export class AvailableSlotsComponent implements OnInit {
       time: time,
     };
     this.createSlotEvent.emit(data);
+  }
+
+  setAsDefault(time:string){
+    console.log(time);
   }
 }

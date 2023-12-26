@@ -28,6 +28,7 @@ export class SlotManagementComponent implements OnInit {
   unbookedSlots: string[] = [];
   mentorDetails!: UserInfo;
   createdSlotDates!:string[];
+  from:string = 'calender'
 
   constructor(private service: MentorSlotService, private store: Store,private showMessage:MessageToastrService) {}
 

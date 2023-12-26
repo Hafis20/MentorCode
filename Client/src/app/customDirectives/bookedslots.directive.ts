@@ -38,4 +38,6 @@ export class BookedslotsDirective implements OnChanges{
       this.renderer.addClass(this.element.nativeElement,'bg-orange-400')
     }
   }
+
+  
 }
