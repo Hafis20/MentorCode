@@ -58,6 +58,7 @@ import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.
 import { SharedTableDirective } from './customDirectives/shared-table.directive';
 import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
 import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profile/mentor-edit-profile.component';
+import { PaginationComponent } from './shared/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profi
     SharedTableDirective,
     ViewBookingsComponent,
     MentorEditProfileComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

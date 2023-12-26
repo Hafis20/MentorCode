@@ -70,7 +70,7 @@ export class SharedTableComponent implements OnInit, OnChanges {
     this.currentUsers = this.showUsersInTable();
   }
 
-  showUsersInTable(): (MenteeData | MenteeData)[] {
+  showUsersInTable(): (MenteeData | MentorData)[] {
     if (this.usersList) {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;

@@ -34,6 +34,8 @@ export class BookedslotsDirective implements OnChanges{
       this.renderer.addClass(this.element.nativeElement,'bg-green-500');
     }else if(this.bookingStatus === 'cancelled'){
       this.renderer.addClass(this.element.nativeElement,'bg-red-500');
+    }else if(this.bookingStatus === 'Mentor cancelled'){
+      this.renderer.addClass(this.element.nativeElement,'bg-orange-400')
     }
   }
 }

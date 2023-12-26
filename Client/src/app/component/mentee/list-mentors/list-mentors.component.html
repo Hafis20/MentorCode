@@ -25,7 +25,11 @@
             </form>
 
          </div>
-         <cards [mentorDetails]="mentorsList"></cards>
+         <cards [mentorDetails]="currentUsers"></cards>
+      </div>
+      <!-- Pagination -->
+      <div class="px-20 flex justify-end">
+         <pagination [total]="totalMentors" [currentPage]="currentPage" (changePageEvent)="changePage($event)"></pagination>
       </div>
    </div>
 </div>

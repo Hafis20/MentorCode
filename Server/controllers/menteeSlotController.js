@@ -2,7 +2,6 @@ const Slot = require("../models/slotModel");
 const BookedSlot = require("../models/bookingModel");
 const { default: mongoose } = require("mongoose");
 const Wallet = require("../models/walletModel");
-const Mentor = require('../models/mentorModel');
 const getAdminData = require("../Helper/getAdmin");
 const { refundPayment } = require("./paymentController");
 
@@ -12,7 +11,7 @@ const bookSlot = async (req, res) => {
     const menteeId = req.menteeId;
     // console.log(menteeId);
     const { mentorId, slotDate, slotTime, fee, payment_id,slot_id } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     // const { menteeId,mentorId, slotDate, slotTime } = req.body;
     let bookedSlot = await BookedSlot.findOne({ menteeId: menteeId }); // We are checking the mentee have already a doc
 

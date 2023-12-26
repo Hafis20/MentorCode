@@ -62,7 +62,7 @@
                       <td class="p-3 pr-0 text-center">
                         <div class="dropdown inline-block relative">
                           <button (click)="toggleMenu(i)"
-                            [disabled]="booking.status === 'completed' || booking.status === 'cancelled'"
+                            [disabled]="booking.status === 'completed' || booking.status === 'cancelled'|| booking.status === 'Mentor cancelled'"
                             class=" bg-indigo-400 text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
                             <span class="">Change Status</span>
                           </button>
@@ -138,21 +138,28 @@
                       </td>
 
                       <td class="p-3 pr-0 text-center">
-                        <ng-container *ngIf="booking.details.status === 'pending';else cancelled">
+                        <ng-container *ngIf="booking.details.status === 'pending'">
                           <button (click)="cancelByMentor(booking.details._id,booking.menteeDetails._id)"
                             class=" bg-red-500 text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
                             <span class="">Cancel Booking</span>
                           </button>
                         </ng-container>
-                        <ng-template #cancelled>
-                          <button
+                        <ng-container *ngIf="booking.details.status === 'cancelled' || booking.details.status === 'Mentor cancelled'">
+                          <button 
                             class=" bg-red-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
-                            <span class="">Booking cancelled</span>
+                            <span class="">Cancelled</span>
                           </button>
-                        </ng-template>
+                        </ng-container>
+                        <ng-container *ngIf="booking.details.status === 'completed'">
+                          <button 
+                            class=" bg-green-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
+                            <span class="">Completed</span>
+                          </button>
+                        </ng-container>
                       </td>
                     </tr>
                   </tbody>
+                  <pagination></pagination>
                 </table>
               </div>
             </div>
