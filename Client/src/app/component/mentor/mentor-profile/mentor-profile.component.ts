@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MentorProfile } from 'src/app/model/mentorModel';
+import { MentorSlotService } from 'src/app/services/mentor-slot.service';
 import { MentorService } from 'src/app/services/mentor.service';
+import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
 @Component({
   selector: 'app-mentor-profile',
@@ -20,12 +22,42 @@ export class MentorProfileComponent implements OnInit {
   mentor!:MentorProfile;
   from:string = 'editProfile'
 
-  constructor(private service:MentorService) {}
+  constructor(private service:MentorService,
+    private mentorSlotService:MentorSlotService,
+    private showMessage:MessageToastrService
+  ) {}
   ngOnInit(): void {
     this.service.getMentorProfile().subscribe({
       next:(response)=>{
         this.mentor = response[0];
+        this.getDefaultSlotsOfMentor();
       }
     })
+  }
+
+  getDefaultSlotsOfMentor(){
+    this.mentorSlotService.getDefaultSlot().subscribe({
+      next:(response)=>{
+        this.timeSlots = this.timeSlots.filter((slot)=>{
+          return !response.includes(slot);
+        })
+      },
+      error:(error)=>{
+        console.log(error.error.message);
+      }
+    })
+  }
+
+  defaultSlotSetting(time:string){
+    this.mentorSlotService.setDefaultSlot({time}).subscribe({
+      next:(response)=>{
+        this.getDefaultSlotsOfMentor(); // Refreshing the component
+        this.showMessage.showSuccessToastr(response.message);
+      },
+      error:(error)=>{
+        this.showMessage.showErrorToastr(error.error.message);
+      }
+    })
+    
   }
 }

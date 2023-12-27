@@ -7,15 +7,18 @@
         <div
           class="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
           <!-- card header -->
-          <div class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
+          <div class="px-9 flex justify-between items-stretch flex-wrap pt-5 bg-transparent">
             <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
               <span class="mr-3 font-semibold text-dark">My Bookings</span>
             </h3>
           </div>
           <!-- end card header -->
+          <div class="px-8">
+             <filter (filterEvent)="filter($event)"></filter>
+          </div>
           <!-- card body  -->
           <div *ngIf="MenteeBookingDetails">
-            <div *ngIf="MenteeBookingDetails;else emptyBookings" class="flex-auto block py-8 pt-6 px-9">
+            <div *ngIf="MenteeBookingDetails;else emptyBookings" class="flex-auto block  px-9">
               <div>
                 <table class="w-full my-0 align-middle text-dark border-neutral-200">
                   <thead class="align-bottom ">
@@ -35,7 +38,7 @@
                               class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="">
                           </ng-container>
                           <ng-template #defaultImage class="relative inline-block shrink-0 rounded-2xl me-3">
-                            <img src="assets/imgs/background/defualt-profile.jpeg"
+                            <img src="assets/imgs/background/default-profile.jpeg"
                               class="w-[50px] h-[50px] inline-block shrink-0 rounded-2xl" alt="">
                           </ng-template>
                           <div class="flex flex-col justify-start">

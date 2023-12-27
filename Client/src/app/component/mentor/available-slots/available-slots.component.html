@@ -1,10 +1,10 @@
-<div *ngIf="timeSlots.length > 0">
+<div *ngIf="timeSlots.length > 0" class="font-poppins">
    <div *ngIf="from ==='calender'">
       <h1><span class="font-bold pl-20">Available Slots</span></h1>
    </div>
    <div class="h-52 overflow-y-scroll">
       <div *ngFor="let time of timeSlots"  [ngClass]="{'bg-indigo-600':from ==='editProfile'}"
-         class="w-full font-bold max-w-sm mx-auto rounded overflow-hidden px-10 py-3 shadow-lg bg-sky-200 flex gap-3 mb-2">
+         class="w-full font-bold max-w-sm mx-auto rounded overflow-hidden px-8 py-3 shadow-lg bg-sky-200 flex gap-3 mb-2">
          <div class="flex justify-center items-center ">
             <p style="margin: 0;">{{time}}</p>
          </div>

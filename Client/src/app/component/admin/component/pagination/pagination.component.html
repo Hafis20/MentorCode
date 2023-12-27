@@ -1,4 +1,4 @@
-<div class="bg-white p-4 flex items-center flex-wrap" *ngIf="pages.length !==0 && total > 5">
+<div class="bg-gray-200 p-4 flex items-center flex-wrap" *ngIf="pages.length !==0 && total > 5">
    <nav aria-label="Page navigation">
      <ul class="inline-flex">
        <li>
@@ -21,7 +21,7 @@
        
        <li>
          <button (click)="changePage(currentPage + 1)" 
-           class="h-10 px-4 ml-2 text-black transition-colors duration-150 bg-white rounded-r-lg focus:shadow-outline hover:bg-sky-100"
+           class="h-10 px-4 ml-2 text-black transition-colors duration-150 bg-gray-200 rounded-r-lg focus:shadow-outline hover:bg-sky-100"
            [disabled]="currentPage === pages.length">
            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />

@@ -16,7 +16,7 @@ import { MenteeData, MentorData } from 'src/app/model/adminModel';
 })
 export class SharedTableComponent implements OnInit, OnChanges {
   currentPage: number = 1;
-  itemsPerPage: number = 5; // Set your desired limit
+  itemsPerPage: number = 5; // Set desired limit
   currentUsers!: (MentorData | MenteeData)[];
 
   // Getting data from the parent

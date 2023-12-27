@@ -60,6 +60,8 @@ import { ViewBookingsComponent } from './component/mentor/view-bookings/view-boo
 import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profile/mentor-edit-profile.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
 import { WalletAmountCardComponent } from './shared/wallet-amount-card/wallet-amount-card.component';
+import { SearchBarComponent } from './shared/search-bar/search-bar.component';
+import { FilterBarComponent } from './shared/filter-bar/filter-bar.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +106,8 @@ import { WalletAmountCardComponent } from './shared/wallet-amount-card/wallet-am
     MentorEditProfileComponent,
     PaginationComponent,
     WalletAmountCardComponent,
+    SearchBarComponent,
+    FilterBarComponent,
   ],
   imports: [
     BrowserModule,

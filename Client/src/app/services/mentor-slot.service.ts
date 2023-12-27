@@ -37,7 +37,18 @@ export class MentorSlotService {
     return this.http.get<MentorBookingDetails[]>(`${environment.mentorslotURL}/getBookedSlots`);
   }
 
+  // Cancel the mentee booked slot
   cancelMenteeBooking(data:MenteeSlotAction):Observable<HttpResponseModel>{
     return this.http.post<HttpResponseModel>(`${environment.mentorslotURL}/cancelMenteeBooking`,data);
+  }
+
+  // get Defaul slots
+  getDefaultSlot():Observable<string[]>{
+    return this.http.get<string[]>(`${environment.mentorslotURL}/getDefaultSlots`);
+  }
+
+  // Default slot setting
+  setDefaultSlot(data:object):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.mentorslotURL}/setDefaultSlot`,data);
   }
 }

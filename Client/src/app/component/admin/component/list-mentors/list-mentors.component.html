@@ -3,6 +3,7 @@
 </div>
 <div class="px-10 flex justify-between">
    <filter (filterEvent)="filter($event)"></filter>
-   <searchbar  (searchEvent)="searchText($event)"></searchbar>
+   <searchbar (searchEvent)="searchText($event)"></searchbar>
 </div>
-<shared-table [tableHeaders]="tableHeaders" [usersList]="mentors" (totalUsers)="totalMentors" (blockUser)="block($event)" (unblockUser)="unblock($event)"></shared-table>
+<shared-table [tableHeaders]="tableHeaders" [usersList]="mentors" [totalUsers]="totalMentors"
+   (blockUser)="block($event)" (unblockUser)="unblock($event)"></shared-table>

@@ -25,7 +25,6 @@ export class ListMentorsComponent implements OnInit {
   constructor(
     private service: AdminService,
     private showMessage: MessageToastrService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,14 +36,7 @@ export class ListMentorsComponent implements OnInit {
       },
       error: (error) => {
         const errorMessage = error.error.message;
-        if (error.status === 401 && errorMessage === 'Unauthorized') {
-          // Error handled which is not authorized
-          this.showMessage.showErrorToastr('Unauthorized Admin');
-          localStorage.removeItem('adminToken');
-          this.router.navigate(['/login']);
-        } else {
-          this.showMessage.showErrorToastr(errorMessage);
-        }
+        this.service.errorHandler(error.status, errorMessage);
       },
     });
   }

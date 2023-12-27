@@ -1,11 +1,11 @@
-<div *ngIf="createdSlots.length > 0">
+<div *ngIf="createdSlots.length > 0" class="font-poppins">
    <div>
-      <h1><span class="font-bold pl-20">Created Slots</span></h1>
+      <h1><span class="font-bold  pl-20">Created Slots</span></h1>
    </div>
    <div class="h-52 overflow-y-scroll">
       <div *ngFor="let slot of createdSlots" >
             <div Bookedslots [SlotStatus]="slot.is_booked"
-            class="w-full font-bold max-w-sm mx-auto rounded overflow-hidden px-8 py-3 shadow-lg bg-green-200 flex gap-3 mb-2">
+            class="w-full font-bold max-w-sm mx-auto rounded overflow-hidden px-4 py-3 shadow-lg bg-green-200 flex gap-3 mb-2">
             <div class="flex justify-center items-center px-5">
                <p style="margin: 0;">{{slot.time}}</p>
             </div>

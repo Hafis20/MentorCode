@@ -13,6 +13,7 @@ export class AvailableSlotsComponent implements OnInit {
   @Input() timeSlots!:string[];
   @Input() from!:string;
   @Output() createSlotEvent: EventEmitter<SlotModel> = new EventEmitter<SlotModel>();
+  @Output() defaultSlotEvent:EventEmitter<string> = new EventEmitter<string>();
   mentorId!:string;
 
   
@@ -35,6 +36,6 @@ export class AvailableSlotsComponent implements OnInit {
   }
 
   setAsDefault(time:string){
-    console.log(time);
+    this.defaultSlotEvent.emit(time); // Send the data into parent
   }
 }

@@ -96,9 +96,9 @@ const getAllMentors = async (req, res) => {
 // Block a mentee
 const blockMentee = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { menteeId } = req.body;
     const updatedMenteeData = await Mentee.findByIdAndUpdate(
-      id,
+      menteeId,
       {
         $set: {
           is_blocked: true,
@@ -116,9 +116,9 @@ const blockMentee = async (req, res) => {
 // Unblocking a mentee
 const unblockMentee = async (req, res) => {
   try {
-    const { id } = req.body;
-    const menteeData = await Mentee.findByIdAndUpdate(
-      id,
+    const { menteeId } = req.body;
+    const updatedMenteeData = await Mentee.findByIdAndUpdate(
+      menteeId,
       {
         $set: {
           is_blocked: false,
@@ -128,6 +128,7 @@ const unblockMentee = async (req, res) => {
         new: true,
       }
     );
+    console.log(updatedMenteeData)
     res.status(200).json({ message: "Successfull Unblock" });
   } catch (error) {
     res.status(500).json({ message: "Server side error" });
@@ -137,9 +138,10 @@ const unblockMentee = async (req, res) => {
 // Block a mentee
 const blockMentor = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { mentorId } = req.body;
+    console.log(req.body)
     const updatedMenteeData = await Mentor.findByIdAndUpdate(
-      id,
+      mentorId,
       {
         $set: {
           is_blocked: true,
@@ -157,9 +159,9 @@ const blockMentor = async (req, res) => {
 // Unblocking a mentee
 const unblockMentor = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { mentorId } = req.body;
     const menteeData = await Mentor.findByIdAndUpdate(
-      id,
+      mentorId,
       {
         $set: {
           is_blocked: false,

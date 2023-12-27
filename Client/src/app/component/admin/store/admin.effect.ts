@@ -25,7 +25,7 @@ export class AdminEffect {
               const userData = data;
               localStorage.setItem('adminToken', userData.accessToken);
               this.showMessage.showSuccessToastr(userData.message);
-              this.router.navigate(['/admin/']);
+              this.router.navigate(['/admin/dashboard']);
               return loginAdminSuccess({ admin: userData.accessedUser });
             } else {
               return;

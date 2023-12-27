@@ -1,6 +1,7 @@
 const Slot = require("../models/slotModel");
 const BookedSlot = require("../models/bookingModel");
 const Wallet = require("../models/walletModel");
+const DefaultSlot = require('../models/defaultSlotModel');
 const { default: mongoose } = require("mongoose");
 
 // Creating a slot for mentor
@@ -247,6 +248,39 @@ const cancelMenteeBooking = async (req, res) => {
   }
 };
 
+// Get the default slots of the mentor
+const getDefaultSlots = async(req,res)=>{
+  try {
+    const mentorId = req.mentorId;
+    let defaultSlot = await DefaultSlot.findOne({mentorId:mentorId});
+    if(!defaultSlot){
+      defaultSlot = new DefaultSlot({
+        mentorId:mentorId,
+        defaultSlots:[]
+      })
+      await defaultSlot.save();
+    }
+    const slots = defaultSlot.defaultSlots;
+    res.status(200).json(slots);
+  } catch (error) { 
+    console.log(error.message)
+    res.status(500).json({message:'Internal Server error'});
+  }
+}
+
+// Setting default slot for mentor
+const setDefaultSlot = async(req,res)=>{
+  try {
+    const mentorId = req.mentorId;
+    const {time} = req.body;
+    let mentordefaultSlot = await DefaultSlot.findOne({mentorId:mentorId});    // Checking the user is already exist in db
+    mentordefaultSlot.defaultSlots.push(time);
+    await mentordefaultSlot.save(); // Saving the default time into the database
+    res.status(200).json({message:'Default slot created'});
+  } catch (error) {
+    res.status(500).json({message:'Internal Server error'});
+  }
+}
 module.exports = {
   createSlot,
   getSlotsByDate,
@@ -254,4 +288,6 @@ module.exports = {
   getSlotsOfMentor,
   getBookedSlots,
   cancelMenteeBooking,
+  getDefaultSlots,
+  setDefaultSlot,
 };

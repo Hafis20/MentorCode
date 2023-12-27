@@ -21,7 +21,7 @@ export const LoggedInAuthGuard:CanActivateFn = (route,state)=>{
   const router = inject(Router);
   
   if(authService.checkAdminLoggedIn()){
-    router.navigate(['/admin/'])
+    router.navigate(['/admin/dashboard'])
     return false;
   }else{
     return true;

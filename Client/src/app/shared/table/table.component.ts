@@ -25,6 +25,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() changeStatusEvent: EventEmitter<MenteeSlotAction> =
     new EventEmitter<MenteeSlotAction>();
 
+  @Output() filterEvent:EventEmitter<string> = new EventEmitter<string>();
   isMenuOpened: boolean[] = [];    // For menu toggler
   constructor() {}
 
@@ -65,4 +66,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.changeStatusEvent.emit({bookingId:bookingId,menteeId:menteeId,status:'Mentor cancelled'});
   }
   
+  filter(value:string){
+    this.filterEvent.emit(value);
+  }
 }

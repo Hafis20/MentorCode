@@ -29,7 +29,7 @@
             </div>
             <div>
                <h1>Set Default Slot</h1>
-               <available-slots [from]="from" [timeSlots]="timeSlots"></available-slots>
+               <available-slots [from]="from" [timeSlots]="timeSlots" (defaultSlotEvent)="defaultSlotSetting($event)"></available-slots>
             </div>
          </div>
          
