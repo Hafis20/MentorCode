@@ -6,6 +6,7 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { LoggedInAuthGuard, LoginAuthGuard } from './guards/auth.guard';
 import { ListMenteesComponent } from './component/list-mentees/list-mentees.component';
 import { ListMentorsComponent } from './component/list-mentors/list-mentors.component';
+import { ListBookingsComponent } from './component/list-bookings/list-bookings.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'list-mentees', component: ListMenteesComponent },
       { path: 'list-mentors', component: ListMentorsComponent },
+      { path: 'list-bookings', component: ListBookingsComponent },
     ],
   },
 ];

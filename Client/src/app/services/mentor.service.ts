@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MentorModel, MentorProfile } from '../model/mentorModel';
+import { GetStatistics, MentorModel, MentorProfile } from '../model/mentorModel';
 import {Observable} from 'rxjs';
 import { HttpResponseModel, LoginModel, LoginResponseModel, UserInfo, ValidateOtpModel } from '../model/commonModel';
 import { environment } from 'src/environments/environment';
@@ -53,8 +53,11 @@ export class MentorService {
 
   // Edit profile mentor
   editMentorProfile(data:any):Observable<HttpResponseModel>{
-    console.log('From service',data);
     return this.http.post<HttpResponseModel>(`${environment.mentorURL}/editProfile`,data);
   }
  
+  // get Statistics on dashboard
+  getStatistics():Observable<GetStatistics>{
+    return this.http.get<GetStatistics>(`${environment.mentorURL}/getStatistics`);
+  }
 }

@@ -25,3 +25,11 @@ export interface MenteeData{
 export interface MentorData extends MenteeData {
    experience:string;
 }
+
+
+// get statistics for admin dashboard
+export interface Statistics{
+   noOfMentors:number;
+   noOfMentees:number;
+   bookingDetails:{}
+}

@@ -62,6 +62,9 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
 import { WalletAmountCardComponent } from './shared/wallet-amount-card/wallet-amount-card.component';
 import { SearchBarComponent } from './shared/search-bar/search-bar.component';
 import { FilterBarComponent } from './shared/filter-bar/filter-bar.component';
+import { ChangetopositivePipe } from './customPipes/changetopositive.pipe';
+import { AgChartsAngularModule } from 'ag-charts-angular';
+
 
 @NgModule({
   declarations: [
@@ -108,6 +111,7 @@ import { FilterBarComponent } from './shared/filter-bar/filter-bar.component';
     WalletAmountCardComponent,
     SearchBarComponent,
     FilterBarComponent,
+    ChangetopositivePipe,
   ],
   imports: [
     BrowserModule,
@@ -127,6 +131,7 @@ import { FilterBarComponent } from './shared/filter-bar/filter-bar.component';
     EffectsModule.forRoot([MenteeEffect,AdminEffect,MentorEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     AdminModule,
+    AgChartsAngularModule,
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},

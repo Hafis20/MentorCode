@@ -1,6 +1,6 @@
 <div *ngIf="mentor">
    <div class="w-full rounded-lg h-auto px-10 pt-10">
-      <div class=" w-full  bg-white flex justify-between items-center rounded-md px-10 shadow-lg">
+      <div class=" w-full  bg-white flex justify-between  rounded-md px-10 shadow-lg">
          <div class="card h-96 w-auto my-3  py-3">
             <div class="profile-image flex justify-center">
                <ng-container *ngIf="mentor.image;else defaultImage">
@@ -21,18 +21,11 @@
                      {{mentor.fee}}</span></p>
             </div>
          </div>
-         
-         <div class="button flex flex-col gap-5 items-end justify-around">
-            <div >
-               <button [routerLink]="['/mentor/edit-profile']"
-                  class="px-10 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Edit Profile</button>
-            </div>
-            <div>
-               <h1>Set Default Slot</h1>
-               <available-slots [from]="from" [timeSlots]="timeSlots" (defaultSlotEvent)="defaultSlotSetting($event)"></available-slots>
-            </div>
+         <div class="pt-5">
+            <button [routerLink]="['/mentor/edit-profile']"
+               class="px-10 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Edit Profile</button>
          </div>
-         
       </div>
+      
    </div>
 </div>

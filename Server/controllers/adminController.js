@@ -2,6 +2,7 @@ const { comparePass } = require("../Helper/hashPass");
 const Admin = require("../models/adminModel");
 const Mentee = require("../models/menteeModel");
 const Mentor = require("../models/mentorModel");
+const BookedSlots = require('../models/bookingModel');
 const jwt = require("jsonwebtoken");
 
 // Login Admin
@@ -177,6 +178,31 @@ const unblockMentor = async (req, res) => {
   }
 };
 
+//Count of mentee and mentor in admin side
+const getStatistics = async(req,res)=>{
+  try {
+    const noOfMentors = await Mentor.find().countDocuments();
+    const noOfMentees = await Mentee.find().countDocuments();
+
+    // Booking details
+    const bookingDetails = await BookedSlots.aggregate([
+      {
+        $unwind:'$details',
+      },
+      {
+        $group:{
+          _id:'$details.status',
+          'count':{$sum:1}
+        }
+      },
+    ]);
+    
+    res.status(200).json({noOfMentors,noOfMentees,bookingDetails});
+  } catch (error) {
+    res.status(500).json({message:'Internal Server error'});
+  }
+}
+
 module.exports = {
   login,
   getAllMentees,
@@ -186,4 +212,5 @@ module.exports = {
   blockMentor,
   unblockMentor,
   getAdminData,
+  getStatistics,
 };

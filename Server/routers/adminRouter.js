@@ -43,5 +43,7 @@ adminRouter.patch('/unblockMentee',adminAuth,adminController.unblockMentee);
 adminRouter.patch('/blockMentor',adminAuth,adminController.blockMentor);
 // Unblocking a mentor
 adminRouter.patch('/unblockMentor',adminAuth,adminController.unblockMentor);
+// Users count for admin dashboard
+adminRouter.get('/getStatistics',adminAuth,adminController.getStatistics);
 
 module.exports = adminRouter;

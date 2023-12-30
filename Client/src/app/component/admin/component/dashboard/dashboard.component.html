@@ -1,17 +1,22 @@
-
 <div class="flex justify-between">
+   <!-- Graph -->
+   <div class="w-2/3">
+      <ag-charts-angular [options]="optionsPie"></ag-charts-angular>
+   </div>
+    <!-- Showing Amount and UserCount -->
+<div class="flex flex-col gap-3">
    <div class="w-full font-poppins md:w-[380px]">
-      <div class="flex flex-col bg-white rounded-3xl">
+      <div class=" bg-white rounded-3xl">
          <div class="px-6 py-8 sm:p-10 sm:pb-6">
-            <div class="grid items-center justify-center w-full grid-cols-1 text-left">
+            <div class="flex items-center justify-between w-full grid-cols-1 text-left">
                <div>
                   <h2 class="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
                      Wallet Amount
                   </h2>
                </div>
-               <div class="mt-6">
+               <div>
                   <p>
-                     <span class="text-5xl font-light tracking-tight text-black">
+                     <span class="text-3xl font-light tracking-tight text-black">
                         ₹{{walletAmount}}
                      </span>
                      <span class="text-base font-medium text-gray-500"> Rs </span>
@@ -21,21 +26,20 @@
          </div>
       </div>
    </div>
-
    <!-- Total Mentors -->
-   <div class="w-full font-poppins md:w-[380px]">
-      <div class="flex flex-col bg-white rounded-3xl">
+   <div class="w-full font-poppins md:w-[380px]" *ngIf="totalMentors">
+      <div class=" bg-white rounded-3xl">
          <div class="px-6 py-8 sm:p-10 sm:pb-6">
-            <div class="grid items-center justify-center w-full grid-cols-1 text-left">
+            <div class="flex items-center justify-between w-full grid-cols-1 text-left">
                <div>
                   <h2 class="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
                      Total Mentors
                   </h2>
                </div>
-               <div class="mt-6">
+               <div>
                   <p>
-                     <span class="text-5xl font-light tracking-tight text-black flex justify-center">
-                       7
+                     <span class="text-3xl font-light tracking-tight text-black flex justify-center">
+                        {{totalMentors}}
                      </span>
                   </p>
                </div>
@@ -43,21 +47,20 @@
          </div>
       </div>
    </div>
-
    <!-- Total Mentees -->
-   <div class="w-full font-poppins md:w-[380px]">
-      <div class="flex flex-col bg-white rounded-3xl">
+   <div class="w-full font-poppins md:w-[380px]" *ngIf="totalMentees">
+      <div class=" bg-white rounded-3xl">
          <div class="px-6 py-8 sm:p-10 sm:pb-6">
-            <div class="grid items-center justify-center w-full grid-cols-1 text-left">
+            <div class="flex items-center justify-between w-full grid-cols-1 text-left">
                <div>
                   <h2 class="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
                      Total Mentees
                   </h2>
                </div>
-               <div class="mt-6">
+               <div>
                   <p>
-                     <span class="text-5xl font-light tracking-tight text-black flex justify-center">
-                        6
+                     <span class="text-3xl font-light tracking-tight text-black flex justify-center">
+                        {{totalMentees}}
                      </span>
                   </p>
                </div>
@@ -65,4 +68,6 @@
          </div>
       </div>
    </div>
+   
+</div>
 </div>

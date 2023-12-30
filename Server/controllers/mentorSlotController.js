@@ -263,7 +263,7 @@ const getDefaultSlots = async(req,res)=>{
     const slots = defaultSlot.defaultSlots;
     res.status(200).json(slots);
   } catch (error) { 
-    console.log(error.message)
+    // console.log(error.message)
     res.status(500).json({message:'Internal Server error'});
   }
 }
@@ -278,7 +278,7 @@ const setDefaultSlot = async(req,res)=>{
     await mentordefaultSlot.save(); // Saving the default time into the database
     res.status(200).json({message:'Default slot created'});
   } catch (error) {
-    res.status(500).json({message:'Internal Server error'});
+     res.status(500).json({message:'Internal Server error'});
   }
 }
 module.exports = {

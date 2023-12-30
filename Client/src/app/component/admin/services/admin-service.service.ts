@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MenteeData, MentorData } from 'src/app/model/adminModel';
+import { MenteeData, MentorData, Statistics } from 'src/app/model/adminModel';
 import {
   AdminInfo,
   HttpResponseModel,
@@ -79,6 +79,10 @@ export class AdminService {
   // Unblock a mentor
   unblockMentor(id:object):Observable<HttpResponseModel>{
     return this.http.patch<HttpResponseModel>(`${environment.adminURL}/unblockMentor`,id);
+  }
 
+  // Data for admin dashboard
+  getStatistics():Observable<Statistics>{
+    return this.http.get<Statistics>(`${environment.adminURL}/getStatistics`);
   }
 }

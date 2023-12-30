@@ -10,6 +10,7 @@ import {
   spaceValidation,
 } from 'src/app/customValidation/validation';
 import { MentorProfile } from 'src/app/model/mentorModel';
+import { MentorSlotService } from 'src/app/services/mentor-slot.service';
 import { MentorService } from 'src/app/services/mentor.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 
@@ -26,10 +27,24 @@ export class MentorEditProfileComponent implements OnInit {
   formData:FormData = new FormData();
   constructor(
     private service: MentorService,
+    private mentorSlotService:MentorSlotService,
     private showMessage: MessageToastrService,
     private fb: FormBuilder,
     private router:Router
   ) {}
+
+  timeSlots: string[] = [
+    '09:00 AM to 10:00 AM',
+    '10:00 AM to 11:00 AM',
+    '11:00 AM to 12:00 PM',
+    '01:00 PM to 02:00 PM',
+    '02:00 PM to 03:00 PM',
+    '03:00 PM to 04:00 PM',
+    '04:00 PM to 05:00 PM',
+  ];
+  createdDefaultSlots!:string[];
+  from:string = 'editProfile'
+  
 
   ngOnInit(): void {
     this.editProfileForm = this.fb.group({
@@ -48,9 +63,37 @@ export class MentorEditProfileComponent implements OnInit {
       next: (response) => {
         this.MentorData = response[0];
         this.updateForm();
+        this.getDefaultSlotsOfMentor();
       },
     });
     // Creating form for edit profile
+  }
+
+   getDefaultSlotsOfMentor(){
+    this.mentorSlotService.getDefaultSlot().subscribe({
+      next:(response)=>{
+        this.timeSlots = this.timeSlots.filter((slots)=>{
+           return !response.includes(slots); 
+        })
+        this.createdDefaultSlots = response;
+      },
+      error:(error)=>{
+        console.log(error.error.message);
+      }
+    })
+  }
+
+  defaultSlotSetting(time:string){
+    this.mentorSlotService.setDefaultSlot({time}).subscribe({
+      next:(response)=>{
+        this.getDefaultSlotsOfMentor(); // Refreshing the component
+        this.showMessage.showSuccessToastr(response.message);
+      },
+      error:(error)=>{
+        this.showMessage.showErrorToastr(error.error.message);
+      }
+    })
+    
   }
 
   updateForm() {

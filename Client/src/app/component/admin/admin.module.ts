@@ -15,6 +15,9 @@ import { ListMentorsComponent } from './component/list-mentors/list-mentors.comp
 import { PaginationComponent } from './component/pagination/pagination.component';
 import { SearchbarComponent } from './component/searchbar/searchbar.component';
 import { FilterComponent } from './component/filter/filter.component';
+import { ListBookingsComponent } from './component/list-bookings/list-bookings.component';
+import { AgChartsAngularModule } from 'ag-charts-angular';
+
 
 
 @NgModule({
@@ -30,6 +33,7 @@ import { FilterComponent } from './component/filter/filter.component';
     PaginationComponent,
     SearchbarComponent,
     FilterComponent,
+    ListBookingsComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +41,7 @@ import { FilterComponent } from './component/filter/filter.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    AgChartsAngularModule,
   ],
 })
 export class AdminModule { }

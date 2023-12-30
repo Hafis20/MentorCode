@@ -22,7 +22,7 @@ export class MyBookingsComponent implements OnInit {
   ];
 
   BookingDetails!: MenteeBookingsDetails[]; // Setting and passing the data about booking details of the user
-  filterDetails!:MenteeBookingsDetails[];
+  filterDetails!: MenteeBookingsDetails[];
   constructor(
     private service: MenteeSlotService,
     private showMessage: MessageToastrService
@@ -37,7 +37,7 @@ export class MyBookingsComponent implements OnInit {
       // For getting the mentee booking details service
       next: (response) => {
         this.BookingDetails = response; // Setting the data of details
-        this.filterDetails = response
+        this.filterDetails = response;
       },
     });
   }
@@ -67,22 +67,25 @@ export class MyBookingsComponent implements OnInit {
     }
   }
 
-  filter(type:string){
-    if(type === 'all'){
+  filter(type: string) {
+    if (type === 'all') {
       this.BookingDetails = this.filterDetails;
-    }else if(type === 'completed'){
-      this.BookingDetails = this.filterDetails.filter((booking)=>{
-        return booking.status === 'completed'
-      })
-    }else if(type === 'cancelled'){
-      this.BookingDetails = this.filterDetails.filter((booking)=>{
-        return booking.status === 'cancelled'
-      })
-    }else if(type === 'Mentor cancelled'){
-      this.BookingDetails = this.filterDetails.filter((booking)=>{
-        return booking.status === 'Mentor cancelled'
-      })
+    } else if (type === 'completed') {
+      this.BookingDetails = this.filterDetails.filter((booking) => {
+        return booking.status === 'completed';
+      });
+    } else if (type === 'pending') {
+      this.BookingDetails = this.filterDetails.filter((booking) => {
+        return booking.status === 'pending';
+      });
+    } else if (type === 'cancelled') {
+      this.BookingDetails = this.filterDetails.filter((booking) => {
+        return booking.status === 'cancelled';
+      });
+    } else if (type === 'Mentor cancelled') {
+      this.BookingDetails = this.filterDetails.filter((booking) => {
+        return booking.status === 'Mentor cancelled';
+      });
     }
   }
-  
 }

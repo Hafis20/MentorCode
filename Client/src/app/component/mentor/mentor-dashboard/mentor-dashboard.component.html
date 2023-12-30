@@ -1,6 +1,31 @@
-<div class="px-2">
-   <h1><span class="font-bold">Dashboard</span></h1>
-</div>
-<div>
-   <wallet-card [walletAmount]="walletAmount"></wallet-card>
+<div class="flex justify-between">
+   <div class="w-2/3 flex">
+
+   </div>
+   <div class="flex flex-col gap-2">
+      <div>
+         <wallet-card [walletAmount]="walletAmount"></wallet-card>
+      </div>
+
+      <div class="w-full font-poppins md:w-[380px]">
+         <div class=" bg-white rounded-3xl">
+            <div class="px-6 py-8 sm:p-10 sm:pb-6">
+               <div class="flex items-center justify-between w-full grid-cols-1 text-left">
+                  <div>
+                     <h2 class="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
+                        Completed Sessions
+                     </h2>
+                  </div>
+                  <div>
+                     <p>
+                        <span class="text-3xl font-light tracking-tight text-black">
+                           {{totalSessions}}
+                        </span>
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>

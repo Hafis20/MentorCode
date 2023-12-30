@@ -17,7 +17,7 @@
              <filter (filterEvent)="filter($event)"></filter>
           </div>
           <!-- card body  -->
-          <div *ngIf="MenteeBookingDetails">
+          <ng-container *ngIf="MenteeBookingDetails">
             <div *ngIf="MenteeBookingDetails;else emptyBookings" class="flex-auto block  px-9">
               <div>
                 <table class="w-full my-0 align-middle text-dark border-neutral-200">
@@ -97,12 +97,12 @@
                 </table>
               </div>
             </div>
-          </div>
+          </ng-container>
 
 
 
           <!-- Mentor Details -->
-          <div *ngIf="MentorBookingDetails">
+          <ng-container *ngIf="MentorBookingDetails">
             <div *ngIf="MentorBookingDetails;else emptyBookings" class="flex-auto block py-8 pt-6 px-9">
               <div class="overflow-x-auto">
                 <table class="w-full my-0 align-middle text-dark border-neutral-200">
@@ -143,19 +143,19 @@
                       <td class="p-3 pr-0 text-center">
                         <ng-container *ngIf="booking.details.status === 'pending'">
                           <button (click)="cancelByMentor(booking.details._id,booking.menteeDetails._id)"
-                            class=" bg-red-500 text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
+                            class=" bg-red-500 text-gray-900 font-semibold py-[7px] px-[17px] rounded inline-flex items-center">
                             <span class="">Cancel Booking</span>
                           </button>
                         </ng-container>
                         <ng-container *ngIf="booking.details.status === 'cancelled' || booking.details.status === 'Mentor cancelled'">
                           <button 
-                            class=" bg-red-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
+                            class="bg-red-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded inline-flex items-center">
                             <span class="">Cancelled</span>
                           </button>
                         </ng-container>
                         <ng-container *ngIf="booking.details.status === 'completed'">
                           <button 
-                            class=" bg-green-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
+                            class="bg-green-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded inline-flex items-center">
                             <span class="">Completed</span>
                           </button>
                         </ng-container>
@@ -166,7 +166,7 @@
                 </table>
               </div>
             </div>
-          </div>
+          </ng-container>
 
         </div>
       </div>
@@ -180,7 +180,7 @@
       <table class="w-full my-0 align-middle text-dark border-neutral-200">
         <thead class="align-bottom ">
           <tr class="font-semibold text-[0.95rem] text-secondary-dark">
-            <th *ngFor="let title of TableHeaders; let i = index" appTable [index]="i" class="pb-3"> {{title}} </th>
+            <th *ngFor="let title of TableHeaders; let i = index" appTable [index]="i" class="pb-3 px-10"> {{title}} </th>
           </tr>
         </thead>
         <tbody>

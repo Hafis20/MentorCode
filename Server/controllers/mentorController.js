@@ -3,6 +3,7 @@ const { hashedPass, comparePass } = require("../Helper/hashPass");
 const Mentor = require("../models/mentorModel");
 const jwt = require("jsonwebtoken");
 const Skills = require("../models/skillsModel");
+const BookedSlot = require("../models/bookingModel");
 const { default: mongoose } = require("mongoose");
 
 // Registering the mentor controller
@@ -27,11 +28,12 @@ const register = async (req, res) => {
         otp: otp,
         otp_updated_at: new Date(),
       });
-      const mentorSkills = await Skills.create({     // creating the skills db
-        mentor_id:mentorData._id,
-        skills:['Html','Css','Javascript'],
-        about:`My name is ${name} I am a software developer of ${experience} year experience`,
-      })
+      const mentorSkills = await Skills.create({
+        // creating the skills db
+        mentor_id: mentorData._id,
+        skills: ["Html", "Css", "Javascript"],
+        about: `My name is ${name} I am a software developer of ${experience} year experience`,
+      });
       res.status(201).json({ message: "Check your mail... Verify your otp" });
     }
   } catch (error) {
@@ -106,25 +108,29 @@ const login = async (req, res) => {
     const mentorData = await Mentor.findOne({ email }); // Searching this user is avaliable in the database
     if (mentorData) {
       const matchPass = await comparePass(password, mentorData.password); // Checking the passwords are same
-      if (matchPass) {  // Checking the password is available in mentor data
-        if(mentorData.is_blocked){
-          return res.status(401).status({message:'Your account is blocked by Admin'})
-        }else{
+      if (matchPass) {
+        // Checking the password is available in mentor data
+        if (mentorData.is_blocked) {
+          return res
+            .status(401)
+            .status({ message: "Your account is blocked by Admin" });
+        } else {
           const data = {
             userId: mentorData._id,
           };
-  
+
           const accessToken = jwt.sign(data, process.env.JWT_ACCESS_TOKEN);
           const accessedUser = {
-            _id:mentorData._id,
+            _id: mentorData._id,
             name: mentorData.name,
             email: mentorData.email,
-            image:mentorData.image,
+            image: mentorData.image,
             role: mentorData.role,
           };
-          res.status(201).json({accessToken,accessedUser,message:'Login Success'});
+          res
+            .status(201)
+            .json({ accessToken, accessedUser, message: "Login Success" });
         }
-        
       } else {
         res.status(404).json({ message: "Invalid Credentials" });
       }
@@ -160,170 +166,188 @@ const forgotPassword = async (req, res) => {
 };
 
 // For changing the mentor password
-const changePassword = async(req,res)=>{
+const changePassword = async (req, res) => {
   try {
-    const {email,password} = req.body;
-    if(!email){
-      return res.status(400).json({message:'Sorry Password Not changed'});
-    }else{
+    const { email, password } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Sorry Password Not changed" });
+    } else {
       const hashPass = await hashedPass(password);
-      const mentor = await Mentor.findOneAndUpdate({email:email},
+      const mentor = await Mentor.findOneAndUpdate(
+        { email: email },
         {
-          $set:{
-            password:hashPass
-          }
+          $set: {
+            password: hashPass,
+          },
         },
         {
-          new:true
+          new: true,
         }
-      )
-      if(mentor){
-        return res.status(201).json({message:'Password changed please login'});  // Password is changed
-      }else{
-        return res.status(404).json({message:'Mentor data not found'});   // If there is no data
+      );
+      if (mentor) {
+        return res
+          .status(201)
+          .json({ message: "Password changed please login" }); // Password is changed
+      } else {
+        return res.status(404).json({ message: "Mentor data not found" }); // If there is no data
       }
     }
-
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
     console.log(error.message);
   }
-}
+};
 
 // Getting the mentor data for store purpose
-const getMentorDetails = async(req,res)=>{
+const getMentorDetails = async (req, res) => {
   try {
-    const mentorId =  req.mentorId;
+    const mentorId = req.mentorId;
     const mentor = await Mentor.findById(mentorId);
-    if(mentor){
+    if (mentor) {
       const mentorData = {
-        _id:mentor._id,
-        name:mentor.name,
-        email:mentor.email,
-        image:mentor.image,
-        role:mentor.role,
-      }
+        _id: mentor._id,
+        name: mentor.name,
+        email: mentor.email,
+        image: mentor.image,
+        role: mentor.role,
+      };
       res.status(201).json(mentorData);
-    }else{
-      res.status(404).json({message:'Mentor Data not found'})
+    } else {
+      res.status(404).json({ message: "Mentor Data not found" });
     }
   } catch (error) {
-    res.status(500).json({message:'Internal server error'});
+    res.status(500).json({ message: "Internal server error" });
     console.log(error.message);
   }
-}
+};
 
 // Getting the profile of the mentor
-const getMentorProfile = async(req,res)=>{
+const getMentorProfile = async (req, res) => {
   try {
     // const {mentorId} = req.body;
     const mentorId = req.mentorId;
-    let skills = await Skills.findOne({mentor_id:mentorId});
-    if(!skills){
-      skills = await new Skills({    // If the particular mentor has no skills collection we are creating one,
-        mentor_id:mentorId,
-        skills: ["Html","CSS","Javascript"],
-        about:''
+    let skills = await Skills.findOne({ mentor_id: mentorId });
+    if (!skills) {
+      skills = await new Skills({
+        // If the particular mentor has no skills collection we are creating one,
+        mentor_id: mentorId,
+        skills: ["Html", "CSS", "Javascript"],
+        about: "",
       }).save();
     }
     const mentorData = await Skills.aggregate([
       {
         $match: {
-          mentor_id: new mongoose.Types.ObjectId(mentorId)
-        }
+          mentor_id: new mongoose.Types.ObjectId(mentorId),
+        },
       },
       {
         $lookup: {
-          from: 'mentors',
-          localField: 'mentor_id',
-          foreignField: '_id',
-          as: 'MentorDetails'
-        }
+          from: "mentors",
+          localField: "mentor_id",
+          foreignField: "_id",
+          as: "MentorDetails",
+        },
       },
       {
-        $unwind: '$MentorDetails'
+        $unwind: "$MentorDetails",
       },
       {
         $project: {
           skills: 1,
-          about:1,
+          about: 1,
           mentor_id: 1,
-          'MentorDetails.name': 1,
-          'MentorDetails.experience': 1,
-          'MentorDetails.image': 1,
-          'MentorDetails.mobile': 1,
-          'MentorDetails.fee': 1
-        }
+          "MentorDetails.name": 1,
+          "MentorDetails.experience": 1,
+          "MentorDetails.image": 1,
+          "MentorDetails.mobile": 1,
+          "MentorDetails.fee": 1,
+        },
       },
       {
         $replaceRoot: {
           newRoot: {
-            $mergeObjects: ['$MentorDetails', '$$ROOT']
-          }
-        }
+            $mergeObjects: ["$MentorDetails", "$$ROOT"],
+          },
+        },
       },
       {
         $project: {
-          MentorDetails: 0
-        }
-      }
+          MentorDetails: 0,
+        },
+      },
     ]);
-    
+
     res.status(201).json(mentorData);
   } catch (error) {
-    res.status(500).json({message:'Internal server error'});
+    res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
 // Editing the profile of the mentor
-const editProfile = async(req,res)=>{
+const editProfile = async (req, res) => {
   try {
     const mentorId = req.mentorId;
-    const {name,mobile,fee,skills,about,experience} = req.body;
+    const { name, mobile, fee, skills, about, experience } = req.body;
     const mentorskill = JSON.parse(skills);
     let mentorDetails = await Mentor.findById(mentorId);
 
-    let imgUrl = mentorDetails.image;         // If there is no image in the req.file
+    let imgUrl = mentorDetails.image; // If there is no image in the req.file
 
-    if(req.file){
+    if (req.file) {
       imgUrl = `http://localhost:7000/${req.file.originalname}`;
     }
-    const updateMentorSkills = await Skills.findOneAndUpdate(     // Updating the skills
+    const updateMentorSkills = await Skills.findOneAndUpdate(
+      // Updating the skills
       {
-        mentor_id:mentorId
+        mentor_id: mentorId,
       },
       {
-        $set:{
-          about:about,
-          skills:mentorskill,
-        }
+        $set: {
+          about: about,
+          skills: mentorskill,
+        },
       },
       {
-        new:true
+        new: true,
       }
-    )
-    if(mentorDetails){
+    );
+    if (mentorDetails) {
       mentorDetails.name = name;
       mentorDetails.image = imgUrl;
       mentorDetails.fee = fee;
       mentorDetails.experience = experience;
       await mentorDetails.save();
     }
-    res.status(200).json({message:'Edit Success'})
+    res.status(200).json({ message: "Edit Success" });
   } catch (error) {
-    res.status(500).json({message:'Internal server error'});
-    console.log(error.message)
+    res.status(500).json({ message: "Internal server error" });
+    console.log(error.message);
   }
-}
+};
 
 // Data for mentor dashboard
-const dashboardData = async(req,res)=>{
-   try {
-    
-   } catch (error) {
-    res.status(500).json({message:'Internal server error'});
-   }
-}
+const getStatistics = async (req, res) => {
+  try {
+    // const {mentorId} = req.body;
+    const mentorId = req.mentorId;
+    const completed = await BookedSlot.aggregate([
+      {
+        $unwind: "$details",
+      },
+      {
+        $match: {
+          "details.mentorId": new mongoose.Types.ObjectId(mentorId),
+          "details.status": "completed",
+        },
+      },
+    ]);
+    const totalSessions = completed.length;
+    res.status(200).json({ totalSessions });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 module.exports = {
   register,
   login,
@@ -334,4 +358,5 @@ module.exports = {
   getMentorDetails,
   getMentorProfile,
   editProfile,
+  getStatistics,
 };
