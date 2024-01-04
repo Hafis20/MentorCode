@@ -22,10 +22,17 @@
             </div>
          </div>
          <div class="pt-5">
-            <button [routerLink]="['/mentor/edit-profile']"
-               class="px-10 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Edit Profile</button>
+            <div class="flex items-center relative px-3">
+               <div class="absolute ml-4 mr-3">
+                  <i class="fa-solid fa-user-pen text-white"></i>
+               </div>
+               <div>
+                  <button [routerLink]="['/mentor/edit-profile']"
+                     class="px-10 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Edit Profile</button>
+               </div>
+            </div>
          </div>
       </div>
-      
+
    </div>
 </div>

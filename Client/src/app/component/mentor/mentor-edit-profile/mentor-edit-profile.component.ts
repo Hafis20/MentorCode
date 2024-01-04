@@ -62,8 +62,8 @@ export class MentorEditProfileComponent implements OnInit {
     this.service.getMentorProfile().subscribe({
       next: (response) => {
         this.MentorData = response[0];
-        this.updateForm();
         this.getDefaultSlotsOfMentor();
+        this.updateForm();
       },
     });
     // Creating form for edit profile
@@ -72,6 +72,7 @@ export class MentorEditProfileComponent implements OnInit {
    getDefaultSlotsOfMentor(){
     this.mentorSlotService.getDefaultSlot().subscribe({
       next:(response)=>{
+        console.log('Slots of mentor',response)
         this.timeSlots = this.timeSlots.filter((slots)=>{
            return !response.includes(slots); 
         })
@@ -86,7 +87,9 @@ export class MentorEditProfileComponent implements OnInit {
   defaultSlotSetting(time:string){
     this.mentorSlotService.setDefaultSlot({time}).subscribe({
       next:(response)=>{
+        console.log(response);
         this.getDefaultSlotsOfMentor(); // Refreshing the component
+        console.log('Response calling')
         this.showMessage.showSuccessToastr(response.message);
       },
       error:(error)=>{
@@ -155,7 +158,7 @@ export class MentorEditProfileComponent implements OnInit {
     }
     this.editProfileForm.get('skills')?.reset();
   }
-
+  // Adding skill for the mentor
   addSkill(skill: string) {
     // Adding skill
     if (skill.trim() === '') {

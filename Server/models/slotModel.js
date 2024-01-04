@@ -17,6 +17,9 @@ const slotSchema = new mongoose.Schema(
         is_booked: {
           type: Boolean,
         },
+        slot_type:{
+          type:String,
+        }
       },
     ],
   },

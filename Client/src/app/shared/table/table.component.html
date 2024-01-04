@@ -1,9 +1,9 @@
 <ng-container>
   <!-- component -->
-  <div class="flex flex-wrap  mb-5 font-poppins">
-    <div class="w-full max-w-full px-5 mb-6 mx-auto">
+  <div class="flex flex-wrap  font-poppins">
+    <div class="w-full max-w-full  mx-auto">
       <div
-        class="relative  flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem]  bg-gray-100 m-5">
+        class="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem]  bg-gray-100 m-5">
         <div
           class="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
           <!-- card header -->
@@ -14,11 +14,11 @@
           </div>
           <!-- end card header -->
           <div class="px-8">
-             <filter (filterEvent)="filter($event)"></filter>
+            <filter (filterEvent)="filter($event)"></filter>
           </div>
           <!-- card body  -->
-          <ng-container *ngIf="MenteeBookingDetails">
-            <div *ngIf="MenteeBookingDetails;else emptyBookings" class="flex-auto block  px-9">
+          <ng-container *ngIf="currentMenteeDetails">
+            <div *ngIf="currentMenteeDetails;else emptyBookings" class="flex-auto block  px-9">
               <div>
                 <table class="w-full my-0 align-middle text-dark border-neutral-200">
                   <thead class="align-bottom ">
@@ -28,7 +28,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let booking of MenteeBookingDetails;let i=index"
+                    <tr *ngFor="let booking of currentMenteeDetails;let i=index"
                       class="border-b border-dashed last:border-b-0">
                       <td class="p-3 px-10 pl-0">
                         <div class="flex items-center gap-3">
@@ -61,6 +61,11 @@
                           {{booking.status}} </span>
                       </td>
 
+                      <!-- Video calling icon -->
+                      <td class="p-3  px-10 pr-0 text-center">
+                        <i class="fa-solid fa-video text-lg hover:text-gray-600 cursor-pointer" (click)="openVedio()"></i>
+                      </td>
+
                       <!-- Dropdown -->
                       <td class="p-3  px-10 pr-0 text-center">
                         <div class="dropdown inline-block relative">
@@ -77,15 +82,13 @@
                               <div class="" role="none">
                                 <a (click)="completed(booking._id)"
                                   class="text-gray-700  hover:bg-gray-400 block  px-4 py-2 text-sm cursor-pointer"
-                                  role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa fa-trash"
-                                    aria-hidden="true"></i>
+                                  role="menuitem" tabindex="-1" id="menu-item-2">
                                   Completed</a>
                               </div>
                               <div class="" role="none">
                                 <a (click)="cancel(booking._id)"
                                   class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-400 "
-                                  role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa fa-trash"
-                                    aria-hidden="true"></i>
+                                  role="menuitem" tabindex="-1" id="menu-item-2">
                                   Cancel Booking</a>
                               </div>
                             </div>
@@ -95,6 +98,9 @@
                     </tr>
                   </tbody>
                 </table>
+                <div class="flex justify-end">
+                  <pagination [total]="totalMenteeBookings" [limit]="itemsPerPage" [currentPage]="currentPage" (changePageEvent)="changeMenteeTablePage($event)"></pagination>
+                </div>
               </div>
             </div>
           </ng-container>
@@ -102,8 +108,8 @@
 
 
           <!-- Mentor Details -->
-          <ng-container *ngIf="MentorBookingDetails">
-            <div *ngIf="MentorBookingDetails;else emptyBookings" class="flex-auto block py-8 pt-6 px-9">
+          <ng-container *ngIf="currentMentorDetails">
+            <div *ngIf="currentMentorDetails;else emptyBookings" class="flex-auto block py-8 pt-6 px-9">
               <div class="overflow-x-auto">
                 <table class="w-full my-0 align-middle text-dark border-neutral-200">
                   <thead class="align-bottom ">
@@ -113,7 +119,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let booking of MentorBookingDetails" class="border-b border-dashed last:border-b-0">
+                    <tr *ngFor="let booking of currentMentorDetails" class="border-b border-dashed last:border-b-0">
                       <td class="p-3 pl-0">
                         <div class="flex items-center">
                           <div class="relative inline-block shrink-0 rounded-2xl me-3">
@@ -140,6 +146,7 @@
                           {{booking.details.status}} </span>
                       </td>
 
+                      
                       <td class="p-3 pr-0 text-center">
                         <ng-container *ngIf="booking.details.status === 'pending'">
                           <button (click)="cancelByMentor(booking.details._id,booking.menteeDetails._id)"
@@ -147,22 +154,30 @@
                             <span class="">Cancel Booking</span>
                           </button>
                         </ng-container>
-                        <ng-container *ngIf="booking.details.status === 'cancelled' || booking.details.status === 'Mentor cancelled'">
-                          <button 
+                        <ng-container
+                          *ngIf="booking.details.status === 'cancelled' || booking.details.status === 'Mentor cancelled'">
+                          <button
                             class="bg-red-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded inline-flex items-center">
                             <span class="">Cancelled</span>
                           </button>
                         </ng-container>
                         <ng-container *ngIf="booking.details.status === 'completed'">
-                          <button 
+                          <button
                             class="bg-green-300 cursor-auto text-gray-900 font-semibold py-[7px] px-[17px] rounded inline-flex items-center">
                             <span class="">Completed</span>
                           </button>
                         </ng-container>
                       </td>
+
+                      <td class="p-3  px-10 pr-0 text-center">
+                        <i class="fa-solid fa-video text-lg hover:text-gray-600 cursor-pointer" (click)="openVedio()"></i>
+                      </td>
+                      
                     </tr>
                   </tbody>
-                  <pagination></pagination>
+                  <div class="flex justify-end">
+                    <pagination [total]="totalMentorBookings" [limit]="itemsPerPage" [currentPage]="currentPage" (changePageEvent)="changeMentorTablePage($event)"></pagination>
+                  </div>
                 </table>
               </div>
             </div>
@@ -180,7 +195,8 @@
       <table class="w-full my-0 align-middle text-dark border-neutral-200">
         <thead class="align-bottom ">
           <tr class="font-semibold text-[0.95rem] text-secondary-dark">
-            <th *ngFor="let title of TableHeaders; let i = index" appTable [index]="i" class="pb-3 px-10"> {{title}} </th>
+            <th *ngFor="let title of TableHeaders; let i = index" appTable [index]="i" class="pb-3 px-10"> {{title}}
+            </th>
           </tr>
         </thead>
         <tbody>

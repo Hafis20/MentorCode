@@ -1,8 +1,8 @@
 const Slot = require("../models/slotModel");
 const BookedSlot = require("../models/bookingModel");
 const Wallet = require("../models/walletModel");
-const DefaultSlot = require('../models/defaultSlotModel');
 const { default: mongoose } = require("mongoose");
+const getRemainingDays = require("../Helper/getRemainingDays");
 
 // Creating a slot for mentor
 const createSlot = async (req, res) => {
@@ -13,6 +13,7 @@ const createSlot = async (req, res) => {
       // Creating the time object
       time: time,
       is_booked: false,
+      slot_type: "normal",
     };
     let mentorSlot = await Slot.findOne({
       mentor_id: mentorId,
@@ -212,7 +213,7 @@ const cancelMenteeBooking = async (req, res) => {
 
     // Mentee wallet amount from mentor wallet
     // Find the wallet is available for the mentee?
-    let menteeWallet = await Wallet.findOne({user_id:menteeId});
+    let menteeWallet = await Wallet.findOne({ user_id: menteeId });
     if (!menteeWallet) {
       // If no wallet
       menteeWallet = new Wallet({
@@ -228,7 +229,7 @@ const cancelMenteeBooking = async (req, res) => {
     await menteeWallet.save();
 
     // Reducing amount from mentor wallet
-    let mentorWallet = await Wallet.findOne({user_id:mentorId});
+    let mentorWallet = await Wallet.findOne({ user_id: mentorId });
     if (!mentorWallet) {
       // If no wallet
       mentorWallet = new Wallet({
@@ -238,7 +239,7 @@ const cancelMenteeBooking = async (req, res) => {
       });
     } // If wallet
     mentorWallet.balance -= returnAmount;
-    mentorWallet.transaction_history.push(-1*(returnAmount));
+    mentorWallet.transaction_history.push(-1 * returnAmount);
 
     await mentorWallet.save();
     res.status(200).json({ message: "Slot cancelled" });
@@ -249,36 +250,128 @@ const cancelMenteeBooking = async (req, res) => {
 };
 
 // Get the default slots of the mentor
-const getDefaultSlots = async(req,res)=>{
+const getDefaultSlots = async (req, res) => {
   try {
     const mentorId = req.mentorId;
-    let defaultSlot = await DefaultSlot.findOne({mentorId:mentorId});
-    if(!defaultSlot){
-      defaultSlot = new DefaultSlot({
-        mentorId:mentorId,
-        defaultSlots:[]
-      })
-      await defaultSlot.save();
+    // const { mentorId } = req.body;
+    let slots = await Slot.aggregate([
+      {
+        $match: {
+          mentor_id: new mongoose.Types.ObjectId(mentorId),
+        },
+      },
+      {
+        $unwind: "$added_slots",
+      },
+      {
+        $group: {
+          _id: "$added_slots.time",
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          slot: { $push: "$_id" },
+        },
+      },
+    ]);
+    if (slots) {
+      const defaultSlots = slots[0].slot;
+      res.status(200).json(defaultSlots);
     }
-    const slots = defaultSlot.defaultSlots;
-    res.status(200).json(slots);
-  } catch (error) { 
-    // console.log(error.message)
-    res.status(500).json({message:'Internal Server error'});
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "Internal Server error" });
   }
-}
+};
 
 // Setting default slot for mentor
-const setDefaultSlot = async(req,res)=>{
+const setDefaultSlot = async (req, res) => {
   try {
     const mentorId = req.mentorId;
-    const {time} = req.body;
-    let mentordefaultSlot = await DefaultSlot.findOne({mentorId:mentorId});    // Checking the user is already exist in db
-    mentordefaultSlot.defaultSlots.push(time);
-    await mentordefaultSlot.save(); // Saving the default time into the database
-    res.status(200).json({message:'Default slot created'});
+    const { time } = req.body;
+    let mentorSlots = await Slot.find({ mentor_id: mentorId }); // Checking the user is already exist in db
+    const remainingDates = getRemainingDays();
+
+    if (mentorSlots.length > 0) {
+      for (const date of remainingDates) {   
+        let dateExists = false;
+      
+        for (let i = 0; i < mentorSlots.length; i++) {
+          const slot = mentorSlots[i];
+      
+          if (slot.slot_date === date) {  // Checking the date is exists
+            dateExists = true;
+      
+            let timeExists = false;
+      
+            for (const slot_time of slot.added_slots) {
+              if (slot_time.time === time) {
+                timeExists = true;
+                break;
+              }
+            }
+      
+            if (!timeExists) {
+              const data = {
+                time: time,
+                is_booked: false,
+                slot_type: "default",
+              };
+      
+              slot.added_slots.push(data);
+              await slot.save();
+            }
+      
+            break;
+          }
+        }
+      
+        if (!dateExists) {
+          const newSlot = new Slot({
+            mentor_id: mentorId,
+            slot_date: date,
+            added_slots: [
+              {
+                time: time,
+                is_booked: false,
+                slot_type: "default",
+              },
+            ],
+          });
+      
+          await newSlot.save();
+        }
+      }      
+    } else {
+      const newSlots = remainingDates.map((date) => {
+        return {
+          mentor_id: mentorId,
+          slot_date: date,
+          added_slots: [
+            {
+              time: time,
+              is_booked: false,
+              slot_type: "default",
+            },
+          ],
+        };
+      });
+      await Slot.create(newSlots);
+    }
+    res.status(200).json({ message: "Default slots added" });
   } catch (error) {
-     res.status(500).json({message:'Internal Server error'});
+    console.log(error.message);
+    res.status(500).json({ message: "Internal Server error" });
+  }
+};
+
+// Remove default slot of mentor
+const removeDefaultSlots = async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    res.status(500).json({message:'Internal Server error'});
   }
 }
 module.exports = {
@@ -290,4 +383,5 @@ module.exports = {
   cancelMenteeBooking,
   getDefaultSlots,
   setDefaultSlot,
+  removeDefaultSlots,
 };

@@ -95,7 +95,8 @@ mentorSlotRouter.post('/getSlotsByDate',mentorSlotController.getSlotsByDate);  /
 mentorSlotRouter.get('/getSlotsOfMentor',mentorAuth,mentorSlotController.getSlotsOfMentor);  // getting the slots of mentor 
 mentorSlotRouter.get('/getBookedSlots',mentorAuth,mentorSlotController.getBookedSlots);  // for showing the data in the table
 mentorSlotRouter.post('/cancelMenteeBooking',mentorAuth,mentorSlotController.cancelMenteeBooking); // Cancel the mentee booked slot
-mentorSlotRouter.get('/getDefaultSlots',mentorAuth,mentorSlotController.getDefaultSlots);
+mentorSlotRouter.get('/getDefaultSlots',mentorAuth,mentorSlotController.getDefaultSlots);  // get the default slot
 mentorSlotRouter.post('/setDefaultSlot',mentorAuth,mentorSlotController.setDefaultSlot); // Set the default slot
+mentorSlotRouter.post('/removeDefaultSlots',mentorAuth,mentorSlotController.removeDefaultSlots); // Removing the default slots
 
 module.exports = mentorSlotRouter;

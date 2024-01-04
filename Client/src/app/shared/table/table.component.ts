@@ -7,6 +7,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   MenteeBookingsDetails,
   MenteeSlotAction,
@@ -26,8 +27,17 @@ export class TableComponent implements OnInit, OnChanges {
     new EventEmitter<MenteeSlotAction>();
 
   @Output() filterEvent:EventEmitter<string> = new EventEmitter<string>();
+  @Output() videoEvent:EventEmitter<void> = new EventEmitter<void>();
+
   isMenuOpened: boolean[] = [];    // For menu toggler
-  constructor() {}
+  totalMenteeBookings!:number;
+  totalMentorBookings!:number;
+  currentPage:number = 1;
+  itemsPerPage:number = 5;
+  currentMenteeDetails!:MenteeBookingsDetails[];
+  currentMentorDetails!:MentorBookingDetails[];
+  
+  constructor(private router:Router) {}
 
   ngOnInit(): void {
 
@@ -36,14 +46,19 @@ export class TableComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['MenteeBookingDetails']) {
       if(this.MenteeBookingDetails){
-        this.MenteeBookingDetails = this.MenteeBookingDetails;
+        this.currentMenteeDetails =  this.showMenteeTableData();
+        this.totalMenteeBookings = this.MenteeBookingDetails.length;
         this.isMenuOpened = Array(this.MenteeBookingDetails.length).fill(false);
       }
       // console.log(this.MenteeBookingDetails);
     }
 
     if (changes['MentorBookingDetails']) {
-      console.log(this.MentorBookingDetails);
+      if(this.MentorBookingDetails){
+        this.currentMentorDetails =  this.showMentorTableData();
+        this.totalMentorBookings = this.MentorBookingDetails.length;
+        this.isMenuOpened = Array(this.MentorBookingDetails.length).fill(false);
+      }
     }
   }
 
@@ -68,5 +83,44 @@ export class TableComponent implements OnInit, OnChanges {
   
   filter(value:string){
     this.filterEvent.emit(value);
+  }
+
+  // Mentee Pagination code 
+  changeMenteeTablePage(page:number){
+    this.currentPage = page;
+    this.currentMenteeDetails = this.showMenteeTableData();
+  }
+
+  showMenteeTableData(): MenteeBookingsDetails[]{
+    if (this.MenteeBookingDetails) {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.MenteeBookingDetails.slice(startIndex, endIndex);
+    } else {
+      return [];
+    }
+  }
+
+  // Mentor Pagination code
+  changeMentorTablePage(page:number){
+    this.currentPage = page;
+    this.currentMentorDetails = this.showMentorTableData();
+  }
+
+  showMentorTableData(): MentorBookingDetails[]{
+    if (this.MentorBookingDetails) {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.MentorBookingDetails.slice(startIndex, endIndex);
+    } else {
+      return [];
+    }
+  }
+
+
+
+  // Video chat implementation button click
+  openVedio(){
+    this.videoEvent.emit(); 
   }
 }

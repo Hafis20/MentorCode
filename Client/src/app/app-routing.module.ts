@@ -29,6 +29,7 @@ import { ViewMentorComponent } from './component/mentee/view-mentor/view-mentor.
 import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.component';
 import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
 import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profile/mentor-edit-profile.component';
+import { VideoChatMentorComponent } from './component/mentor/video-chat-mentor/video-chat-mentor.component';
 
 // Mentee routes
 const menteeRoutes: Routes = [
@@ -117,9 +118,10 @@ const mentorRoutes: Routes = [
     children: [
       { path: 'dashboard', component: MentorDashboardComponent },
       { path: 'slot-management', component: SlotManagementComponent },
-      { path: 'profile',component: MentorProfileComponent },
+      { path: 'profile', component: MentorProfileComponent },
       { path: 'edit-profile', component: MentorEditProfileComponent },
       { path: 'bookings', component: ViewBookingsComponent },
+      { path: 'video-chat', component: VideoChatMentorComponent }
     ],
   },
 ];

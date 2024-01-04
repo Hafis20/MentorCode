@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   MenteeBookingsDetails,
   MenteeSlotAction,
@@ -19,13 +20,15 @@ export class MyBookingsComponent implements OnInit {
     'Time',
     'Status',
     'Action',
+    'Start Chat'
   ];
 
   BookingDetails!: MenteeBookingsDetails[]; // Setting and passing the data about booking details of the user
   filterDetails!: MenteeBookingsDetails[];
   constructor(
     private service: MenteeSlotService,
-    private showMessage: MessageToastrService
+    private showMessage: MessageToastrService,
+    private router:Router,
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +70,7 @@ export class MyBookingsComponent implements OnInit {
     }
   }
 
+  // Filter the table according to the data status
   filter(type: string) {
     if (type === 'all') {
       this.BookingDetails = this.filterDetails;
@@ -87,5 +91,9 @@ export class MyBookingsComponent implements OnInit {
         return booking.status === 'Mentor cancelled';
       });
     }
+  }
+
+  videoChat(){
+    
   }
 }
