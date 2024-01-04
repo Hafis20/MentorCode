@@ -121,7 +121,7 @@ const mentorRoutes: Routes = [
       { path: 'profile', component: MentorProfileComponent },
       { path: 'edit-profile', component: MentorEditProfileComponent },
       { path: 'bookings', component: ViewBookingsComponent },
-      { path: 'video-chat', component: VideoChatMentorComponent }
+      { path: 'video-chat/:roomId', component: VideoChatMentorComponent }
     ],
   },
 ];

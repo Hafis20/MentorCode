@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 const mediaConstraints = {
   audio:true,
@@ -16,6 +16,8 @@ const mediaConstraints = {
 export class VideoChatMentorComponent implements AfterViewInit{
 
   private localStream!: MediaStream;
+  @ViewChild('local_video') localVideo!:ElementRef;
+  @ViewChild('received_video') remoteVideo!:ElementRef;
 
   constructor(){}
 
@@ -24,6 +26,23 @@ export class VideoChatMentorComponent implements AfterViewInit{
   }
 
   private async requestMediaDevices():Promise<void>{
-    this.localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints) 
+    this.localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+    this.pauseLocalVideo();
   }
+
+  pauseLocalVideo():void{
+    this.localStream.getTracks().forEach(track=>{
+      track.enabled = false;
+    })
+    this.localVideo.nativeElement.srcObject = undefined;
+  }
+
+  startLocalVideo():void{
+    this.localStream.getTracks().forEach(track=>{
+      track.enabled = true;
+    })
+    this.localVideo.nativeElement.srcObject = this.localStream;
+  }
+
+  
 }

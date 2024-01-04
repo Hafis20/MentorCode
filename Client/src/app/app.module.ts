@@ -2,16 +2,21 @@ import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
+// Socket io configuration
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+const config:SocketIoConfig = {url:'http://localhost:7000',options:{}}
+
+// Components
+import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { MenteeLoginComponent } from './component/mentee/mentee-login/mentee-login.component';
 import { MentorLoginComponent } from './component/mentor/mentor-login/mentor-login.component';
 import { MenteeRegisterComponent } from './component/mentee/mentee-register/mentee-register.component';
 import { HomeComponent } from './component/home/home.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -133,6 +138,7 @@ import { VideoChatMentorComponent } from './component/mentor/video-chat-mentor/v
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     AdminModule,
     AgChartsAngularModule,
+    SocketIoModule.forRoot(config),
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},

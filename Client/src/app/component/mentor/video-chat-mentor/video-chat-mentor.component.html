@@ -1,6 +1,6 @@
-<div class="w-full h-auto">
+<div class="w-full">
    <div class="w-full flex justify-between gap-2">
-      <div class=" w-full">
+      <div class="w-full">
          <p class="video_description">Local:</p>
          <video #local_video [autoplay]="true" [muted]="true"></video>
       </div>
@@ -10,8 +10,8 @@
       </div>
    </div>
    <div class="w-1/3 mt-3 flex justify-between text-white">
-      <button class="px-5 py-2 bg-sky-600 rounded">Start local</button>
-      <button class="px-5 py-2 bg-orange-600 rounded">Stop local</button>
+      <button (click)="startLocalVideo()" class="px-5 py-2 bg-sky-600 rounded">Start local</button>
+      <button (click)="pauseLocalVideo()" class="px-5 py-2 bg-orange-600 rounded">Stop local</button>
       <button class="px-5 py-2 bg-green-600 rounded">Call</button>
       <button class="px-5 py-2 bg-red-600 rounded">HangUp</button>
    </div>

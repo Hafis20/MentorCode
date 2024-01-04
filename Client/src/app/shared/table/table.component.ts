@@ -27,7 +27,7 @@ export class TableComponent implements OnInit, OnChanges {
     new EventEmitter<MenteeSlotAction>();
 
   @Output() filterEvent:EventEmitter<string> = new EventEmitter<string>();
-  @Output() videoEvent:EventEmitter<void> = new EventEmitter<void>();
+  @Output() videoEvent:EventEmitter<string> = new EventEmitter<string>();
 
   isMenuOpened: boolean[] = [];    // For menu toggler
   totalMenteeBookings!:number;
@@ -120,7 +120,7 @@ export class TableComponent implements OnInit, OnChanges {
 
 
   // Video chat implementation button click
-  openVedio(){
-    this.videoEvent.emit(); 
+  openVedio(bookingId:string){
+    this.videoEvent.emit(bookingId); 
   }
 }

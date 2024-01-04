@@ -1,6 +1,6 @@
 // Server configuration
 const express = require("express");
-const path = require('path');
+const path = require("path");
 const app = express();
 
 // .env configuration
@@ -16,20 +16,26 @@ mongoose
 
 // Cors configuration
 const cors = require("cors");
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:4200", "https://admin.socket.io"],
+  credentials: true,
+}));
+
+// Socket configuration
+const socketManager = require("./config/socket.js");
+const { Server } = require("socket.io");
 
 // Port configuration
 const PORT = process.env.PORT || 5000;
 
 // Swagger configurations
-const swaggerSpec = require('./swagger');
-const swaggerUi = require('swagger-ui-express')
-app.use('/docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec));
-
+const swaggerSpec = require("./swagger");
+const swaggerUi = require("swagger-ui-express");
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Application middlewares
 app.use(express.json());
-app.use(express.static(path.join(__dirname,'Images')));
+app.use(express.static(path.join(__dirname, "Images")));
 
 // Application routers
 const adminRouter = require("./routers/adminRouter");
@@ -37,18 +43,30 @@ const menteeRouter = require("./routers/menteeRouter");
 const mentorRouter = require("./routers/mentorRouter");
 const mentorSlotRouter = require("./routers/mentorSlotRouter");
 const menteeSlotRouter = require("./routers/menteeSlotRouter");
-const paymentRouter = require('./routers/paymentRouter');
+const paymentRouter = require("./routers/paymentRouter");
 const walletRouter = require("./routers/walletRouter");
 
 // calling application middleware for routers
-app.use("/admin", adminRouter);           // For admin operations
-app.use("/mentee", menteeRouter);        // For mentee operations
-app.use("/mentor", mentorRouter);       // For mentor operations
-app.use('/mentorslot',mentorSlotRouter); // For mentor slot operations
-app.use('/menteeslot',menteeSlotRouter); // For mentee slot operations
-app.use('/payment',paymentRouter);     // For user payment operations
-app.use('/wallet',walletRouter);    // For wallet operations
+app.use("/admin", adminRouter); // For admin operations
+app.use("/mentee", menteeRouter); // For mentee operations
+app.use("/mentor", mentorRouter); // For mentor operations
+app.use("/mentorslot", mentorSlotRouter); // For mentor slot operations
+app.use("/menteeslot", menteeSlotRouter); // For mentee slot operations
+app.use("/payment", paymentRouter); // For user payment operations
+app.use("/wallet", walletRouter); // For wallet operations
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
 });
+
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "http://localhost:4200",
+      "https://admin.socket.io",
+    ],
+    credentials: true,
+  },
+});
+
+socketManager(io);

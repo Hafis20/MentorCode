@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { MenteeSlotAction, MentorBookingDetails } from 'src/app/model/bookingsModel';
 import { MentorSlotService } from 'src/app/services/mentor-slot.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
+import { SocketService } from 'src/app/services/socket.service';
+import { getMentorInfo } from 'src/app/store/Mentor/mentor.selector';
 
 @Component({
   selector: 'app-view-bookings',
@@ -21,11 +24,15 @@ export class ViewBookingsComponent implements OnInit{
 
   BookingDetails!:MentorBookingDetails[];
   BookingDetailsCopy!:MentorBookingDetails[];
+  email!:string;
+  mentorId!:string;
 
     constructor(
       private service:MentorSlotService,
       private showMessage:MessageToastrService,
-      private router: Router
+      private router: Router,
+      private store:Store,
+      private socketSevice:SocketService,
     ){}
 
     ngOnInit(): void {
@@ -76,8 +83,20 @@ export class ViewBookingsComponent implements OnInit{
       }
     }
 
-    videoChat(){
-      console.log('Chat')
-      this.router.navigate(['mentor/video-chat']);
+    getMentorDetails(){
+      this.store.select(getMentorInfo).subscribe({
+        next:(response)=>{
+          this.email = response.email,
+          this.mentorId = response._id
+        }
+      })
+    }
+
+    videoChat(bookingId:string){
+      this.getMentorDetails();
+      const email = this.email;
+      const roomId = bookingId+this.mentorId;
+      this.socketSevice.mentorJoinRoom({email:email,room:roomId});
+      this.router.navigate([`mentor/video-chat/${roomId}`]);
     }
 }
