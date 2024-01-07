@@ -109,6 +109,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.currentMentorDetails = this.showMentorTableData();
   }
 
+
   showMentorTableData(): MentorBookingDetails[]{
     if (this.MentorBookingDetails) {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;

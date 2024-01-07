@@ -70,6 +70,7 @@ import { FilterBarComponent } from './shared/filter-bar/filter-bar.component';
 import { ChangetopositivePipe } from './customPipes/changetopositive.pipe';
 import { AgChartsAngularModule } from 'ag-charts-angular';
 import { VideoChatComponent } from './component/video-chat/video-chat.component';
+import { VedioDirective } from './customDirectives/vedio.directive';
 
 
 @NgModule({
@@ -119,6 +120,7 @@ import { VideoChatComponent } from './component/video-chat/video-chat.component'
     FilterBarComponent,
     ChangetopositivePipe,
     VideoChatComponent,
+    VedioDirective,
   ],
   imports: [
     BrowserModule,
