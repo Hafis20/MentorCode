@@ -69,7 +69,8 @@ import { SearchBarComponent } from './shared/search-bar/search-bar.component';
 import { FilterBarComponent } from './shared/filter-bar/filter-bar.component';
 import { ChangetopositivePipe } from './customPipes/changetopositive.pipe';
 import { AgChartsAngularModule } from 'ag-charts-angular';
-import { VideoChatMentorComponent } from './component/mentor/video-chat-mentor/video-chat-mentor.component';
+import { VideoChatComponent } from './component/video-chat/video-chat.component';
+
 
 @NgModule({
   declarations: [
@@ -117,7 +118,7 @@ import { VideoChatMentorComponent } from './component/mentor/video-chat-mentor/v
     SearchBarComponent,
     FilterBarComponent,
     ChangetopositivePipe,
-    VideoChatMentorComponent,
+    VideoChatComponent,
   ],
   imports: [
     BrowserModule,

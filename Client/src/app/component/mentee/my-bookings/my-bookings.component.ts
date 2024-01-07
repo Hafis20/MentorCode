@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import {
   MenteeBookingsDetails,
   MenteeSlotAction,
 } from 'src/app/model/bookingsModel';
 import { MenteeSlotService } from 'src/app/services/mentee-slot.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
+import { SocketService } from 'src/app/services/socket.service';
+import { getMenteeInfo } from 'src/app/store/Mentee/mentee.selector';
 
 @Component({
   selector: 'app-my-bookings',
@@ -25,14 +28,22 @@ export class MyBookingsComponent implements OnInit {
 
   BookingDetails!: MenteeBookingsDetails[]; // Setting and passing the data about booking details of the user
   filterDetails!: MenteeBookingsDetails[];
+  email!:string;
   constructor(
     private service: MenteeSlotService,
     private showMessage: MessageToastrService,
     private router:Router,
+    private socketService:SocketService,
+    private store:Store,
   ) {}
 
   ngOnInit(): void {
     this.getMenteeBookingDetails();
+    this.store.select(getMenteeInfo).subscribe({
+      next:(response)=>{
+        this.email = response.email;
+      }
+    })
   }
 
   getMenteeBookingDetails() {
@@ -93,7 +104,9 @@ export class MyBookingsComponent implements OnInit {
     }
   }
 
-  videoChat(){
-    
+  menteeVideoChat(roomId:string){
+    // For joining the call
+    this.socketService.menteeJoinRoom({email:this.email,room:roomId});
+    this.router.navigate([`mentee/video-chat/${roomId}`],{state:{role:'mentee'}});
   }
 }

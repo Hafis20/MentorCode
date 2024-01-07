@@ -92,11 +92,11 @@ export class ViewBookingsComponent implements OnInit{
       })
     }
 
-    videoChat(bookingId:string){
+    videoChatMentor(bookingId:string){
       this.getMentorDetails();
       const email = this.email;
       const roomId = bookingId+this.mentorId;
       this.socketSevice.mentorJoinRoom({email:email,room:roomId});
-      this.router.navigate([`mentor/video-chat/${roomId}`]);
+      this.router.navigate([`mentor/video-chat/${roomId}`],{state:{role:'mentor'}});
     }
 }
