@@ -1,5 +1,5 @@
-<div class="px-10">
-   <div class="flex flex-col">
+<div class="px-10" *ngIf="location_details">
+   <div class="flex flex-col font-poppins">
       <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
          <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div class="overflow-hidden">
@@ -53,6 +53,61 @@
                </table>
                <div class="flex justify-end">
                   <pagination [total]="totalUsers" [currentPage]="currentPage" (changePageEvent)="changePage($event)">
+                  </pagination>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Booking Details -->
+<div class="px-10" *ngIf="location_bookings && bookingDetails">
+   <div class="flex flex-col font-poppins">
+      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+         <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div class="overflow-hidden">
+               <table class="min-w-full text-center text-sm font-light">
+                  <thead class="border-b font-medium dark:border-neutral-500">
+                     <tr>
+                        <th *ngFor="let headers of tableHeaders" scope="col" class="px-6 py-4">{{headers | uppercase}}
+                        </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <ng-container *ngIf="currentBookings.length > 0; else showempty">
+                        <tr *ngFor="let details of currentBookings" class="border-b dark:border-neutral-500">
+                           <td class="whitespace-nowrap px-6 py-6 font-bold text-[17px]">{{details.MentorDetails.name}}</td>
+                           <td class="whitespace-nowrap px-6 py-4 font-bold text-[17px]">{{details.MenteeDetails.name}}</td>
+                           <td class="whitespace-nowrap px-6 py-4">{{details.details.date}}</td>
+                           <td class="whitespace-nowrap px-6 py-4">{{details.details.time}}</td>
+                           <td class="whitespace-nowrap px-6 py-4">₹ {{details.details.fee}}</td>
+                           <ng-container>
+                              <td class="whitespace-nowrap px-6 py-4" *ngIf="details.details.status === 'completed'">
+                                 <span class="px-4 py-1 bg-green-500 rounded-full text-white">Completed</span>
+                              </td>
+                              <td class="whitespace-nowrap px-6 py-4" *ngIf="details.details.status === 'Mentor cancelled'">
+                                 <span class="px-4 py-1 bg-orange-500 rounded-full text-white">Mentor Cancelled</span>
+                              </td>
+                              <td class="whitespace-nowrap px-6 py-4" *ngIf="details.details.status === 'cancelled'">
+                                 <span class="px-4 py-1 bg-red-500 rounded-full text-white">Cancelled</span>
+                              </td>
+                              <td class="whitespace-nowrap px-6 py-4" *ngIf="details.details.status === 'pending'">
+                                 <span class="px-4 py-1 bg-sky-700 rounded-full text-white">Pending</span>
+                              </td>
+                           </ng-container>
+                        </tr>
+                     </ng-container>
+                     <ng-template #showempty>
+                        <div class="flex justify-center pt-10">
+                           <h1>No Bookings Yet</h1>
+                        </div>
+                     </ng-template>
+                  </tbody>
+               </table>
+               <div class="flex justify-end">
+                  <pagination [total]="totalUsers" [currentPage]="currentPage" (changePageEvent)="changeBookingPage($event)">
                   </pagination>
                </div>
             </div>

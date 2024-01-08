@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { bookingOptions, userOptions } from './filter-data';
 
 @Component({
   selector: 'filter',
@@ -6,8 +7,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent {
-
+  @Input() from!:string;
   @Output() filterEvent:EventEmitter<string> = new EventEmitter<string>();
+
+  userOptions:{option:string,value:string}[] = userOptions;
+  bookingOptions:{option:string,value:string}[] = bookingOptions;
+
 
   selectedType:string = 'all';
   changedSelection(){

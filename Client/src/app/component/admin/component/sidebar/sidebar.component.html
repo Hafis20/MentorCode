@@ -13,10 +13,10 @@
 <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
    <ul class="space-y-2 font-medium">
       <li>
-         <a [routerLink]="['dashboard']" [routerLinkActive]="'bg-gray-500'"
+         <a [routerLink]="['dashboard']" [routerLinkActive]="'bg-gray-700'"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <svg
-               class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+               class="w-5 h-5 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                <path
                   d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
@@ -28,26 +28,26 @@
       </li>
 
       <li>
-         <a [routerLink]="['list-mentors']" [routerLinkActive]="'bg-gray-500'"
+         <a [routerLink]="['list-mentors']" [routerLinkActive]="'bg-gray-700'"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <i class="fa-solid fa-chalkboard-user text-xl text-gray-400"></i>
+            <span><i class="fa-solid fa-chalkboard-user text-xl text-white"></i></span>
             <span class="flex-1 ms-3 whitespace-nowrap">Mentors</span>
          </a>
       </li>
 
       <li>
-         <a [routerLink]="['list-mentees']" [routerLinkActive]="'bg-gray-500'"
+         <a [routerLink]="['list-mentees']" [routerLinkActive]="'bg-gray-700'"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <i class="fa-solid fa-user-graduate text-xl text-gray-400"></i>
+            <i class="fa-solid fa-user-graduate text-xl text-white"></i>
             <span class="flex-1 ms-3 whitespace-nowrap">Mentees</span>
          </a>
       </li>
       
       <!-- List Bookings -->
       <li>
-         <a [routerLink]="['list-bookings']" [routerLinkActive]="'bg-gray-500'"
+         <a [routerLink]="['list-bookings']" [routerLinkActive]="'bg-gray-700'"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <i class="fa-solid fa-list text-xl text-gray-400"></i>
+            <i class="fa-solid fa-list text-xl text-white"></i>
             <span class="flex-1 ms-3 whitespace-nowrap">Bookings</span>
             
          </a>
@@ -56,7 +56,7 @@
       <li>
          <a (click)="logout()" 
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
-            <i class="fa-solid fa-right-from-bracket text-xl text-gray-400"></i>
+            <i class="fa-solid fa-right-from-bracket text-xl text-white"></i>
             <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
          </a>
       </li>

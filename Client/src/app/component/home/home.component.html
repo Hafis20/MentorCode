@@ -5,10 +5,14 @@
     <div class="flex flex-col h-96">
       <h1><span class="font-poppins text-black text-6xl tracking-wide">Ask Directly to <br> the <span
             class="text-blue-900 font-bold ">Experts</span></span></h1>
-      <button [routerLink]="['/mentee/list-mentors']"
-        class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
-        Find a Mentor
-      </button>
+      <div [routerLink]="['/mentee/list-mentors']" class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2 flex justify-center gap-2 cursor-pointer">
+        <div>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div>
+          Find A Mentor
+        </div>
+      </div>
     </div>
   
     <div class="w-1/2">

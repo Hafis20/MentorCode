@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MenteeData, MentorData, Statistics } from 'src/app/model/adminModel';
+import { Bookings } from 'src/app/model/bookingsModel';
 import {
   AdminInfo,
   HttpResponseModel,
@@ -84,5 +85,9 @@ export class AdminService {
   // Data for admin dashboard
   getStatistics():Observable<Statistics>{
     return this.http.get<Statistics>(`${environment.adminURL}/getStatistics`);
+  }
+
+  getBookingDetails():Observable<Bookings[]>{
+    return this.http.get<Bookings[]>(`${environment.adminURL}/getBookingDetails`);
   }
 }

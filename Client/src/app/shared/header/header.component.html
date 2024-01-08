@@ -9,31 +9,42 @@
           </a>
         </div>
         <div class="bg-white h-auto flex items-center justify-between">
-          <div class="pr-5">
-            <button [routerLink]="['']"
-              class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
-              Home
-            </button>
-          </div>
-          <ng-container *ngIf="!isLogin;else profile">
-            <div class="pr-5">
-              <button [routerLink]="['/mentor/login']" *ngIf="!currentUser || currentUser === 'mentor'"
-                class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
-                Become a Mentor
-              </button>
+          <!-- Home Router Button -->
+          <div [routerLink]="['']" class="px-6 py-2 text-blue-900 border border-solid border-blue-900 hover:bg-blue-900 hover:text-white cursor-pointer rounded-full flex justify-between gap-2 mr-3">
+            <div>
+              <span>
+                <i class="fa-solid fa-house"></i>
+              </span>
             </div>
-          
+            <div class="font-bold">
+              Home
+            </div>
+          </div>
+
+          <!-- Become a Mentor button -->
+          <ng-container *ngIf="!isLogin;else profile">
+            <div [routerLink]="['/mentor/login']" *ngIf="!currentUser || currentUser === 'mentor'" class="px-6 py-2 text-blue-900 border border-solid border-blue-900 hover:bg-blue-900 hover:text-white cursor-pointer rounded-full flex justify-between gap-2 mr-3">
+              <div>
+                <span>
+                  <i class="fa-solid fa-chalkboard-user"></i>
+                </span>
+              </div>
+              <div class="font-bold">
+                Become a Mentor
+              </div>
+            </div>
+
             <div class="pr-5">
               <button [routerLink]="['/mentee/login']" *ngIf="!currentUser || currentUser === 'mentee'"
-                class="border border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
+                class="border border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
                 Sign In
               </button>
             </div>
           </ng-container>
           <ng-template #profile>
-            <div (click)="gotoProfile()" 
-              class="m-1 hidden  mr-4 w-12 h-12 relative md:flex justify-center items-center rounded-full cursor-pointer bg-gray-500 text-xl text-white">
-              <img src="assets/imgs/background/default-profile.jpeg" class="rounded-full">
+            <div (click)="gotoProfile()"
+              class="m-1 hidden  mr-4 w-12 h-12 relative md:flex justify-center items-center rounded-full cursor-pointer text-2xl text-blue-900">
+              <i class="fa-solid fa-user"></i>
             </div>
           </ng-template>
         </div>

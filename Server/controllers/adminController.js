@@ -203,6 +203,53 @@ const getStatistics = async(req,res)=>{
   }
 }
 
+// Get the booking details for the admin side table
+const getBookingDetails = async(req,res)=>{
+  try {
+    const bookingDetails = await BookedSlots.aggregate([
+      {
+        $unwind:'$details',
+      },
+      {
+        $lookup:{
+          from:'mentors',
+          localField:'details.mentorId',
+          foreignField:'_id',
+          as:'MentorDetails'
+        }
+      },
+      {
+        $lookup:{
+          from:'mentees',
+          localField:'menteeId',
+          foreignField:'_id',
+          as:'MenteeDetails'
+        }
+      },
+      {
+        $unwind:'$MenteeDetails',
+      },
+      {
+        $unwind:'$MentorDetails',
+      },
+      {
+        $project:{
+          '_id':1,
+          'details.date':1,
+          'details.time':1,
+          'details.fee':1,
+          'details.status':1,
+          'MentorDetails.name':1,
+          'MenteeDetails.name':1,
+        }
+      }
+    ]);
+    res.status(200).json(bookingDetails)
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({message:'Internal server error'});
+  }
+}
 module.exports = {
   login,
   getAllMentees,
@@ -213,4 +260,5 @@ module.exports = {
   unblockMentor,
   getAdminData,
   getStatistics,
+  getBookingDetails,
 };

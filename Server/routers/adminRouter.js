@@ -45,5 +45,6 @@ adminRouter.patch('/blockMentor',adminAuth,adminController.blockMentor);
 adminRouter.patch('/unblockMentor',adminAuth,adminController.unblockMentor);
 // Users count for admin dashboard
 adminRouter.get('/getStatistics',adminAuth,adminController.getStatistics);
-
+// Getting the booking details for showing in admin table
+adminRouter.get('/getBookingDetails',adminController.getBookingDetails);
 module.exports = adminRouter;
