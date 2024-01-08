@@ -61,45 +61,30 @@
                           {{booking.status}} </span>
                       </td>
 
-                      <!-- Video calling icon -->
-                      <td class="p-3  px-10 pr-0 text-center">
-                        <i appVedio [currentDate]="booking.date" class="fa-solid fa-video text-lg hover:text-gray-600 cursor-pointer" (click)="openVedioMentee(booking._id,booking.mentorId)"></i>
-                      </td>
-
                       <!-- Dropdown -->
-                      <td class="p-3  px-10 pr-0 text-center">
-                        <div class="dropdown inline-block relative">
-                          <button (click)="toggleMenu(i)"
-                            [disabled]="booking.status === 'completed' || booking.status === 'cancelled'|| booking.status === 'Mentor cancelled'"
-                            class=" bg-indigo-400 text-gray-900 font-semibold py-[7px] px-[17px] rounded-full inline-flex items-center">
-                            <span class="">Change Status</span>
-                          </button>
-
-                          <ng-container *ngIf="booking.status !== 'completed'">
-                            <div *ngIf="isMenuOpened[i] "
-                              class="dropdown-menu  absolute right-0 z-10 mt-0 w-56 origin-top-right divide-y divide-gray-300 rounded-md bg-indigo-300 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                              role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                              <div class="" role="none">
-                                <a (click)="completed(booking._id)"
-                                  class="text-gray-700  hover:bg-gray-400 block  px-4 py-2 text-sm cursor-pointer"
-                                  role="menuitem" tabindex="-1" id="menu-item-2">
-                                  Completed</a>
-                              </div>
-                              <div class="" role="none">
-                                <a (click)="cancel(booking._id)"
-                                  class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-400 "
-                                  role="menuitem" tabindex="-1" id="menu-item-2">
-                                  Cancel Booking</a>
-                              </div>
-                            </div>
-                          </ng-container>
+                      <td>
+                        <div appTable [status]="booking.status" (click)="cancel(booking._id)" class="border border-solid border-red-500 px-3 py-2 rounded-full cursor-pointer hover:bg-red-200 ">
+                          <div class="flex w-full h-max items-center justify-center gap-2 text-red-500 ">
+                            <p style="margin: 0px;">Cancel Booking</p>
+                            <i class="fa-solid fa-xmark"></i>
+                          </div>
                         </div>
                       </td>
+
+                      <!-- Video calling icon -->
+                      <td class="p-3  px-10 pr-0 text-center">
+                        <i appVedio [currentDate]="booking.date"
+                          class="fa-solid fa-video text-lg hover:text-gray-600 cursor-pointer"
+                          (click)="openVedioMentee(booking._id,booking.mentorId)"></i>
+                      </td>
+
+
                     </tr>
                   </tbody>
                 </table>
                 <div class="flex justify-end">
-                  <pagination [total]="totalMenteeBookings" [limit]="itemsPerPage" [currentPage]="currentPage" (changePageEvent)="changeMenteeTablePage($event)"></pagination>
+                  <pagination [total]="totalMenteeBookings" [limit]="itemsPerPage" [currentPage]="currentPage"
+                    (changePageEvent)="changeMenteeTablePage($event)"></pagination>
                 </div>
               </div>
             </div>
@@ -146,7 +131,7 @@
                           {{booking.details.status}} </span>
                       </td>
 
-                      
+
                       <td class="p-3 pr-0 text-center">
                         <ng-container *ngIf="booking.details.status === 'pending'">
                           <button (click)="cancelByMentor(booking.details._id,booking.menteeDetails._id)"
@@ -170,14 +155,17 @@
                       </td>
 
                       <!-- Video  -->
-                      <td class="p-3  px-10 pr-0 text-center" >
-                        <span><i appVedio [currentDate]="booking.details.date" class="fa-solid fa-video text-lg hover:text-gray-600 cursor-pointer" (click)="openVedioMentor(booking.details._id)"></i></span>
+                      <td class="p-3  px-10 pr-0 text-center">
+                        <span><i appVedio [currentDate]="booking.details.date"
+                            class="fa-solid fa-video text-lg hover:text-gray-600 cursor-pointer"
+                            (click)="openVedioMentor(booking.details._id)"></i></span>
                       </td>
-                      
+
                     </tr>
                   </tbody>
                   <div class="flex justify-end">
-                    <pagination [total]="totalMentorBookings" [limit]="itemsPerPage" [currentPage]="currentPage" (changePageEvent)="changeMentorTablePage($event)"></pagination>
+                    <pagination [total]="totalMentorBookings" [limit]="itemsPerPage" [currentPage]="currentPage"
+                      (changePageEvent)="changeMentorTablePage($event)"></pagination>
                   </div>
                 </table>
               </div>

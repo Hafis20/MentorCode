@@ -77,5 +77,6 @@ export interface MentorProfile {
 
 // Get statistics on mentor dashboard
 export interface GetStatistics{
+  bookings:[],
   totalSessions:number;
 }

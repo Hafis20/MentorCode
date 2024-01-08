@@ -23,27 +23,29 @@ export class MyBookingsComponent implements OnInit {
     'Time',
     'Status',
     'Action',
-    'Start Chat'
+    'Start Chat',
   ];
 
   BookingDetails!: MenteeBookingsDetails[]; // Setting and passing the data about booking details of the user
   filterDetails!: MenteeBookingsDetails[];
-  email!:string;
+  email!: string;
+  menteeId!: string;
   constructor(
     private service: MenteeSlotService,
     private showMessage: MessageToastrService,
-    private router:Router,
-    private socketService:SocketService,
-    private store:Store,
+    private router: Router,
+    private socketService: SocketService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
     this.getMenteeBookingDetails();
     this.store.select(getMenteeInfo).subscribe({
-      next:(response)=>{
+      next: (response) => {
         this.email = response.email;
-      }
-    })
+        this.menteeId = response._id;
+      },
+    });
   }
 
   getMenteeBookingDetails() {
@@ -55,30 +57,17 @@ export class MyBookingsComponent implements OnInit {
       },
     });
   }
-  completeAction(data: MenteeSlotAction) {
-    if (data.status === 'completed') {
-      this.service.completeMentorShip(data).subscribe({
-        // Response of complete action
-        next: (response) => {
-          this.showMessage.showSuccessToastr(response.message);
-          this.getMenteeBookingDetails();
-        },
-        error: (error) => {
-          this.showMessage.showErrorToastr(error.error.message);
-        },
-      });
-    } else {
-      this.service.cancelMentorShip(data).subscribe({
-        // Response of cancel booking
-        next: (response) => {
-          this.showMessage.showSuccessToastr(response.message);
-          this.getMenteeBookingDetails();
-        },
-        error: (error) => {
-          this.showMessage.showErrorToastr(error.error.message);
-        },
-      });
-    }
+  actionEvent(data: MenteeSlotAction) {
+    this.service.cancelMentorShip(data).subscribe({
+      // Response of cancel booking
+      next: (response) => {
+        this.showMessage.showSuccessToastr(response.message);
+        this.getMenteeBookingDetails();
+      },
+      error: (error) => {
+        this.showMessage.showErrorToastr(error.error.message);
+      },
+    });
   }
 
   // Filter the table according to the data status
@@ -104,9 +93,16 @@ export class MyBookingsComponent implements OnInit {
     }
   }
 
-  menteeVideoChat(roomId:string){
+  menteeVideoChat(data: any) {
     // For joining the call
-    this.socketService.menteeJoinRoom({email:this.email,room:roomId});
-    this.router.navigate([`mentee/video-chat/${roomId}`],{state:{role:'mentee'}});
+    const roomId =  data.bookingId + data.mentorId._id;
+    this.socketService.menteeJoinRoom({ email: this.email, room: roomId });
+    this.router.navigate([`mentee/video-chat/${roomId}`], {
+      state: {
+        role: 'mentee',
+        bookingId: data.bookingId,
+        menteeId: this.menteeId,
+      },
+    });
   }
 }

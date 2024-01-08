@@ -97,6 +97,6 @@ export class ViewBookingsComponent implements OnInit{
       const email = this.email;
       const roomId = bookingId+this.mentorId;
       this.socketSevice.mentorJoinRoom({email:email,room:roomId});
-      this.router.navigate([`mentor/video-chat/${roomId}`],{state:{role:'mentor'}});
+      this.router.navigate([`mentor/video-chat/${roomId}`],{state:{role:'mentor',bookingId:bookingId}});
     }
 }

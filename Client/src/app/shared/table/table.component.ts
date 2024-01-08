@@ -28,7 +28,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   @Output() filterEvent:EventEmitter<string> = new EventEmitter<string>();
   @Output() mentorVideoEvent:EventEmitter<string> = new EventEmitter<string>(); // Passing bookingId
-  @Output() menteeVideoEvent:EventEmitter<string> = new EventEmitter<string>();  // Passing room Id
+  @Output() menteeVideoEvent:EventEmitter<object> = new EventEmitter<object>();  // Passing room Id
 
 
   isMenuOpened: boolean[] = [];    // For menu toggler
@@ -48,9 +48,9 @@ export class TableComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['MenteeBookingDetails']) {
       if(this.MenteeBookingDetails){
+        this.currentPage = 1;
         this.currentMenteeDetails =  this.showMenteeTableData();
         this.totalMenteeBookings = this.MenteeBookingDetails.length;
-        this.isMenuOpened = Array(this.MenteeBookingDetails.length).fill(false);
       }
       // console.log(this.MenteeBookingDetails);
     }
@@ -66,11 +66,6 @@ export class TableComponent implements OnInit, OnChanges {
 
   toggleMenu(index:number){
     this.isMenuOpened[index] = !this.isMenuOpened[index];
-  }
-
-  // Completed the mentorship
-  completed(bookingId: string) {
-    this.changeStatusEvent.emit({ bookingId: bookingId, status: 'completed' });
   }
 
   // Cancel the mentor ship
@@ -130,7 +125,6 @@ export class TableComponent implements OnInit, OnChanges {
   // Video chat implementation button click mentee
 
   openVedioMentee(bookingId:string,mentorId:any){
-    const roomId = bookingId+mentorId._id;
-    this.menteeVideoEvent.emit(roomId); 
+    this.menteeVideoEvent.emit({bookingId,mentorId}); 
   }
 }

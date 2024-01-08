@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { WalletService } from 'src/app/services/wallet.service';
 import { getAdminInfo } from '../../store/admin.selector';
 import { AdminService } from '../../services/admin-service.service';
-import { Statistics } from 'src/app/model/adminModel';
 import { AgChartOptions } from 'ag-charts-community';
 
 @Component({

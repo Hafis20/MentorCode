@@ -6,6 +6,8 @@ export const LOGIN_MENTEE = '[auth] mentee login';
 export const LOGIN_MENTEE_SUCCESS = '[auth] mentee login success';
 export const GET_MENTEE = '[auth] get mentee data'
 export const GET_MENTEE_SUCCESS = '[auth] get mentee data success';
+export const LOGOUT_MENTEE = '[auth] mentee logout';
+
 
 // Action definition
 export const loginMentee = createAction(LOGIN_MENTEE,props<{data:LoginModel}>());
@@ -14,3 +16,6 @@ export const loginMenteeSuccess = createAction(LOGIN_MENTEE_SUCCESS,props<{mente
 // Mentee data
 export const getMentee = createAction(GET_MENTEE);
 export const getMenteeSuccess = createAction(GET_MENTEE_SUCCESS,props<{mentee:UserInfo}>())
+
+// Mentee logout
+export const logoutMentee = createAction(LOGOUT_MENTEE);

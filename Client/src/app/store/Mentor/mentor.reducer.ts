@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { MentorState } from './mentor.state';
-import { getMentorSuccess, loginMentorSuccess } from './mentor.action';
+import { getMentorSuccess, loginMentorSuccess, logoutMentor } from './mentor.action';
 
 const _mentorReducer = createReducer(
   MentorState,
@@ -29,6 +29,18 @@ const _mentorReducer = createReducer(
             role:mentorData.role,
          }
       }
+  }),
+  on(logoutMentor,(state)=>{
+    return {
+      ...state,
+      mentorInfo:{
+        _id:'',
+        name:'',
+        email:'',
+        image:'',
+        role:''
+      }
+    }
   })
 );
 

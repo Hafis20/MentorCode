@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { MenteeState } from './mentee.state';
-import { getMenteeSuccess, loginMenteeSuccess } from './mentee.action';
+import { getMenteeSuccess, loginMenteeSuccess, logoutMentee } from './mentee.action';
 
 const _menteeReducer = createReducer(
   MenteeState,
@@ -28,6 +28,17 @@ const _menteeReducer = createReducer(
         role: mentee.role,
       },
     };
+  }),
+  on(logoutMentee,(state)=>{
+    return {
+      ...state,
+      menteeInfo:{
+        _id:'',
+        name:'',
+        email:'',
+        role:''
+      }
+    }
   })
 );
 

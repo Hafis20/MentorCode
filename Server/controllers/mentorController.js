@@ -331,19 +331,33 @@ const getStatistics = async (req, res) => {
   try {
     // const {mentorId} = req.body;
     const mentorId = req.mentorId;
-    const completed = await BookedSlot.aggregate([
+    const bookings = await BookedSlot.aggregate([
       {
         $unwind: "$details",
       },
       {
         $match: {
           "details.mentorId": new mongoose.Types.ObjectId(mentorId),
-          "details.status": "completed",
         },
       },
+      {
+        $group:{
+          _id:'$details.status',
+          'count':{$sum:1}
+        }
+      },
     ]);
-    const totalSessions = completed.length;
-    res.status(200).json({ totalSessions });
+    let totalSessions;
+    Object.entries(bookings).forEach(([key, value]) => {
+      // console.log(key, value);
+      if (value._id === 'completed') {
+        totalSessions = value.count;
+      }
+    });
+    if(!totalSessions){
+      totalSessions = 0;
+    }
+    res.status(200).json({totalSessions,bookings});
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

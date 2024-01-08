@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenteeSlotAction } from 'src/app/model/bookingsModel';
+import { MenteeSlotService } from 'src/app/services/mentee-slot.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 import { PeerService } from 'src/app/services/peer.service';
 import { SocketService } from 'src/app/services/socket.service';
@@ -29,17 +31,22 @@ export class VideoChatComponent implements OnInit, AfterViewInit{
 
   @ViewChild('local_video') localVideo!:ElementRef;
   @ViewChild('received_video') remoteVideo!:ElementRef;
+  bookingId!:string;
+  menteeId!:string;
   role!:string;
 
   constructor(
     private socketService:SocketService,
     private peerService:PeerService,
     private router: Router,
-    private showMessage:MessageToastrService
+    private showMessage:MessageToastrService,
+    private menteeSlotService:MenteeSlotService,
   ){}
 
   ngOnInit(): void {
     this.role = history.state.role;
+    this.bookingId = history.state.bookingId;
+    this.menteeId = history.state.menteeId;
     // console.log(this.role);
     this.socketService.onUserJoined().subscribe((data)=>{
       console.log('Remote Socket Id',data);  
@@ -154,11 +161,30 @@ export class VideoChatComponent implements OnInit, AfterViewInit{
 
   afterDisconnect():void{
     if(this.role === 'mentee'){
+      this.complete();
       this.router.navigate(['/mentee/mybookings']);
       this.showMessage.showWarningToastr('Call Disconnected');
     }else if(this.role === 'mentor'){
       this.router.navigate(['/mentor/bookings']);
       this.showMessage.showWarningToastr('Call Disconnected');
+    }
+  }
+
+  complete(){
+    if(this.role === 'mentee'){
+      const data:MenteeSlotAction = {
+        bookingId:this.bookingId,
+        status:'completed',
+        menteeId:this.menteeId,
+      }
+      this.menteeSlotService.completeMentorShip(data).subscribe({
+        next:(response)=>{
+          this.showMessage.showSuccessToastr(response.message);
+        },
+        error: (error) => {
+          this.showMessage.showErrorToastr(error.error.message);
+        },
+      })
     }
   }
 

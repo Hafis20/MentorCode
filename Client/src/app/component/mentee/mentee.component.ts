@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { getMentee } from 'src/app/store/Mentee/mentee.action';
+import { getMentee, logoutMentee } from 'src/app/store/Mentee/mentee.action';
 
 @Component({
   selector: 'app-mentee',
@@ -17,6 +17,7 @@ export class MenteeComponent implements OnInit {
   }
 
   logout() {
+    this.store.dispatch(logoutMentee());
     localStorage.removeItem('menteeToken');
     this.router.navigate(['/mentee/login']);
   }
