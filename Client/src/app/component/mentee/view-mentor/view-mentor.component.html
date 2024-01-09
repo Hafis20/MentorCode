@@ -74,10 +74,13 @@
                            <li *ngFor="let skill of mentorDetails.skills" class="mb-2">{{skill}}</li>
                         </ul>
                      </div>
-                     <!-- <hr class="my-6 border-t border-gray-300">
-                     <div class="mt-6 flex flex-wrap gap-4 justify-center">
-                        <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
-                     </div> -->
+                     <hr class="my-6 border-t border-gray-300">
+                     <div class="flex flex-col gap-2">
+                        <div class="mt-2 flex flex-wrap gap-4 justify-center cursor-pointer">
+                           <a (click)="toggleModal()" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Feedback</a>
+                        </div>
+                        <feedback-modal [MentorId]="mentorId" *ngIf="modalOpen"></feedback-modal>
+                     </div>
                   </div>
                   <view-mentor-calender [slots]="bookedDates" [slotDates]="slotDates"
                      (dateEvent)="slotsOfTheDay($event)"></view-mentor-calender>

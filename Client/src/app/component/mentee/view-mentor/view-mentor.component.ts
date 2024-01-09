@@ -30,6 +30,10 @@ export class ViewMentorComponent implements OnInit {
   bookedDates!:string[];
   slot_id!:string;
   slotTime!:string;
+
+  // Rating and command modal
+  modalOpen:boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private service: MenteeService,
@@ -144,5 +148,10 @@ export class ViewMentorComponent implements OnInit {
         this.showMessage.showErrorToastr(error.error.message);
       }
     })
+  }
+
+  // Modal toggling
+  toggleModal(){
+    this.modalOpen = !this.modalOpen;
   }
 }

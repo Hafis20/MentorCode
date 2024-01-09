@@ -63,4 +63,10 @@ export class MenteeService {
   getMentorSlots(id:string):Observable<GetMentorSlots>{
     return this.http.get<GetMentorSlots>(`${environment.menteeURL}/getMentorSlots/?id=${id}`);
   }
+
+  // Feedback for mentor in mentee side
+  sendFeedback(data:any):Observable<HttpResponseModel>{
+    console.log(data);
+    return this.http.post<HttpResponseModel>(`${environment.menteeURL}/setFeedback`,data);
+  }
 }

@@ -316,6 +316,7 @@ const editProfile = async (req, res) => {
       mentorDetails.name = name;
       mentorDetails.image = imgUrl;
       mentorDetails.fee = fee;
+      mentorDetails.mobile = mobile;
       mentorDetails.experience = experience;
       await mentorDetails.save();
     }

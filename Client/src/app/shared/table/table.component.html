@@ -73,7 +73,7 @@
 
                       <!-- Video calling icon -->
                       <td class="p-3  px-10 pr-0 text-center">
-                        <i appVedio [currentDate]="booking.date"
+                        <i appVedio [currentDate]="booking.date" appTable [status]="booking.status" 
                           class="fa-solid fa-video text-lg hover:text-gray-600 cursor-pointer"
                           (click)="openVedioMentee(booking._id,booking.mentorId)"></i>
                       </td>

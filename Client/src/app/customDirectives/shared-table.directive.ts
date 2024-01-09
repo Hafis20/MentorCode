@@ -37,4 +37,7 @@ export class SharedTableDirective implements OnChanges{
       this.renderer.removeClass(this.element.nativeElement,'opacity-30')     
     }
   }
+
+
+  
 }

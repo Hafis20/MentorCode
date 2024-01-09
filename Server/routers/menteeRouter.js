@@ -226,4 +226,5 @@ menteeRouter.patch('/change-password',menteeController.changePassword); // For c
 menteeRouter.get('/getMentor',homeController.getMentor);  // Get the mentor for mentee
 menteeRouter.get('/getMentorSlots',homeController.getMentorSlots); // For getting the slots of the particular user
 menteeRouter.get('/getMentee',menteeAuth,menteeController.getMenteeDetails);  // Get mentor details for store
+menteeRouter.post('/setFeedback',menteeAuth,menteeController.setFeedback); // Setting the feedback of the mentor
 module.exports = menteeRouter;

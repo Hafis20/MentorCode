@@ -71,6 +71,8 @@ import { ChangetopositivePipe } from './customPipes/changetopositive.pipe';
 import { AgChartsAngularModule } from 'ag-charts-angular';
 import { VideoChatComponent } from './component/video-chat/video-chat.component';
 import { VedioDirective } from './customDirectives/vedio.directive';
+import { StarRatingModule } from 'angular-star-rating';
+import { FeedbackMentorComponent } from './component/mentee/feedback-mentor/feedback-mentor.component';
 
 
 @NgModule({
@@ -121,6 +123,7 @@ import { VedioDirective } from './customDirectives/vedio.directive';
     ChangetopositivePipe,
     VideoChatComponent,
     VedioDirective,
+    FeedbackMentorComponent,
   ],
   imports: [
     BrowserModule,
@@ -142,6 +145,7 @@ import { VedioDirective } from './customDirectives/vedio.directive';
     AdminModule,
     AgChartsAngularModule,
     SocketIoModule.forRoot(config),
+    StarRatingModule.forRoot()   // For rating
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
