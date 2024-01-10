@@ -1,19 +1,27 @@
 <div class="font-poppins">
    <div class="flex justify-between gap-3">
-      <div class="w-full">
-         <ag-charts-angular [options]="pieOptions"></ag-charts-angular>
+      <div class="flex flex-col w-full">
+         <div class="w-full h-[384px]">
+            <ag-charts-angular [options]="pieOptions"></ag-charts-angular>
+         </div>
+         <div class="flex mt-3">
+            <div class="bg-blue-100 w-1/2">
+               <!-- <h1 class="text-center">Today's Sessions</h1> -->
+            </div>
+         </div>
       </div>
       <div class="flex flex-col gap-2">
          <div>
             <wallet-card [walletAmount]="walletAmount"></wallet-card>
          </div>
-   
+
          <div class="w-full font-poppins md:w-[380px]">
-            <div class=" bg-white rounded-3xl">
-               <div class="px-6 py-8 sm:p-10 sm:pb-6">
+            <div class=" bg-white rounded">
+               <div class="px-6 py-8 sm:p-10 ">
                   <div class="flex items-center justify-between w-full grid-cols-1 text-left">
-                     <div>
-                        <h2 class="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
+                     <div class="flex items-center gap-2">
+                        <span class="text-lg text-gray-600"><i class="fa-solid fa-check"></i></span>
+                        <h2 style="margin: 0px;" class="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
                            Completed Sessions
                         </h2>
                      </div>
@@ -28,12 +36,10 @@
                </div>
             </div>
          </div>
+         <!-- Transaction History -->
+         <transaction-history [transaction_history]="transaction_history"></transaction-history>
       </div>
    </div>
-   
-   <div class="flex mt-3">
-      <div class="bg-blue-100 w-1/2">
-         <h1 class="text-center">Today's Sessions</h1>
-      </div>
-   </div>
+
+
 </div>

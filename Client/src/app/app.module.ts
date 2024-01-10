@@ -75,6 +75,8 @@ import { StarRatingModule } from 'angular-star-rating';
 import { FeedbackMentorComponent } from './component/mentee/feedback-mentor/feedback-mentor.component';
 import { MenteeProfileComponent } from './component/mentee/mentee-profile/mentee-profile.component';
 import { MenteeEditProfileComponent } from './component/mentee/mentee-edit-profile/mentee-edit-profile.component';
+import { ToDatePipe } from './customPipes/to-date.pipe';
+import { TransactionHistoryComponent } from './shared/transaction-history/transaction-history.component';
 
 
 @NgModule({
@@ -128,6 +130,8 @@ import { MenteeEditProfileComponent } from './component/mentee/mentee-edit-profi
     FeedbackMentorComponent,
     MenteeProfileComponent,
     MenteeEditProfileComponent,
+    ToDatePipe,
+    TransactionHistoryComponent,
   ],
   imports: [
     BrowserModule,

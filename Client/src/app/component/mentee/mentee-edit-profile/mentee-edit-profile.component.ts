@@ -66,4 +66,8 @@ export class MenteeEditProfileComponent implements OnInit {
       this.profileImage = files[0];
     }
   }
+
+  removeEditModal(){
+    this.editModalEvent.emit()
+  }
 }

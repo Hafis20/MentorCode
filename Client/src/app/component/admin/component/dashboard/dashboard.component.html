@@ -6,16 +6,17 @@
     <!-- Showing Amount and UserCount -->
 <div class="flex flex-col gap-3">
    <div class="w-full font-poppins md:w-[380px]">
-      <div class=" bg-white rounded-3xl">
-         <div class="px-6 py-8 sm:p-10 sm:pb-6">
+      <div class=" bg-white rounded">
+         <div class="px-6 py-8 sm:p-10 ">
             <div class="flex items-center justify-between w-full grid-cols-1 text-left">
-               <div>
-                  <h2 class="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
+               <div class="flex items-center gap-2">
+                  <span class="text-lg text-gray-600"><i class="fa-solid fa-wallet"></i></span>
+                  <h2 style="margin: 0px;" class="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
                      Wallet Amount
                   </h2>
                </div>
                <div>
-                  <p>
+                  <p style="margin: 0px;">
                      <span class="text-3xl font-light tracking-tight text-black">
                         ₹{{walletAmount}}
                      </span>
@@ -28,7 +29,7 @@
    </div>
    <!-- Total Mentors -->
    <div class="w-full font-poppins md:w-[380px]" *ngIf="totalMentors">
-      <div class=" bg-white rounded-3xl">
+      <div class=" bg-white rounded">
          <div class="px-6 py-8 sm:p-10 sm:pb-6">
             <div class="flex items-center justify-between w-full grid-cols-1 text-left">
                <div>
@@ -49,7 +50,7 @@
    </div>
    <!-- Total Mentees -->
    <div class="w-full font-poppins md:w-[380px]" *ngIf="totalMentees">
-      <div class=" bg-white rounded-3xl">
+      <div class=" bg-white rounded">
          <div class="px-6 py-8 sm:p-10 sm:pb-6">
             <div class="flex items-center justify-between w-full grid-cols-1 text-left">
                <div>

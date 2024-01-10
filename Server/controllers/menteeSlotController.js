@@ -122,11 +122,11 @@ const completeMentorShip = async (req, res) => {
       adminWallet = new Wallet({
         user_id:adminData._id,
         balance:adminWalletAmount,
-        transaction_history:[adminWalletAmount],
+        transaction_history:[{amount:adminWalletAmount,date_of_transaction:new Date()}],
       })
     }else{               // If already exists
       adminWallet.balance += adminWalletAmount,
-      adminWallet.transaction_history.push(adminWalletAmount);
+      adminWallet.transaction_history.push({amount:adminWalletAmount,date_of_transaction:new Date()});
     }
     await adminWallet.save();  // Save to the database
 
@@ -137,11 +137,11 @@ const completeMentorShip = async (req, res) => {
       mentorWallet = new Wallet({
         user_id:mentorId,
         balance:mentorWalletAmount,
-        transaction_history:[mentorWalletAmount],
+        transaction_history:[{amount:mentorWalletAmount,date_of_transaction:new Date()}],
       })
     }else{               // If already exists
       mentorWallet.balance += mentorWalletAmount,
-      mentorWallet.transaction_history.push(mentorWalletAmount);
+      mentorWallet.transaction_history.push({amount:mentorWalletAmount,date_of_transaction:new Date()});
     }
     await mentorWallet.save();  // Save to the database
     res.status(200).json({ message: "Marked As Completed" });
@@ -173,12 +173,13 @@ const cancelMentorShip = async(req,res) =>{
       bookingData.details.forEach((booking)=>{
         if(booking._id.equals(bookingId)){
           booking.status = status;
-          fee = booking.fee;
+          fee =Number( booking.fee);
           mentorId = booking.mentorId;
           paymentId = booking.payment_id;
           slot_id = booking.slot_id;
         }
       })
+      console.log(fee);
       await bookingData.save(); // Save the updated booking details into the database
     }
     // Wallet Management
@@ -192,16 +193,18 @@ const cancelMentorShip = async(req,res) =>{
 
     // Admin wallet management
     let adminWallet = await Wallet.findOne({user_id:adminData._id}); 
+    // console.log('Admin Wallet : ',adminWallet);
     if(!adminWallet){      // If there is no admin wallet we want to create one
       adminWallet = new Wallet({
         user_id:adminData._id,
         balance:adminWalletAmount,
-        transaction_history:[adminWalletAmount],
+        transaction_history:[{amount:adminWalletAmount,date_of_transaction:new Date()}],
       })
     }else{               // If already exists
       adminWallet.balance += adminWalletAmount,
-      adminWallet.transaction_history.push(adminWalletAmount);
+      adminWallet.transaction_history.push({amount:adminWalletAmount,date_of_transaction:new Date()});
     }
+    
     await adminWallet.save();  // Save to the database
 
     // Mentor Wallet management
@@ -210,11 +213,11 @@ const cancelMentorShip = async(req,res) =>{
       mentorWallet = new Wallet({
         user_id:mentorId,
         balance:mentorWalletAmount,
-        transaction_history:[mentorWalletAmount],
+        transaction_history:[{amount:mentorWalletAmount,date_of_transaction:new Date()}],
       })
     }else{               // If already exists
       mentorWallet.balance += mentorWalletAmount,
-      mentorWallet.transaction_history.push(mentorWalletAmount);
+      mentorWallet.transaction_history.push({amount:mentorWalletAmount,date_of_transaction:new Date()});
     }
     await mentorWallet.save();  // Save to the database
 
@@ -224,11 +227,11 @@ const cancelMentorShip = async(req,res) =>{
       menteeWallet = new Wallet({
         user_id:menteeId,
         balance:menteeWalletAmount,
-        transaction_history:[menteeWalletAmount],
+        transaction_history:[{amount:menteeWalletAmount,date_of_transaction:new Date()}],
       })
     }else{               // If already exists
       menteeWallet.balance += menteeWalletAmount,
-      menteeWallet.transaction_history.push(menteeWalletAmount);
+      menteeWallet.transaction_history.push({amount:menteeWalletAmount,date_of_transaction:new Date()});
     }
     await menteeWallet.save();  // Save to the database
 
