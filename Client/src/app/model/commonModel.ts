@@ -23,6 +23,7 @@ export interface UserInfo{
    _id:string;
    name:string;
    email:string;
+   mobile?:string;
    image:string;
    role:string;
 }

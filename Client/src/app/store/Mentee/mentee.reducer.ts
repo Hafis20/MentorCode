@@ -13,6 +13,7 @@ const _menteeReducer = createReducer(
         _id: mentee._id,
         name: mentee.name,
         email: mentee.email,
+        image:mentee.image,
         role: mentee.role,
       },
     };
@@ -25,6 +26,7 @@ const _menteeReducer = createReducer(
         _id: mentee._id,
         name: mentee.name,
         email: mentee.email,
+        image:mentee.image,
         role: mentee.role,
       },
     };
@@ -36,6 +38,7 @@ const _menteeReducer = createReducer(
         _id:'',
         name:'',
         email:'',
+        image:'',
         role:''
       }
     }

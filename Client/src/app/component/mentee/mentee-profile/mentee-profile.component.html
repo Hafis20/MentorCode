@@ -1,0 +1,48 @@
+<div class="flex w-full h-auto font-poppins">
+   <!-- Profile -->
+   <div class="w-full h-[400px] px-10 py-2">
+      <div class="bg-white h-full flex justify-between shadow-lg rounded p-5">
+         <div>
+            <p class="font-semibold text-2xl">My Profile</p>
+
+            <div class="mt-5" *ngIf="myProfileData">
+               <div class="profile-image flex pl-3">
+                  <ng-container *ngIf="myProfileData.image;else defaultImage">
+                     <img class="object-contain w-25 h-32 rounded-full" [src]="myProfileData.image" alt="">
+                  </ng-container>
+                  <ng-template #defaultImage>
+                     <img class="object-contain w-25 h-32 rounded-full" src="assets/imgs/background/default-profile.jpeg" alt="">
+                  </ng-template>
+               </div>
+               <div class="p-3" *ngIf="myProfileData">
+                  <p><span class="text-gray-500  text-lg">Name : </span> <span
+                        class="font-bold">{{myProfileData.name}}</span></p>
+                  <p><span class="text-gray-500 text-lg">Email : </span> <span
+                        class="font-bold">{{myProfileData.email}}</span></p>
+                  <p><span class="text-gray-500 text-lg">Mobile :</span> <span
+                        class="font-bold">{{myProfileData.mobile}}</span></p>
+               </div>
+
+            </div>
+         </div>
+         <!-- Data -->
+
+         <div>
+            <div class="flex items-center relative px-3 cursor-pointer" (click)="editModalToggle()">
+               <div class="absolute ml-4">
+                  <i class="fa-solid fa-user-pen text-white"></i>
+               </div>
+               <div>
+                  <button 
+                     class="px-10 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Edit Profile</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Edit Profile -->
+   <div class="w-full" >
+      <mentee-edit-profile [myProfileData]="myProfileData" *ngIf="editModal" (editModalEvent)="editModalEventToggle()"></mentee-edit-profile>
+   </div>
+</div>

@@ -209,6 +209,56 @@ const getMenteeDetails = async (req, res) => {
   }
 };
 
+// get mentee profile
+const getProfile = async(req,res)=>{
+  try {
+    const menteeId = req.menteeId;
+    const menteeProfile = await Mentee.findById(menteeId);
+    const data = {
+      _id:menteeProfile._id,
+      name:menteeProfile.name,
+      mobile:menteeProfile.mobile,
+      email:menteeProfile.email,
+      image:menteeProfile.image,
+    }
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({message:'Internal server error'});
+  }
+}
+
+// edit profile mentee
+const editProfile = async(req,res)=>{
+  try {
+    const menteeId = req.menteeId;
+    const {name,mobile} = req.body;
+    let menteeDetails = await Mentee.findById(menteeId);
+
+    let imgUrl = menteeDetails.image;
+
+    if(req.file){
+      imgUrl = `http://localhost:7000/${req.file.originalname}`;
+    }
+    
+    const updateData = await Mentee.findByIdAndUpdate(
+      menteeId,
+      {
+        $set:{
+          name:name,
+          mobile:mobile,
+          image:imgUrl,
+        }
+      },
+      {
+        new:true,
+      }
+    )
+    res.status(200).json({message:'Edit success'})
+  } catch (error) {
+    res.status(500).json({message:"Internal server error"});
+  }
+}
+
 // Set feedback for mentor
 const setFeedback = async (req, res) => {
   try {
@@ -258,5 +308,7 @@ module.exports = {
   forgotPassword,
   changePassword,
   getMenteeDetails,
+  getProfile,
+  editProfile,
   setFeedback,
 };

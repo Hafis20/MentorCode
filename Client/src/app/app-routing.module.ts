@@ -30,6 +30,8 @@ import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.
 import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
 import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profile/mentor-edit-profile.component';
 import { VideoChatComponent } from './component/video-chat/video-chat.component';
+import { MenteeProfileComponent } from './component/mentee/mentee-profile/mentee-profile.component';
+import { MenteeEditProfileComponent } from './component/mentee/mentee-edit-profile/mentee-edit-profile.component';
 
 // Mentee routes
 const menteeRoutes: Routes = [
@@ -75,7 +77,8 @@ const menteeRoutes: Routes = [
     children: [
       { path: 'dashboard', component: MenteeDashboardComponent },
       { path: 'mybookings', component: MyBookingsComponent },
-      { path: 'video-chat/:roomId', component: VideoChatComponent }
+      { path: 'profile',component: MenteeProfileComponent},
+      { path: 'video-chat/:roomId', component: VideoChatComponent },
     ],
   },
 ];
@@ -122,7 +125,7 @@ const mentorRoutes: Routes = [
       { path: 'profile', component: MentorProfileComponent },
       { path: 'edit-profile', component: MentorEditProfileComponent },
       { path: 'bookings', component: ViewBookingsComponent },
-      { path: 'video-chat/:roomId', component: VideoChatComponent }
+      { path: 'video-chat/:roomId', component: VideoChatComponent },
     ],
   },
 ];

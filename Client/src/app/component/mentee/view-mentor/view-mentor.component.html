@@ -75,9 +75,13 @@
                         </ul>
                      </div>
                      <hr class="my-6 border-t border-gray-300">
-                     <div class="flex flex-col gap-2">
-                        <div class="mt-2 flex flex-wrap gap-4 justify-center cursor-pointer">
-                           <a (click)="toggleModal()" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Feedback</a>
+                     <div class="flex flex-col gap-1">
+                        <div class="mt-1 flex flex-wrap gap-4 justify-center cursor-pointer">
+                           <div (click)="toggleModal()"
+                              class="bg-green-500 hover:bg-green-600 py-2 px-4 rounded text-white flex gap-2">
+                              <p style="margin: 0px;">Feedback</p>
+                              <span><i class="fa-solid fa-comment"></i></span>
+                           </div>
                         </div>
                         <feedback-modal [MentorId]="mentorId" *ngIf="modalOpen"></feedback-modal>
                      </div>

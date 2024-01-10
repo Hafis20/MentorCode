@@ -72,7 +72,7 @@ export class MentorEditProfileComponent implements OnInit {
    getDefaultSlotsOfMentor(){
     this.mentorSlotService.getDefaultSlot().subscribe({
       next:(response)=>{
-        console.log('Slots of mentor',response)
+        // console.log('Slots of mentor',response)
         this.timeSlots = this.timeSlots.filter((slots)=>{
            return !response.includes(slots); 
         })
@@ -87,9 +87,9 @@ export class MentorEditProfileComponent implements OnInit {
   defaultSlotSetting(time:string){
     this.mentorSlotService.setDefaultSlot({time}).subscribe({
       next:(response)=>{
-        console.log(response);
+        // console.log(response);
         this.getDefaultSlotsOfMentor(); // Refreshing the component
-        console.log('Response calling')
+        // console.log('Response calling')
         this.showMessage.showSuccessToastr(response.message);
       },
       error:(error)=>{

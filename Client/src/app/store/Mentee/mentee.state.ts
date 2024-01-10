@@ -4,6 +4,7 @@ export const MenteeState = {
       _id:'',
       name:'',
       email:'',
+      image:'',
       role:''
    }
 }

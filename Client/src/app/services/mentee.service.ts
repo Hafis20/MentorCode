@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HttpResponseModel,LoginModel,LoginResponseModel, UserInfo, ValidateOtpModel } from '../model/commonModel';
 
 import { Observable } from 'rxjs';
-import { ListMentorsHomeOfMentee, MenteeModel, ShowMenteeCalenderData } from '../model/menteeModel';
+import { ListMentorsHomeOfMentee, MenteeModel, MenteeProfile, ShowMenteeCalenderData } from '../model/menteeModel';
 import { GetMentorSlots } from '../model/mentorModel';
 
 @Injectable({
@@ -57,6 +57,16 @@ export class MenteeService {
   // Get mentee for storing in the store
   getMentee():Observable<UserInfo>{
     return this.http.get<UserInfo>(`${environment.menteeURL}/getMentee`);
+  }
+
+  // get profile
+  getMenteeProfile():Observable<MenteeProfile>{
+    return this.http.get<MenteeProfile>(`${environment.menteeURL}/getProfile`);
+  }
+
+  // Edit mentee profile
+  editMenteeProfile(data:any):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.menteeURL}/editProfile`,data);
   }
 
   // Take the mentor slots to view page

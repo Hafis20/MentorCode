@@ -12,6 +12,7 @@ export interface MenteeState {
     name: string;
     email: string;
     role: string;
+    image:string;
     _id:string;
   };
 }
@@ -42,3 +43,11 @@ export interface ShowMenteeCalenderData {
   added_slots: [];
 }
 
+// get profile
+export interface MenteeProfile{
+  _id:string;
+  name:string;
+  mobile:string;
+  email:string;
+  image:string;
+}

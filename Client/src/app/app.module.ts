@@ -73,6 +73,8 @@ import { VideoChatComponent } from './component/video-chat/video-chat.component'
 import { VedioDirective } from './customDirectives/vedio.directive';
 import { StarRatingModule } from 'angular-star-rating';
 import { FeedbackMentorComponent } from './component/mentee/feedback-mentor/feedback-mentor.component';
+import { MenteeProfileComponent } from './component/mentee/mentee-profile/mentee-profile.component';
+import { MenteeEditProfileComponent } from './component/mentee/mentee-edit-profile/mentee-edit-profile.component';
 
 
 @NgModule({
@@ -124,6 +126,8 @@ import { FeedbackMentorComponent } from './component/mentee/feedback-mentor/feed
     VideoChatComponent,
     VedioDirective,
     FeedbackMentorComponent,
+    MenteeProfileComponent,
+    MenteeEditProfileComponent,
   ],
   imports: [
     BrowserModule,
