@@ -1,25 +1,26 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { transaction_historyModel } from 'src/app/model/walletModel';
+import { transactionHistoryModel } from 'src/app/model/walletModel';
 
 @Component({
   selector: 'transaction-history',
-  templateUrl: './transaction-history.component.html',
+  templateUrl:'./transaction-history.component.html',
   styleUrls: ['./transaction-history.component.css']
 })
 export class TransactionHistoryComponent implements OnChanges{
-  @Input() transaction_history!:transaction_historyModel[];
+  @Input() transactionHistory!:transactionHistoryModel[];
   currentPage:number = 1;
-  itemsPerPage:number = 2;
+  itemsPerPage:number = 4;
   totalNoOfPage!:number;
   totalNoOfData!:number;
-  show_transaction_history!:transaction_historyModel[];
+  showTransactionHistory!:transactionHistoryModel[];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['transaction_history']){
-      if(this.transaction_history){
-        this.totalNoOfData = this.transaction_history.length;
+    if(changes['transactionHistory']){
+      if(this.transactionHistory){
+        // console.log(this.transactionHistory,'dahaohfdjikjiffffffffff');
+        this.totalNoOfData = this.transactionHistory.length;
         this.findTotalPage();
-        this.show_transaction_history = this.showTransactions();
+        this.showTransactionHistory = this.showTransactions();
       }
     }
   }
@@ -30,14 +31,14 @@ export class TransactionHistoryComponent implements OnChanges{
 
   changePage(page:number){
     this.currentPage += page;
-    this.show_transaction_history = this.showTransactions();
+    this.showTransactionHistory = this.showTransactions();
   }
 
-  showTransactions():transaction_historyModel[]{
-    if (this.transaction_history) {
+  showTransactions():transactionHistoryModel[]{
+    if (this.transactionHistory) {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
-      return this.transaction_history.slice(startIndex, endIndex);
+      return this.transactionHistory.slice(startIndex, endIndex);
     } else {
       return [];
     }

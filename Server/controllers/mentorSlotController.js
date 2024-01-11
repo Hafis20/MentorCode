@@ -221,12 +221,12 @@ const cancelMenteeBooking = async (req, res) => {
       menteeWallet = new Wallet({
         user_id: menteeId,
         balance: returnAmount,
-        transaction_history: [{amount:returnAmount,date_of_transaction:new Date()}],
+        transactionHistory: [{amount:returnAmount,dateOfTransaction:new Date()}],
       });
     } else {
       // If wallet
       menteeWallet.balance += returnAmount;
-      menteeWallet.transaction_history.push({amount:returnAmount,date_of_transaction:new Date()});
+      menteeWallet.transactionHistory.push({amount:returnAmount,dateOfTransaction:new Date()});
     }
     await menteeWallet.save();
 
@@ -237,11 +237,11 @@ const cancelMenteeBooking = async (req, res) => {
       mentorWallet = new Wallet({
         user_id: mentorId,
         balance: 0,
-        transaction_history: [],
+        transactionHistory: [],
       });
     } // If wallet
     mentorWallet.balance -= returnAmount;
-    mentorWallet.transaction_history.push({amount:-1 * returnAmount,date_of_transaction:new Date()});
+    mentorWallet.transactionHistory.push({amount:-1 * returnAmount,dateOfTransaction:new Date()});
 
     await mentorWallet.save();
     res.status(200).json({ message: "Slot cancelled" });

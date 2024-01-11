@@ -1,11 +1,11 @@
-<div class="bg-white w-full h-auto rounded" *ngIf="transaction_history">
+<div class="bg-white w-full h-auto rounded" *ngIf="transactionHistory">
    <div class="text-center">
       <div class="flex items-center font-bold text-lg text-gray-600 py-1 justify-center gap-1">
          <i class="fa-solid fa-clock-rotate-left"></i>
          <p style="margin: 0px;" class="py-2">Transaction History</p>
       </div>
       <!-- Show data  -->
-      <div class="px-2" *ngIf="transaction_history.length > 0 else empty_history">
+      <div class="px-2" *ngIf="transactionHistory.length > 0 else emptyHistory">
          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-300 dark:text-black">
                <tr>
@@ -15,17 +15,17 @@
                </tr>
             </thead>
             <tbody>
-               <ng-container *ngFor="let history of show_transaction_history">
+               <ng-container *ngFor="let history of showTransactionHistory">
                   <tr *ngIf="history.amount > 0 else debit" class="bg-white border-b dark:bg-white">
-                     <td class="px-6 py-2">{{history.date_of_transaction | toDate}}</td>
+                     <td class="px-6 py-2">{{history.dateOfTransaction | toDate}}</td>
                      <td scope="row"
                         class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-black"><span
                            class="px-1 bg-green-300 rounded-full text-sm font-mono">Credit</span></td>
-                     <td class="px-6 py-2 text-green-600">+5000</td>
+                     <td class="px-6 py-2 text-green-600">+{{history.amount}}</td>
                   </tr>
                   <ng-template #debit>
                      <tr class="bg-white border-b dark:bg-white">
-                        <td class="px-6 py-2">{{history.date_of_transaction | toDate}}</td>
+                        <td class="px-6 py-2">{{history.dateOfTransaction | toDate}}</td>
                         <td scope="row"
                            class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-black"><span
                               class="px-1 bg-red-300 rounded-full text-sm font-mono">Debit</span></td>
@@ -47,7 +47,7 @@
             </div>
          </div>
       </div>
-      <ng-template #empty_history>
+      <ng-template #emptyHistory>
          <div class="text-blue-700 py-6">
             <p style="margin: 0px;">No transactions yet</p>
          </div>

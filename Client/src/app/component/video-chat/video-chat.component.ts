@@ -162,7 +162,6 @@ export class VideoChatComponent implements OnInit, AfterViewInit{
   afterDisconnect():void{
     if(this.role === 'mentee'){
       this.complete();
-      this.router.navigate(['/mentee/mybookings']);
       this.showMessage.showWarningToastr('Call Disconnected');
     }else if(this.role === 'mentor'){
       this.router.navigate(['/mentor/bookings']);
@@ -179,6 +178,7 @@ export class VideoChatComponent implements OnInit, AfterViewInit{
       }
       this.menteeSlotService.completeMentorShip(data).subscribe({
         next:(response)=>{
+          this.router.navigate(['/mentee/mybookings']);
           this.showMessage.showSuccessToastr(response.message);
         },
         error: (error) => {

@@ -1,11 +1,13 @@
 <div>
-<app-header></app-header>
+  <app-header></app-header>
 
-  <div class="w-full flex flex-col md:flex-row bg-sky-100 justify-between items-center min-h-screen px-10">
-    <div class="flex flex-col h-96">
+  <div
+    class="w-full flex flex-col md:flex-row bg-sky-100 justify-evenly md:justify-between items-center min-h-screen px-10">
+    <div class=" flex flex-col h-96">
       <h1><span class="font-poppins text-black text-6xl tracking-wide">Ask Directly to <br> the <span
             class="text-blue-900 font-bold ">Experts</span></span></h1>
-      <div [routerLink]="['/mentee/list-mentors']" class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2 flex justify-center gap-2 cursor-pointer">
+      <div [routerLink]="['/mentee/list-mentors']"
+        class="border mt-4 font-poppins text-blue-900 border-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2 flex justify-center gap-2 cursor-pointer">
         <div>
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
@@ -14,23 +16,23 @@
         </div>
       </div>
     </div>
-  
-    <div class="w-1/2">
+
+    <div class="flex md:w-1/2">
       <img class="h-1/2 opacity-80 object-cover" src="assets/imgs/background/Home page.png">
     </div>
   </div>
   <!-- Showing the testimonials  -->
-  
-  <section class="font-poppins">
+
+  <div class="font-poppins">
     <div class="h-screen w-full pt-16">
       <div class="flex justify-center">
         <h1><span class="text-2xl">OUR TESTIMONIALS</span></h1>
       </div>
-      <div class="flex justify-center">
+      <div class="flex px-3 text-center md:justify-center">
         <h1><span class="text-4xl">WINS FROM ALL AROUND THE GLOBE</span></h1>
       </div>
       <div class="flex flex-wrap justify-center mt-10 font-sans">
-  
+
         <!-- card 1 -->
         <div class="p-2 max-w-sm ">
           <div class="flex rounded-lg h-full dark:bg-gray-700 hover:dark:bg-gray-800  bg-teal-400 p-8 py-16 flex-col">
@@ -46,13 +48,14 @@
             </div>
             <div class="flex flex-col justify-between flex-grow">
               <p class="leading-relaxed text-base text-white dark:text-gray-300">
-                Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy.  ducimus ad quam, neque, ratione cum!
+                Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. ducimus ad quam, neque,
+                ratione cum!
                 Gastropub indxgo juice poutine.
               </p>
             </div>
           </div>
         </div>
-  
+
         <!-- card 2 -->
         <div class="p-2 max-w-sm">
           <div class="flex rounded-lg h-full dark:bg-gray-700 hover:dark:bg-gray-800  bg-teal-400 p-8 py-16 flex-col">
@@ -74,7 +77,7 @@
             </div>
           </div>
         </div>
-  
+
         <!-- card 3 -->
         <div class="p-2 max-w-sm">
           <div class="flex rounded-lg h-full dark:bg-gray-700 hover:dark:bg-gray-800  bg-teal-400 p-8 py-16 flex-col">
@@ -96,11 +99,13 @@
             </div>
           </div>
         </div>
-  
-  
+
+
       </div>
-  
+
     </div>
-  </section>
-<app-footer></app-footer>
+  </div>
+  <div>
+  </div>
 </div>
+<app-footer></app-footer>

@@ -11,7 +11,7 @@ const getUserWallet = async (req, res) => {
       wallet = new Wallet({
         user_id: userId,
         balance: 0,
-        transaction_history: [],
+        transactionHistory: [],
       });
       await wallet.save();
     }

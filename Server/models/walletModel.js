@@ -7,12 +7,12 @@ const walletSchema = new mongoose.Schema({
    balance:{
       type:Number
    },
-   transaction_history:[
+   transactionHistory:[
       {
          amount:{
             type:Number
          },
-         date_of_transaction:{
+         dateOfTransaction:{
             type:Date
          }
       }

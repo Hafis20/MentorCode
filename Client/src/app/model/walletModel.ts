@@ -1,10 +1,10 @@
 // Taking the wallet amount and transaction history of the user
 export interface GetWallet{
    balance:number,
-   transaction_history:transaction_historyModel[];
+   transactionHistory:transactionHistoryModel[];
 }
 
-export interface transaction_historyModel{
+export interface transactionHistoryModel{
    amount:number;
-   date_of_transaction:Date;
+   dateOfTransaction:Date;
 }

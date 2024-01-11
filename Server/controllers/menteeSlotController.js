@@ -122,11 +122,11 @@ const completeMentorShip = async (req, res) => {
       adminWallet = new Wallet({
         user_id:adminData._id,
         balance:adminWalletAmount,
-        transaction_history:[{amount:adminWalletAmount,date_of_transaction:new Date()}],
+        transactionHistory:[{amount:adminWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       adminWallet.balance += adminWalletAmount,
-      adminWallet.transaction_history.push({amount:adminWalletAmount,date_of_transaction:new Date()});
+      adminWallet.transactionHistory.push({amount:adminWalletAmount,dateOfTransaction:new Date()});
     }
     await adminWallet.save();  // Save to the database
 
@@ -137,11 +137,11 @@ const completeMentorShip = async (req, res) => {
       mentorWallet = new Wallet({
         user_id:mentorId,
         balance:mentorWalletAmount,
-        transaction_history:[{amount:mentorWalletAmount,date_of_transaction:new Date()}],
+        transactionHistory:[{amount:mentorWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       mentorWallet.balance += mentorWalletAmount,
-      mentorWallet.transaction_history.push({amount:mentorWalletAmount,date_of_transaction:new Date()});
+      mentorWallet.transactionHistory.push({amount:mentorWalletAmount,dateOfTransaction:new Date()});
     }
     await mentorWallet.save();  // Save to the database
     res.status(200).json({ message: "Marked As Completed" });
@@ -198,11 +198,11 @@ const cancelMentorShip = async(req,res) =>{
       adminWallet = new Wallet({
         user_id:adminData._id,
         balance:adminWalletAmount,
-        transaction_history:[{amount:adminWalletAmount,date_of_transaction:new Date()}],
+        transactionHistory:[{amount:adminWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       adminWallet.balance += adminWalletAmount,
-      adminWallet.transaction_history.push({amount:adminWalletAmount,date_of_transaction:new Date()});
+      adminWallet.transactionHistory.push({amount:adminWalletAmount,dateOfTransaction:new Date()});
     }
     
     await adminWallet.save();  // Save to the database
@@ -213,11 +213,11 @@ const cancelMentorShip = async(req,res) =>{
       mentorWallet = new Wallet({
         user_id:mentorId,
         balance:mentorWalletAmount,
-        transaction_history:[{amount:mentorWalletAmount,date_of_transaction:new Date()}],
+        transactionHistory:[{amount:mentorWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       mentorWallet.balance += mentorWalletAmount,
-      mentorWallet.transaction_history.push({amount:mentorWalletAmount,date_of_transaction:new Date()});
+      mentorWallet.transactionHistory.push({amount:mentorWalletAmount,dateOfTransaction:new Date()});
     }
     await mentorWallet.save();  // Save to the database
 
@@ -227,11 +227,11 @@ const cancelMentorShip = async(req,res) =>{
       menteeWallet = new Wallet({
         user_id:menteeId,
         balance:menteeWalletAmount,
-        transaction_history:[{amount:menteeWalletAmount,date_of_transaction:new Date()}],
+        transactionHistory:[{amount:menteeWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       menteeWallet.balance += menteeWalletAmount,
-      menteeWallet.transaction_history.push({amount:menteeWalletAmount,date_of_transaction:new Date()});
+      menteeWallet.transactionHistory.push({amount:menteeWalletAmount,dateOfTransaction:new Date()});
     }
     await menteeWallet.save();  // Save to the database
 

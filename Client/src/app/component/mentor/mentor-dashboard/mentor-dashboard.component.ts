@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AgChartOptions } from 'ag-charts-community';
-import { transaction_historyModel } from 'src/app/model/walletModel';
+import { transactionHistoryModel } from 'src/app/model/walletModel';
 import { MentorService } from 'src/app/services/mentor.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { getMentorInfo } from 'src/app/store/Mentor/mentor.selector';
@@ -16,7 +16,7 @@ export class MentorDashboardComponent implements OnInit {
   walletAmount: number = 0;
   totalSessions!: number;
   bookingDetails: any;
-  transaction_history!:transaction_historyModel[];
+  transactionHistory!:transactionHistoryModel[];
 
 
   public pieOptions: AgChartOptions = {};
@@ -46,7 +46,7 @@ export class MentorDashboardComponent implements OnInit {
     this.walletService.userWallet(this.mentorId).subscribe({
       next: (response) => {
         this.walletAmount = response.balance;
-        this.transaction_history = response.transaction_history;
+        this.transactionHistory = response.transactionHistory;
       },
     });
   }
