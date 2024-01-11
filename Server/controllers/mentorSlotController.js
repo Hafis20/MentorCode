@@ -73,7 +73,7 @@ const getSlotsByDate = async (req, res) => {
   try {
     const { mentorId, date } = req.body;
     const exact_date = new Date(date).toDateString();
-
+    // console.log(req.body);
     let mentorSlots = await Slot.findOne({
       mentor_id: mentorId,
       slot_date: exact_date,
@@ -83,12 +83,14 @@ const getSlotsByDate = async (req, res) => {
         slot_date: mentorSlots.slot_date,
         slots: mentorSlots.added_slots,
       };
+      // console.log(response);
       return res.status(201).json({ response, message: "Successfully found" });
     } else {
       const response = {
         slot_date: "",
         slots: [],
       };
+      // console.log(response);
       return res.status(201).json({ response, message: "Successfully found" });
     }
   } catch (error) {
