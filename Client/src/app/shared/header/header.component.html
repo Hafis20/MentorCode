@@ -14,7 +14,7 @@
         <div class=" hidden bg-white h-auto md:flex items-center justify-between ">
           <!-- Home Router Button -->
           <div [routerLink]="['']"
-            class="px-6 py-2 text-blue-900 border border-solid border-blue-900 hover:bg-blue-900 hover:text-white cursor-pointer rounded-full flex justify-between gap-2 mr-3">
+            class="px-6 py-2 text-blue-900 border border-solid border-blue-900 hover:bg-blue-900 duration-300 hover:text-white cursor-pointer rounded-full flex justify-between gap-2 mr-3">
             <div>
               <span>
                 <i class="fa-solid fa-house"></i>
@@ -27,7 +27,7 @@
           <!-- Become a Mentor button -->
           <ng-container *ngIf="!isLogin;else profile">
             <div [routerLink]="['/mentor/login']" *ngIf="!currentUser || currentUser === 'mentor'"
-              class="px-6 py-2 text-blue-900 border border-solid border-blue-900 hover:bg-blue-900 hover:text-white cursor-pointer rounded-full flex justify-between gap-2 mr-3">
+              class="px-6 py-2 text-blue-900 border border-solid border-blue-900 hover:bg-blue-900 duration-300 hover:text-white cursor-pointer rounded-full flex justify-between gap-2 mr-3">
               <div>
                 <span>
                   <i class="fa-solid fa-chalkboard-user"></i>
@@ -40,7 +40,7 @@
 
             <div class="pr-5">
               <button [routerLink]="['/mentee/login']" *ngIf="!currentUser || currentUser === 'mentee'"
-                class="border border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
+                class="border border-blue-900 text-blue-900 hover:bg-blue-900 duration-300 hover:text-white rounded-full font-bold px-6 py-2">
                 Sign In
               </button>
             </div>
