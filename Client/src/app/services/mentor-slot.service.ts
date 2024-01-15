@@ -51,4 +51,9 @@ export class MentorSlotService {
   setDefaultSlot(data:object):Observable<HttpResponseModel>{
     return this.http.post<HttpResponseModel>(`${environment.mentorslotURL}/setDefaultSlot`,data);
   }
+
+  // Remove the default slots
+  removeDefaultSlot(data:object):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.mentorslotURL}/removeDefaultSlot`,data);
+  }
 }

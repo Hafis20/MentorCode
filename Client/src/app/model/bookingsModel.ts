@@ -50,3 +50,8 @@ export interface Bookings {
     name: string;
   };
 }
+
+// Feed back button enable or desable
+export interface FeedbackBtn{
+  btnEnable:boolean;
+}

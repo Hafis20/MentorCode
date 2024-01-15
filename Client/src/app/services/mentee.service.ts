@@ -6,6 +6,7 @@ import { HttpResponseModel,LoginModel,LoginResponseModel, UserInfo, ValidateOtpM
 import { Observable } from 'rxjs';
 import { ListMentorsHomeOfMentee, MenteeModel, MenteeProfile, ShowMenteeCalenderData } from '../model/menteeModel';
 import { GetMentorSlots } from '../model/mentorModel';
+import { FeedbackBtn } from '../model/bookingsModel';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +73,11 @@ export class MenteeService {
   // Take the mentor slots to view page
   getMentorSlots(id:string):Observable<GetMentorSlots>{
     return this.http.get<GetMentorSlots>(`${environment.menteeURL}/getMentorSlots/?id=${id}`);
+  }
+
+  // For showing the send feedback button we check once the mentor took a session for this particular mentee
+  menteeOnceCompletedSession(data:{mentorId:string,menteeId:string}):Observable<FeedbackBtn>{
+    return this.http.post<FeedbackBtn>(`${environment.menteeURL}/onceCompleted`,data);
   }
 
   // Feedback for mentor in mentee side

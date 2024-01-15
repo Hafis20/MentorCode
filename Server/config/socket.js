@@ -1,5 +1,3 @@
-
-
 const socketManager = (io) => {
 
    const emailToSocketIdMap = new Map();

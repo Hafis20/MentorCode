@@ -228,5 +228,6 @@ menteeRouter.get('/getMentorSlots',homeController.getMentorSlots); // For gettin
 menteeRouter.get('/getMentee',menteeAuth,menteeController.getMenteeDetails);  // Get mentor details for store
 menteeRouter.get('/getProfile',menteeAuth,menteeController.getProfile); // Get the profile details of the mentee
 menteeRouter.post('/editProfile',menteeAuth,upload.single('image'),menteeController.editProfile); // Editing the mentee profile
+menteeRouter.post('/onceCompleted',menteeAuth,menteeController.onceCompleted); // Checking the mentor atlease take a class for the mentee
 menteeRouter.post('/setFeedback',menteeAuth,menteeController.setFeedback); // Setting the feedback of the mentor
 module.exports = menteeRouter;

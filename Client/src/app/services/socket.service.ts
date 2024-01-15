@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { SocketIoConfig } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
-import { data } from 'jquery';
 
 @Injectable({
   providedIn: 'root',

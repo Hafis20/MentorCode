@@ -111,7 +111,7 @@
         <available-slots [from]="from" [timeSlots]="timeSlots" (defaultSlotEvent)="defaultSlotSetting($event)"></available-slots>
       </div>
       <div class="sm:col-span-3">
-        <created-slots [from]="from" [createdDefaultSlots]="createdDefaultSlots" ></created-slots>
+        <created-slots [from]="from" [createdDefaultSlots]="createdDefaultSlots" (removeDefaultSlotEvent)="removeDefaultSlot($event)"></created-slots>
       </div>
     </div>
   <div>

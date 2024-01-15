@@ -4,6 +4,8 @@ const { generateMail } = require("../Helper/generateOTP");
 const { hashedPass, comparePass } = require("../Helper/hashPass");
 const Mentee = require("../models/menteeModel");
 const Feedback = require("../models/feedbackModel");
+const Bookings = require('../models/bookingModel');
+const { default: mongoose } = require("mongoose");
 
 // Registering the mentee
 
@@ -259,6 +261,38 @@ const editProfile = async(req,res)=>{
   }
 }
 
+// Once session completed
+const onceCompleted = async(req,res)=>{
+  try {
+    // console.log(req.body);
+    const { mentorId,menteeId} = req.body;
+    
+    const bookingData = await Bookings.aggregate([
+      {
+        $match:{
+          menteeId:new mongoose.Types.ObjectId(menteeId)
+        }
+      },
+      {
+        $unwind:'$details'
+      },
+      {
+        $match:{
+          'details.mentorId':new mongoose.Types.ObjectId(mentorId),
+          'details.status':'completed'
+        }
+      },
+    ])
+    if(bookingData.length > 0){
+      res.status(200).json({btnEnable:true});
+    }else{
+      res.status(200).json({btnEnable:false});
+    }
+  } catch (error) {
+    res.status(500).json({message:'Internal Server Error'});
+  }
+}
+
 // Set feedback for mentor
 const setFeedback = async (req, res) => {
   try {
@@ -310,5 +344,6 @@ module.exports = {
   getMenteeDetails,
   getProfile,
   editProfile,
+  onceCompleted,
   setFeedback,
 };

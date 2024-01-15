@@ -168,11 +168,12 @@
 
                     </tr>
                   </tbody>
-                  <div class="flex justify-end">
-                    <pagination [total]="totalMentorBookings" [limit]="itemsPerPage" [currentPage]="currentPage"
-                      (changePageEvent)="changeMentorTablePage($event)"></pagination>
-                  </div>
+                  
                 </table>
+                <div class="flex justify-end">
+                  <pagination [total]="totalMentorBookings" [limit]="itemsPerPage" [currentPage]="currentPage"
+                    (changePageEvent)="changeMentorTablePage($event)"></pagination>
+                </div>
               </div>
             </div>
           </ng-container>

@@ -14,6 +14,9 @@ export class ListBookingsComponent implements OnInit{
   filterBookingDetails !:Bookings[];
   totalData!:number;
 
+  // Subscriptions
+  
+
   constructor(private service:AdminService){}
 
   ngOnInit(): void {

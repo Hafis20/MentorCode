@@ -1,6 +1,7 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import {
   ListMentorsHomeOfMentee,
 } from 'src/app/model/menteeModel';
@@ -11,6 +12,7 @@ import { MenteeService } from 'src/app/services/mentee.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { getMentee } from 'src/app/store/Mentee/mentee.action';
+import { getMenteeInfo } from 'src/app/store/Mentee/mentee.selector';
 
 declare var Razorpay:any;
 
@@ -19,7 +21,7 @@ declare var Razorpay:any;
   templateUrl: './view-mentor.component.html',
   styleUrls: ['./view-mentor.component.css'],
 })
-export class ViewMentorComponent implements OnInit {
+export class ViewMentorComponent implements OnInit, OnDestroy {
   userType: string = 'mentee';
   mentorDetails!: ListMentorsHomeOfMentee;
   slotDates!: string[];
@@ -27,9 +29,16 @@ export class ViewMentorComponent implements OnInit {
   slotTimes!: ShowSlots[];
   currentDate!: Date;
   mentorId!: string;
+  menteeId!:string;
   bookedDates!:string[];
   slot_id!:string;
   slotTime!:string;
+  feedbackBtnEnable:boolean = false;
+
+
+  // Subscription
+  getMentorSub$!:Subscription;
+  menteeCompletedSessionSub$!:Subscription;
 
   // Rating and command modal
   modalOpen:boolean = false;
@@ -46,7 +55,7 @@ export class ViewMentorComponent implements OnInit {
   ngOnInit(): void {
     this.currentDate = new Date();
     this.mentorId = this.route.snapshot.paramMap.get('id') as string;
-    this.service.getMentor(this.mentorId).subscribe({
+    this.getMentorSub$ = this.service.getMentor(this.mentorId).subscribe({
       next: (response) => {
         this.mentorDetails = response[0];
       },
@@ -58,6 +67,7 @@ export class ViewMentorComponent implements OnInit {
     this.calenderData();  // For getting the data into the calender;
     // Dispatch an action for getting menteee data in to the store
     this.store.dispatch(getMentee());
+    this.menteeOnceCompleted();
   }
 
 
@@ -153,5 +163,37 @@ export class ViewMentorComponent implements OnInit {
   // Modal toggling
   toggleModal(){
     this.modalOpen = !this.modalOpen;
+  }
+
+
+  // Mentee Once completed for the particular mentor... This is for showing feedback report button
+  menteeOnceCompleted():void{
+    this.store.select(getMenteeInfo).subscribe({
+      next:(response)=>{
+        this.menteeId = response._id;
+
+        // Backend calling
+       if(this.menteeId){
+        const data = {
+          mentorId:this.mentorId,
+          menteeId:this.menteeId,
+        }
+        // console.log(data,'ddddddddddddaaaaaaaaaaaatttttttttqaaaaaaaaaa');
+
+        // Checking once mentee took consultancy
+        this.menteeCompletedSessionSub$ = this.service.menteeOnceCompletedSession(data).subscribe({
+          next:(response)=>{
+            this.feedbackBtnEnable = response.btnEnable;
+          }
+        })
+       }
+      }
+    })
+   
+  }
+
+  ngOnDestroy(): void {
+    this.getMentorSub$.unsubscribe();
+    this.menteeCompletedSessionSub$.unsubscribe();
   }
 }

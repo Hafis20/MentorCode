@@ -12,8 +12,11 @@ export class AvailableSlotsComponent implements OnInit {
   @Input() currentDate!: Date;
   @Input() timeSlots!:string[];
   @Input() from!:string;
-  @Output() createSlotEvent: EventEmitter<SlotModel> = new EventEmitter<SlotModel>();
+  @Output() createSlotEvent: EventEmitter<SlotModel> = new EventEmitter<SlotModel>(); // This is for slot adding in slot management page
+
+  // Default slot manangement
   @Output() defaultSlotEvent:EventEmitter<string> = new EventEmitter<string>();
+
   mentorId!:string;
 
   
@@ -38,4 +41,6 @@ export class AvailableSlotsComponent implements OnInit {
   setAsDefault(time:string){
     this.defaultSlotEvent.emit(time); // Send the data into parent
   }
+
+ 
 }

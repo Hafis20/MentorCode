@@ -76,7 +76,7 @@
                      </div>
                      <hr class="my-6 border-t border-gray-300">
                      <div class="flex flex-col gap-1">
-                        <div class="mt-1 flex flex-wrap gap-4 justify-center cursor-pointer">
+                        <div class="mt-1 flex flex-wrap gap-4 justify-center cursor-pointer" *ngIf="feedbackBtnEnable">
                            <div (click)="toggleModal()"
                               class="bg-green-500 hover:bg-green-600 py-2 px-4 rounded text-white flex gap-2">
                               <p style="margin: 0px;">Feedback</p>

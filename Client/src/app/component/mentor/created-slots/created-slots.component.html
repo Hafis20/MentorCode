@@ -19,7 +19,7 @@
                   </ng-container>
                   <ng-template #bookedslots>
                      <div>
-                        <button
+                        <button 
                            class="border border-red-900 hover:bg-red-900 text-red-900 hover:text-white rounded-full font-bold px-6 py-2">
                            Booked
                         </button>
@@ -41,9 +41,9 @@
                <div class="flex justify-center items-center px-5">
                   <p style="margin: 0;">{{slot}}</p>
                </div>
-               <div class="flex justify-center">
+               <div class="flex justify-center" *ngIf="from === 'editProfile'">
                   <ng-container>
-                     <button
+                     <button (click)="removeDefault(slot)"
                         class="border border-red-900 hover:bg-red-900 text-red-900 hover:text-white rounded-full font-bold px-3 py-2 ">
                         Remove Default
                      </button>

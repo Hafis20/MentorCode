@@ -2,7 +2,7 @@ const Slot = require("../models/slotModel");
 const BookedSlot = require("../models/bookingModel");
 const Wallet = require("../models/walletModel");
 const { default: mongoose } = require("mongoose");
-const getRemainingDays = require("../Helper/getRemainingDays");
+const dates = require("../Helper/getRemainingDays");
 
 // Creating a slot for mentor
 const createSlot = async (req, res) => {
@@ -221,12 +221,17 @@ const cancelMenteeBooking = async (req, res) => {
       menteeWallet = new Wallet({
         user_id: menteeId,
         balance: returnAmount,
-        transactionHistory: [{amount:returnAmount,dateOfTransaction:new Date()}],
+        transactionHistory: [
+          { amount: returnAmount, dateOfTransaction: new Date() },
+        ],
       });
     } else {
       // If wallet
       menteeWallet.balance += returnAmount;
-      menteeWallet.transactionHistory.push({amount:returnAmount,dateOfTransaction:new Date()});
+      menteeWallet.transactionHistory.push({
+        amount: returnAmount,
+        dateOfTransaction: new Date(),
+      });
     }
     await menteeWallet.save();
 
@@ -241,7 +246,10 @@ const cancelMenteeBooking = async (req, res) => {
       });
     } // If wallet
     mentorWallet.balance -= returnAmount;
-    mentorWallet.transactionHistory.push({amount:-1 * returnAmount,dateOfTransaction:new Date()});
+    mentorWallet.transactionHistory.push({
+      amount: -1 * returnAmount,
+      dateOfTransaction: new Date(),
+    });
 
     await mentorWallet.save();
     res.status(200).json({ message: "Slot cancelled" });
@@ -293,42 +301,43 @@ const setDefaultSlot = async (req, res) => {
     const mentorId = req.mentorId;
     const { time } = req.body;
     let mentorSlots = await Slot.find({ mentor_id: mentorId }); // Checking the user is already exist in db
-    const remainingDates = getRemainingDays();
+    const remainingDates = dates.getRemainingDates();
 
     if (mentorSlots.length > 0) {
-      for (const date of remainingDates) {   
+      for (const date of remainingDates) {
         let dateExists = false;
-      
+
         for (let i = 0; i < mentorSlots.length; i++) {
           const slot = mentorSlots[i];
-      
-          if (slot.slot_date === date) {  // Checking the date is exists
+
+          if (slot.slot_date === date) {
+            // Checking the date is exists
             dateExists = true;
-      
+
             let timeExists = false;
-      
+
             for (const slot_time of slot.added_slots) {
               if (slot_time.time === time) {
                 timeExists = true;
                 break;
               }
             }
-      
+
             if (!timeExists) {
               const data = {
                 time: time,
                 is_booked: false,
                 slot_type: "default",
               };
-      
+
               slot.added_slots.push(data);
               await slot.save();
             }
-      
+
             break;
           }
         }
-      
+
         if (!dateExists) {
           const newSlot = new Slot({
             mentor_id: mentorId,
@@ -341,10 +350,10 @@ const setDefaultSlot = async (req, res) => {
               },
             ],
           });
-      
+
           await newSlot.save();
         }
-      }      
+      }
     } else {
       const newSlots = remainingDates.map((date) => {
         return {
@@ -369,13 +378,35 @@ const setDefaultSlot = async (req, res) => {
 };
 
 // Remove default slot of mentor
-const removeDefaultSlots = async(req,res)=>{
+const removeDefaultSlot = async (req, res) => {
   try {
-    
+    const mentorId = req.mentorId;
+    // console.log(mentorId);
+    const { time } = req.body;
+    const mentorSlots = await Slot.find({ mentor_id: mentorId }); // finding the mentor slot
+
+    // Code for removing
+    const daysOfTheMonth =  dates.getCurrentMonthDates();
+    if (mentorSlots.length > 0) {
+      for (const date of daysOfTheMonth) {
+        for (let i = 0; i < mentorSlots.length; i++) {
+          const slot = mentorSlots[i]; // Taking each slot
+          if (slot.slot_date === date) {
+              slot.added_slots = slot.added_slots.filter((slot) => slot.time !== time && slot.is_booked === false );
+            try {
+              await slot.save()
+            } catch (error) {
+              console.log(error.message);
+            }
+          }
+        }
+      }
+    }
+    res.status(200).json({ message: "Default slot removed"});
   } catch (error) {
-    res.status(500).json({message:'Internal Server error'});
+    res.status(500).json({ message: "Internal Server error" });
   }
-}
+};
 module.exports = {
   createSlot,
   getSlotsByDate,
@@ -385,5 +416,5 @@ module.exports = {
   cancelMenteeBooking,
   getDefaultSlots,
   setDefaultSlot,
-  removeDefaultSlots,
+  removeDefaultSlot,
 };

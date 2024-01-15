@@ -99,6 +99,21 @@ export class MentorEditProfileComponent implements OnInit {
     
   }
 
+  removeDefaultSlot(time:string){
+    this.mentorSlotService.removeDefaultSlot({time}).subscribe({
+      next:(response)=>{
+        // console.log(reponse);
+        this.getDefaultSlotsOfMentor(); // Refreshing the component
+        // console.log('Response calling')
+        this.showMessage.showSuccessToastr(response.message);
+      },
+      error:(error)=>{
+        console.log(error.error.message);
+        this.showMessage.showErrorToastr(error.error.message)
+      }
+    })
+  }
+
   updateForm() {
     this.editProfileForm.patchValue({
       fullName: this.MentorData.name,
