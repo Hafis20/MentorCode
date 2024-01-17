@@ -47,13 +47,13 @@ const paymentRouter = require("./routers/paymentRouter");
 const walletRouter = require("./routers/walletRouter");
 
 // calling application middleware for routers
-app.use("/admin", adminRouter); // For admin operations
-app.use("/mentee", menteeRouter); // For mentee operations
-app.use("/mentor", mentorRouter); // For mentor operations
-app.use("/mentorslot", mentorSlotRouter); // For mentor slot operations
-app.use("/menteeslot", menteeSlotRouter); // For mentee slot operations
-app.use("/payment", paymentRouter); // For user payment operations
-app.use("/wallet", walletRouter); // For wallet operations
+app.use("/api/admin", adminRouter); // For admin operations
+app.use("/api/mentee", menteeRouter); // For mentee operations
+app.use("/api/mentor", mentorRouter); // For mentor operations
+app.use("/api/mentorslot", mentorSlotRouter); // For mentor slot operations
+app.use("/api/menteeslot", menteeSlotRouter); // For mentee slot operations
+app.use("/api/payment", paymentRouter); // For user payment operations
+app.use("/api/wallet", walletRouter); // For wallet operations
 
 const server = app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
