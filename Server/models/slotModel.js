@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const slotSchema = new mongoose.Schema(
   {
     mentor_id: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Mentor",
     },
     slot_date: {
