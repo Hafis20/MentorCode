@@ -11,7 +11,7 @@ export class SocketService {
 
   constructor() {
     const config: SocketIoConfig = {
-      url: 'http://localhost:7000',
+      url: 'https://mentorcode.vhhafis.online',
       options: {},
     };
     this.socket = io(config.url, config.options);
