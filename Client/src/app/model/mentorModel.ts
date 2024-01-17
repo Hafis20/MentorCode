@@ -74,3 +74,9 @@ export interface MentorProfile {
   mobile: string;
   fee: number; 
 }
+
+// Get statistics on mentor dashboard
+export interface GetStatistics{
+  bookings:[],
+  totalSessions:number;
+}

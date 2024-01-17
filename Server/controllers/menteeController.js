@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const { generateMail } = require("../Helper/generateOTP");
 const { hashedPass, comparePass } = require("../Helper/hashPass");
 const Mentee = require("../models/menteeModel");
+const Feedback = require("../models/feedbackModel");
+const Bookings = require('../models/bookingModel');
+const { default: mongoose } = require("mongoose");
 
 // Registering the mentee
 
@@ -164,48 +167,172 @@ const forgotPassword = async (req, res) => {
 };
 
 // change password of the mentee from forgot password
-const changePassword = async(req,res)=>{
+const changePassword = async (req, res) => {
   try {
-    const {email,password} = req.body;
-    if(!email){
-      res.status(400).json({message:'Sorry Password Not changed'});
-    }else{
+    const { email, password } = req.body;
+    if (!email) {
+      res.status(400).json({ message: "Sorry Password Not changed" });
+    } else {
       const hashPass = await hashedPass(password);
-      const mentee = await Mentee.findOneAndUpdate({email:email},
+      const mentee = await Mentee.findOneAndUpdate(
+        { email: email },
         {
-          $set:{
-            password:hashPass
-          }
+          $set: {
+            password: hashPass,
+          },
         },
         {
-          new:true
+          new: true,
         }
-      )
+      );
     }
-    res.status(201).json({message:'Password changed please login'});  // Password is changed
+    res.status(201).json({ message: "Password changed please login" }); // Password is changed
   } catch (error) {
-    res.status(500).json({message:'Internal Server Error'});
-    console.log(error.message)
+    res.status(500).json({ message: "Internal Server Error" });
+    console.log(error.message);
   }
-}
+};
 
 // Get mentee data
-const getMenteeDetails = async(req,res)=>{
+const getMenteeDetails = async (req, res) => {
   try {
     const menteeId = req.menteeId;
     const menteeData = await Mentee.findById(menteeId);
     // console.log(menteeData);
     const mentee = {
-      _id:menteeData._id,
-      name:menteeData.name,
-      email:menteeData.email,
-      role:menteeData.role
-    }
+      _id: menteeData._id,
+      name: menteeData.name,
+      email: menteeData.email,
+      role: menteeData.role,
+    };
     res.status(201).json(mentee);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// get mentee profile
+const getProfile = async(req,res)=>{
+  try {
+    const menteeId = req.menteeId;
+    const menteeProfile = await Mentee.findById(menteeId);
+    const data = {
+      _id:menteeProfile._id,
+      name:menteeProfile.name,
+      mobile:menteeProfile.mobile,
+      email:menteeProfile.email,
+      image:menteeProfile.image,
+    }
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({message:'Internal server error'});
+  }
+}
+
+// edit profile mentee
+const editProfile = async(req,res)=>{
+  try {
+    const menteeId = req.menteeId;
+    const {name,mobile} = req.body;
+    let menteeDetails = await Mentee.findById(menteeId);
+
+    let imgUrl = menteeDetails.image;
+
+    if(req.file){
+      imgUrl = `http://localhost:7000/${req.file.originalname}`;
+    }
+    
+    const updateData = await Mentee.findByIdAndUpdate(
+      menteeId,
+      {
+        $set:{
+          name:name,
+          mobile:mobile,
+          image:imgUrl,
+        }
+      },
+      {
+        new:true,
+      }
+    )
+    res.status(200).json({message:'Edit success'})
+  } catch (error) {
+    res.status(500).json({message:"Internal server error"});
+  }
+}
+
+// Once session completed
+const onceCompleted = async(req,res)=>{
+  try {
+    // console.log(req.body);
+    const { mentorId,menteeId} = req.body;
+    
+    const bookingData = await Bookings.aggregate([
+      {
+        $match:{
+          menteeId:new mongoose.Types.ObjectId(menteeId)
+        }
+      },
+      {
+        $unwind:'$details'
+      },
+      {
+        $match:{
+          'details.mentorId':new mongoose.Types.ObjectId(mentorId),
+          'details.status':'completed'
+        }
+      },
+    ])
+    if(bookingData.length > 0){
+      res.status(200).json({btnEnable:true});
+    }else{
+      res.status(200).json({btnEnable:false});
+    }
   } catch (error) {
     res.status(500).json({message:'Internal Server Error'});
   }
 }
+
+// Set feedback for mentor
+const setFeedback = async (req, res) => {
+  try {
+    // console.log(req.body);
+    const { rate, comment, mentorId, menteeId } = req.body;
+    const rateInNum = parseInt(rate);
+
+    const data = {
+      mentee_id: menteeId,
+      rate: rateInNum,
+      comment: comment,
+    };
+
+    let mentorFeedback = await Feedback.findOne({ mentor_id: mentorId });
+    if (!mentorFeedback) {
+      mentorFeedback = new Feedback({
+        mentor_id: mentorId,
+        feedback: [data],
+      });
+    } else {
+      let item = 0;
+      mentorFeedback.feedback.forEach((feedback) => {
+        if (feedback.mentee_id.equals(menteeId)) {
+          feedback.rate = rate;
+          feedback.comment = comment;
+          item++;
+        }
+      });
+      if (item === 0) {
+        mentorFeedback.feedback.push(data);   // IF no data available
+      }
+    }
+    await mentorFeedback.save();
+
+    res.status(200).json({ message: "Thank you for your feedback"});
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
   register,
@@ -215,4 +342,8 @@ module.exports = {
   forgotPassword,
   changePassword,
   getMenteeDetails,
+  getProfile,
+  editProfile,
+  onceCompleted,
+  setFeedback,
 };

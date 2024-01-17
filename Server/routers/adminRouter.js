@@ -29,6 +29,8 @@ const adminAuth = require('../middlewares/adminAuth');
 
 // Login an admin
 adminRouter.post('/login',adminController.login);
+// Get admin details to store
+adminRouter.get('/getAdminData',adminAuth,adminController.getAdminData);
 // Getting all the mentees
 adminRouter.get('/getAllMentees',adminAuth,adminController.getAllMentees);
 // Getting all the mentors
@@ -41,5 +43,8 @@ adminRouter.patch('/unblockMentee',adminAuth,adminController.unblockMentee);
 adminRouter.patch('/blockMentor',adminAuth,adminController.blockMentor);
 // Unblocking a mentor
 adminRouter.patch('/unblockMentor',adminAuth,adminController.unblockMentor);
-
+// Users count for admin dashboard
+adminRouter.get('/getStatistics',adminAuth,adminController.getStatistics);
+// Getting the booking details for showing in admin table
+adminRouter.get('/getBookingDetails',adminAuth,adminController.getBookingDetails);
 module.exports = adminRouter;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { loginAdmin, loginAdminSuccess } from './admin.action';
+import { getAdmin, getAdminSuccess, loginAdmin, loginAdminSuccess } from './admin.action';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { AdminService } from '../services/admin-service.service';
@@ -25,7 +25,7 @@ export class AdminEffect {
               const userData = data;
               localStorage.setItem('adminToken', userData.accessToken);
               this.showMessage.showSuccessToastr(userData.message);
-              this.router.navigate(['/admin/']);
+              this.router.navigate(['/admin/dashboard']);
               return loginAdminSuccess({ admin: userData.accessedUser });
             } else {
               return;
@@ -39,4 +39,21 @@ export class AdminEffect {
       })
     )
   );
+
+
+  _getAdmin$ = createEffect(()=>
+    this.action$.pipe(
+      ofType(getAdmin),
+      exhaustMap((action)=>{
+        return this.adminService.getAdmin().pipe(
+          map((data)=>{
+            return getAdminSuccess({admin:data});
+          }),
+          catchError((error)=>{
+            return of(error.message)
+          })
+        )
+      })
+    )
+  )
 }

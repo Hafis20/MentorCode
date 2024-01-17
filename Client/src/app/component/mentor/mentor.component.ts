@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { getMentor } from "src/app/store/Mentor/mentor.action";
+import { getMentor, logoutMentor } from "src/app/store/Mentor/mentor.action";
 
 @Component({
    selector:'app-mentor',
@@ -17,6 +17,7 @@ export class MentorComponent implements OnInit{
    }
 
    logout(){
+      this.store.dispatch(logoutMentor());
       localStorage.removeItem('mentorToken');
       this.router.navigate(['/mentor/login']);
    }

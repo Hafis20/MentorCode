@@ -13,3 +13,8 @@ export interface ShowSlots{
    time:string;
    is_booked:boolean;
 }
+
+// Mentor default slots
+export interface DefaultSlotsOfMentor{
+   time:string,
+}

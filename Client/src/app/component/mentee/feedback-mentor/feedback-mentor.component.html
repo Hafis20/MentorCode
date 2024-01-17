@@ -1,0 +1,26 @@
+<div class="w-[270px] h-auto bg-sky-100 absolute p-2 z-10 shadow-xl rounded-lg">
+   <!-- Feedback Form -->
+   <form [formGroup]="feedbackForm" (ngSubmit)="feedbackSubmit()">
+      <div class="flex flex-col gap-2 py-2">
+         <div class="flex justify-center">
+            <h3 style="margin: 0;">Rate</h3>
+         </div>
+         <div>
+            <star-rating-control [starType]="'svg'" formControlName="rate"></star-rating-control>
+         </div>
+         <div class="flex justify-center">
+            <h3 style="margin: 0;">Comments</h3>
+         </div>
+         <div>
+            <textarea formControlName="comment" name="" id="" cols="35" rows="10" placeholder="Comments..."></textarea>
+         </div>
+         <div class="flex justify-end">
+            <button
+             [disabled]="feedbackForm.invalid"
+             [ngStyle]="{'opacity':feedbackForm.invalid?0.5:1}" 
+             type="submit" 
+             class="bg-green-500 font-bold px-4 py-1 rounded">Send</button>
+         </div>
+      </div>
+   </form>
+</div>

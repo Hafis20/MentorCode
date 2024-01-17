@@ -2,6 +2,7 @@ const Slot = require("../models/slotModel");
 const BookedSlot = require("../models/bookingModel");
 const Wallet = require("../models/walletModel");
 const { default: mongoose } = require("mongoose");
+const dates = require("../Helper/getRemainingDays");
 
 // Creating a slot for mentor
 const createSlot = async (req, res) => {
@@ -12,6 +13,7 @@ const createSlot = async (req, res) => {
       // Creating the time object
       time: time,
       is_booked: false,
+      slot_type: "normal",
     };
     let mentorSlot = await Slot.findOne({
       mentor_id: mentorId,
@@ -71,7 +73,7 @@ const getSlotsByDate = async (req, res) => {
   try {
     const { mentorId, date } = req.body;
     const exact_date = new Date(date).toDateString();
-
+    // console.log(req.body);
     let mentorSlots = await Slot.findOne({
       mentor_id: mentorId,
       slot_date: exact_date,
@@ -81,12 +83,14 @@ const getSlotsByDate = async (req, res) => {
         slot_date: mentorSlots.slot_date,
         slots: mentorSlots.added_slots,
       };
+      // console.log(response);
       return res.status(201).json({ response, message: "Successfully found" });
     } else {
       const response = {
         slot_date: "",
         slots: [],
       };
+      // console.log(response);
       return res.status(201).json({ response, message: "Successfully found" });
     }
   } catch (error) {
@@ -211,33 +215,41 @@ const cancelMenteeBooking = async (req, res) => {
 
     // Mentee wallet amount from mentor wallet
     // Find the wallet is available for the mentee?
-    let menteeWallet = await Wallet.findOne({user_id:menteeId});
+    let menteeWallet = await Wallet.findOne({ user_id: menteeId });
     if (!menteeWallet) {
       // If no wallet
       menteeWallet = new Wallet({
         user_id: menteeId,
         balance: returnAmount,
-        transaction_history: [returnAmount],
+        transactionHistory: [
+          { amount: returnAmount, dateOfTransaction: new Date() },
+        ],
       });
     } else {
       // If wallet
       menteeWallet.balance += returnAmount;
-      menteeWallet.transaction_history.push(returnAmount);
+      menteeWallet.transactionHistory.push({
+        amount: returnAmount,
+        dateOfTransaction: new Date(),
+      });
     }
     await menteeWallet.save();
 
     // Reducing amount from mentor wallet
-    let mentorWallet = await Wallet.findOne({user_id:mentorId});
+    let mentorWallet = await Wallet.findOne({ user_id: mentorId });
     if (!mentorWallet) {
       // If no wallet
       mentorWallet = new Wallet({
         user_id: mentorId,
         balance: 0,
-        transaction_history: [],
+        transactionHistory: [],
       });
     } // If wallet
     mentorWallet.balance -= returnAmount;
-    mentorWallet.transaction_history.push(-1*(returnAmount));
+    mentorWallet.transactionHistory.push({
+      amount: -1 * returnAmount,
+      dateOfTransaction: new Date(),
+    });
 
     await mentorWallet.save();
     res.status(200).json({ message: "Slot cancelled" });
@@ -247,6 +259,154 @@ const cancelMenteeBooking = async (req, res) => {
   }
 };
 
+// Get the default slots of the mentor
+const getDefaultSlots = async (req, res) => {
+  try {
+    const mentorId = req.mentorId;
+    // const { mentorId } = req.body;
+    let slots = await Slot.aggregate([
+      {
+        $match: {
+          mentor_id: new mongoose.Types.ObjectId(mentorId),
+        },
+      },
+      {
+        $unwind: "$added_slots",
+      },
+      {
+        $group: {
+          _id: "$added_slots.time",
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          slot: { $push: "$_id" },
+        },
+      },
+    ]);
+    if (slots) {
+      const defaultSlots = slots[0].slot;
+      res.status(200).json(defaultSlots);
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "Internal Server error" });
+  }
+};
+
+// Setting default slot for mentor
+const setDefaultSlot = async (req, res) => {
+  try {
+    const mentorId = req.mentorId;
+    const { time } = req.body;
+    let mentorSlots = await Slot.find({ mentor_id: mentorId }); // Checking the user is already exist in db
+    const remainingDates = dates.getRemainingDates();
+
+    if (mentorSlots.length > 0) {
+      for (const date of remainingDates) {
+        let dateExists = false;
+
+        for (let i = 0; i < mentorSlots.length; i++) {
+          const slot = mentorSlots[i];
+
+          if (slot.slot_date === date) {
+            // Checking the date is exists
+            dateExists = true;
+
+            let timeExists = false;
+
+            for (const slot_time of slot.added_slots) {
+              if (slot_time.time === time) {
+                timeExists = true;
+                break;
+              }
+            }
+
+            if (!timeExists) {
+              const data = {
+                time: time,
+                is_booked: false,
+                slot_type: "default",
+              };
+
+              slot.added_slots.push(data);
+              await slot.save();
+            }
+
+            break;
+          }
+        }
+
+        if (!dateExists) {
+          const newSlot = new Slot({
+            mentor_id: mentorId,
+            slot_date: date,
+            added_slots: [
+              {
+                time: time,
+                is_booked: false,
+                slot_type: "default",
+              },
+            ],
+          });
+
+          await newSlot.save();
+        }
+      }
+    } else {
+      const newSlots = remainingDates.map((date) => {
+        return {
+          mentor_id: mentorId,
+          slot_date: date,
+          added_slots: [
+            {
+              time: time,
+              is_booked: false,
+              slot_type: "default",
+            },
+          ],
+        };
+      });
+      await Slot.create(newSlots);
+    }
+    res.status(200).json({ message: "Default slots added" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "Internal Server error" });
+  }
+};
+
+// Remove default slot of mentor
+const removeDefaultSlot = async (req, res) => {
+  try {
+    const mentorId = req.mentorId;
+    // console.log(mentorId);
+    const { time } = req.body;
+    const mentorSlots = await Slot.find({ mentor_id: mentorId }); // finding the mentor slot
+
+    // Code for removing
+    const daysOfTheMonth =  dates.getCurrentMonthDates();
+    if (mentorSlots.length > 0) {
+      for (const date of daysOfTheMonth) {
+        for (let i = 0; i < mentorSlots.length; i++) {
+          const slot = mentorSlots[i]; // Taking each slot
+          if (slot.slot_date === date) {
+              slot.added_slots = slot.added_slots.filter((slot) => slot.time !== time && slot.is_booked === false );
+            try {
+              await slot.save()
+            } catch (error) {
+              console.log(error.message);
+            }
+          }
+        }
+      }
+    }
+    res.status(200).json({ message: "Default slot removed"});
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server error" });
+  }
+};
 module.exports = {
   createSlot,
   getSlotsByDate,
@@ -254,4 +414,7 @@ module.exports = {
   getSlotsOfMentor,
   getBookedSlots,
   cancelMenteeBooking,
+  getDefaultSlots,
+  setDefaultSlot,
+  removeDefaultSlot,
 };

@@ -28,6 +28,7 @@ export class SlotManagementComponent implements OnInit {
   unbookedSlots: string[] = [];
   mentorDetails!: UserInfo;
   createdSlotDates!:string[];
+  from:string = 'calender'
 
   constructor(private service: MentorSlotService, private store: Store,private showMessage:MessageToastrService) {}
 
@@ -45,26 +46,13 @@ export class SlotManagementComponent implements OnInit {
         console.log('Slot management store error');
       },
     });
-
-    const data: GetSlotByDate = {
-      // whenever we click on a date we want to show In that day any booked slots are available or not
-      mentorId: this.mentorDetails._id,
-      date: this.currentDate,
-    };
-    this.service.getSlotsByDate(data).subscribe({
-      next: (response) => {
-        this.createdSlots = response.response.slots;
-        this.timeSlots = this.timeSlots.filter((time) => {
-          return !response.response.slots.map((doc)=>doc.time).includes(time);
-        });
-      },
-    });
+    this.slotDate(this.currentDate);
   }
 
   getSlotsOfMentor(){
     this.service.getSlotsOfMentor().subscribe({
       next:(response)=>{
-        console.log(response);
+        // console.log(response);
         this.createdSlotDates = response.response.map((doc)=>doc.slot_date);
       }
     })

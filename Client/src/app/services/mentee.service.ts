@@ -4,8 +4,9 @@ import { environment } from 'src/environments/environment';
 import { HttpResponseModel,LoginModel,LoginResponseModel, UserInfo, ValidateOtpModel } from '../model/commonModel';
 
 import { Observable } from 'rxjs';
-import { ListMentorsHomeOfMentee, MenteeModel, ShowMenteeCalenderData } from '../model/menteeModel';
+import { ListMentorsHomeOfMentee, MenteeModel, MenteeProfile, ShowMenteeCalenderData } from '../model/menteeModel';
 import { GetMentorSlots } from '../model/mentorModel';
+import { FeedbackBtn } from '../model/bookingsModel';
 
 @Injectable({
   providedIn: 'root'
@@ -59,8 +60,29 @@ export class MenteeService {
     return this.http.get<UserInfo>(`${environment.menteeURL}/getMentee`);
   }
 
+  // get profile
+  getMenteeProfile():Observable<MenteeProfile>{
+    return this.http.get<MenteeProfile>(`${environment.menteeURL}/getProfile`);
+  }
+
+  // Edit mentee profile
+  editMenteeProfile(data:any):Observable<HttpResponseModel>{
+    return this.http.post<HttpResponseModel>(`${environment.menteeURL}/editProfile`,data);
+  }
+
   // Take the mentor slots to view page
   getMentorSlots(id:string):Observable<GetMentorSlots>{
     return this.http.get<GetMentorSlots>(`${environment.menteeURL}/getMentorSlots/?id=${id}`);
+  }
+
+  // For showing the send feedback button we check once the mentor took a session for this particular mentee
+  menteeOnceCompletedSession(data:{mentorId:string,menteeId:string}):Observable<FeedbackBtn>{
+    return this.http.post<FeedbackBtn>(`${environment.menteeURL}/onceCompleted`,data);
+  }
+
+  // Feedback for mentor in mentee side
+  sendFeedback(data:any):Observable<HttpResponseModel>{
+    console.log(data);
+    return this.http.post<HttpResponseModel>(`${environment.menteeURL}/setFeedback`,data);
   }
 }

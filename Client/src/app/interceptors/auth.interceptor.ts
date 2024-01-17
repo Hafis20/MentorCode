@@ -42,7 +42,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
       const authRequest = req.clone({
         setHeaders: {
-          'Content-Type': 'application/json',
           Authorization: `Mentee-Bearer ${menteeToken}`,
         },
       });

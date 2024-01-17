@@ -1,6 +1,7 @@
 export const AdminState = {
    adminInfo:{
       name:'',
-      role:''
+      role:'',
+      _id:'',
    }
 }

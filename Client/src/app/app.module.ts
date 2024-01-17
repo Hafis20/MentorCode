@@ -2,16 +2,21 @@ import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
+// Socket io configuration
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+const config:SocketIoConfig = {url:'http://localhost:7000',options:{}}
+
+// Components
+import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { MenteeLoginComponent } from './component/mentee/mentee-login/mentee-login.component';
 import { MentorLoginComponent } from './component/mentor/mentor-login/mentor-login.component';
 import { MenteeRegisterComponent } from './component/mentee/mentee-register/mentee-register.component';
 import { HomeComponent } from './component/home/home.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -59,6 +64,20 @@ import { SharedTableDirective } from './customDirectives/shared-table.directive'
 import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
 import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profile/mentor-edit-profile.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { WalletAmountCardComponent } from './shared/wallet-amount-card/wallet-amount-card.component';
+import { SearchBarComponent } from './shared/search-bar/search-bar.component';
+import { FilterBarComponent } from './shared/filter-bar/filter-bar.component';
+import { ChangetopositivePipe } from './customPipes/changetopositive.pipe';
+import { AgChartsAngularModule } from 'ag-charts-angular';
+import { VideoChatComponent } from './component/video-chat/video-chat.component';
+import { VedioDirective } from './customDirectives/vedio.directive';
+import { StarRatingModule } from 'angular-star-rating';
+import { FeedbackMentorComponent } from './component/mentee/feedback-mentor/feedback-mentor.component';
+import { MenteeProfileComponent } from './component/mentee/mentee-profile/mentee-profile.component';
+import { MenteeEditProfileComponent } from './component/mentee/mentee-edit-profile/mentee-edit-profile.component';
+import { ToDatePipe } from './customPipes/to-date.pipe';
+import { TransactionHistoryComponent } from './shared/transaction-history/transaction-history.component';
+
 
 @NgModule({
   declarations: [
@@ -102,6 +121,17 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     ViewBookingsComponent,
     MentorEditProfileComponent,
     PaginationComponent,
+    WalletAmountCardComponent,
+    SearchBarComponent,
+    FilterBarComponent,
+    ChangetopositivePipe,
+    VideoChatComponent,
+    VedioDirective,
+    FeedbackMentorComponent,
+    MenteeProfileComponent,
+    MenteeEditProfileComponent,
+    ToDatePipe,
+    TransactionHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,6 +151,9 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     EffectsModule.forRoot([MenteeEffect,AdminEffect,MentorEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     AdminModule,
+    AgChartsAngularModule,
+    SocketIoModule.forRoot(config),
+    StarRatingModule.forRoot()   // For rating
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},

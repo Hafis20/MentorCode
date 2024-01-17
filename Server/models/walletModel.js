@@ -7,7 +7,16 @@ const walletSchema = new mongoose.Schema({
    balance:{
       type:Number
    },
-   transaction_history:[]
+   transactionHistory:[
+      {
+         amount:{
+            type:Number
+         },
+         dateOfTransaction:{
+            type:Date
+         }
+      }
+   ]
 })
 
 module.exports = mongoose.model('wallet',walletSchema);

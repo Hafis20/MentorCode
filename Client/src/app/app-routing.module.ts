@@ -29,6 +29,9 @@ import { ViewMentorComponent } from './component/mentee/view-mentor/view-mentor.
 import { MyBookingsComponent } from './component/mentee/my-bookings/my-bookings.component';
 import { ViewBookingsComponent } from './component/mentor/view-bookings/view-bookings.component';
 import { MentorEditProfileComponent } from './component/mentor/mentor-edit-profile/mentor-edit-profile.component';
+import { VideoChatComponent } from './component/video-chat/video-chat.component';
+import { MenteeProfileComponent } from './component/mentee/mentee-profile/mentee-profile.component';
+import { MenteeEditProfileComponent } from './component/mentee/mentee-edit-profile/mentee-edit-profile.component';
 
 // Mentee routes
 const menteeRoutes: Routes = [
@@ -74,6 +77,8 @@ const menteeRoutes: Routes = [
     children: [
       { path: 'dashboard', component: MenteeDashboardComponent },
       { path: 'mybookings', component: MyBookingsComponent },
+      { path: 'profile',component: MenteeProfileComponent},
+      { path: 'video-chat/:roomId', component: VideoChatComponent },
     ],
   },
 ];
@@ -117,9 +122,10 @@ const mentorRoutes: Routes = [
     children: [
       { path: 'dashboard', component: MentorDashboardComponent },
       { path: 'slot-management', component: SlotManagementComponent },
-      { path: 'profile',component: MentorProfileComponent },
+      { path: 'profile', component: MentorProfileComponent },
       { path: 'edit-profile', component: MentorEditProfileComponent },
       { path: 'bookings', component: ViewBookingsComponent },
+      { path: 'video-chat/:roomId', component: VideoChatComponent },
     ],
   },
 ];

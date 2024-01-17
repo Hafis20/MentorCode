@@ -1,17 +1,23 @@
-<div *ngIf="timeSlots.length > 0">
-   <div>
+<div *ngIf="timeSlots.length > 0" class="font-poppins">
+   <div *ngIf="from ==='calender'">
       <h1><span class="font-bold pl-20">Available Slots</span></h1>
    </div>
    <div class="h-52 overflow-y-scroll">
-      <div *ngFor="let time of timeSlots"
-         class="w-full font-bold max-w-sm mx-auto rounded overflow-hidden px-10 py-3 shadow-lg bg-sky-200 flex gap-3 mb-2">
-         <div class="flex justify-center items-center px-5">
+      <div *ngFor="let time of timeSlots"  [ngClass]="{'bg-indigo-600':from ==='editProfile'}"
+         class="w-full font-bold max-w-sm mx-auto rounded overflow-hidden px-8 py-3 shadow-lg bg-sky-200 flex justify-between gap-3 mb-2">
+         <div class="flex justify-center items-center ">
             <p style="margin: 0;">{{time}}</p>
          </div>
-         <div class="flex justify-center">
+         <div class="flex justify-center" *ngIf="from==='calender'">
             <button (click)="addSlot(time)"
                class="border border-blue-900 hover:bg-blue-900 text-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
                Add
+            </button>
+         </div>
+         <div class="flex justify-center" *ngIf="from==='editProfile'"> 
+            <button (click)="setAsDefault(time)"
+               class="border border-blue-900 hover:bg-blue-900 text-blue-900 hover:text-white rounded-full font-bold px-6 py-2">
+               Set as Default
             </button>
          </div>
       </div>

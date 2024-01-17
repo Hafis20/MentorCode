@@ -3,7 +3,7 @@ const menteeRouter = express.Router();
 const menteeController = require("../controllers/menteeController");
 const homeController = require("../controllers/homeController");
 const menteeAuth  = require('../middlewares/menteeAuth');
-
+const upload = require('../Helper/multer');
 // Tag name definition
 /**
  * @swagger
@@ -226,4 +226,8 @@ menteeRouter.patch('/change-password',menteeController.changePassword); // For c
 menteeRouter.get('/getMentor',homeController.getMentor);  // Get the mentor for mentee
 menteeRouter.get('/getMentorSlots',homeController.getMentorSlots); // For getting the slots of the particular user
 menteeRouter.get('/getMentee',menteeAuth,menteeController.getMenteeDetails);  // Get mentor details for store
+menteeRouter.get('/getProfile',menteeAuth,menteeController.getProfile); // Get the profile details of the mentee
+menteeRouter.post('/editProfile',menteeAuth,upload.single('image'),menteeController.editProfile); // Editing the mentee profile
+menteeRouter.post('/onceCompleted',menteeAuth,menteeController.onceCompleted); // Checking the mentor atlease take a class for the mentee
+menteeRouter.post('/setFeedback',menteeAuth,menteeController.setFeedback); // Setting the feedback of the mentor
 module.exports = menteeRouter;

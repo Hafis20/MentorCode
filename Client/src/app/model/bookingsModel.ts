@@ -32,3 +32,26 @@ export interface MenteeSlotAction{
   status:'completed'|'cancelled'|'Mentor cancelled';
   menteeId?:string;  // This is for mentor side cancellation because we want to find which mentor slot is cancelled
 }
+
+
+// Admin side booking details
+export interface Bookings {
+  _id: string;
+  details: {
+    date: string;
+    time: string;
+    fee: number;
+    status:'completed'|'cancelled'|'Mentor cancelled'|'pending';
+  };
+  MentorDetails: {
+    name: string;
+  };
+  MenteeDetails: {
+    name: string;
+  };
+}
+
+// Feed back button enable or desable
+export interface FeedbackBtn{
+  btnEnable:boolean;
+}

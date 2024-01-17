@@ -1,0 +1,56 @@
+<div class="bg-white w-full h-auto rounded" *ngIf="transactionHistory">
+   <div class="text-center">
+      <div class="flex items-center font-bold text-lg text-gray-600 py-1 justify-center gap-1">
+         <i class="fa-solid fa-clock-rotate-left"></i>
+         <p style="margin: 0px;" class="py-2">Transaction History</p>
+      </div>
+      <!-- Show data  -->
+      <div class="px-2" *ngIf="transactionHistory.length > 0 else emptyHistory">
+         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-300 dark:text-black">
+               <tr>
+                  <th scope="col" class="px-6 py-3">Date</th>
+                  <th scope="col" class="px-6 py-3">Type</th>
+                  <th scope="col" class="px-6 py-3">Amount</th>
+               </tr>
+            </thead>
+            <tbody>
+               <ng-container *ngFor="let history of showTransactionHistory">
+                  <tr *ngIf="history.amount > 0 else debit" class="bg-white border-b dark:bg-white">
+                     <td class="px-6 py-2">{{history.dateOfTransaction | toDate}}</td>
+                     <td scope="row"
+                        class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-black"><span
+                           class="px-1 bg-green-300 rounded-full text-sm font-mono">Credit</span></td>
+                     <td class="px-6 py-2 text-green-600">+{{history.amount}}</td>
+                  </tr>
+                  <ng-template #debit>
+                     <tr class="bg-white border-b dark:bg-white">
+                        <td class="px-6 py-2">{{history.dateOfTransaction | toDate}}</td>
+                        <td scope="row"
+                           class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-black"><span
+                              class="px-1 bg-red-300 rounded-full text-sm font-mono">Debit</span></td>
+                        <td class="px-6 py-2 text-red-600">{{history.amount}}</td>
+                     </tr>
+                  </ng-template>
+               </ng-container>
+               
+            </tbody>
+         </table>
+         <div class="w-full px-2 flex justify-between mt-1">
+            <!-- Left Arrow -->
+            <div class="">
+               <button [disabled]="currentPage === 1" (click)="changePage(-1)" ><span><i class="fa-solid fa-arrow-left"></i></span></button>
+            </div>
+            <!-- Right arrow -->
+            <div class="">
+               <button [disabled]="totalNoOfPage === currentPage" (click)="changePage(1)"><span><i class="fa-solid fa-arrow-right"></i></span></button>
+            </div>
+         </div>
+      </div>
+      <ng-template #emptyHistory>
+         <div class="text-blue-700 py-6">
+            <p style="margin: 0px;">No transactions yet</p>
+         </div>
+      </ng-template>
+   </div>
+</div>

@@ -23,11 +23,13 @@ export interface UserInfo{
    _id:string;
    name:string;
    email:string;
+   mobile?:string;
    image:string;
    role:string;
 }
 
 export interface AdminInfo{
+   _id:string;
    name:string;
    role:string;
 }

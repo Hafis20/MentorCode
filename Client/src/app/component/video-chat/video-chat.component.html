@@ -1,0 +1,59 @@
+<div class="flex"> 
+   <div *ngIf="role === 'mentor'" class="w-2/3">
+      <div *ngIf="remoteSocketId; else noMentee">
+         <p class="text-green-600">Mentee Online</p>
+      </div>
+      <ng-template  #noMentee>
+         <p class="text-red-600">No one in the room</p>
+      </ng-template>
+   </div>
+   <div *ngIf="role === 'mentee'" class="w-2/3">
+      <div *ngIf="remoteSocketId; else noMentor">
+         <p class="text-green-600">Mentor Online</p>
+      </div>
+      <ng-template #noMentor>
+         <p class="text-red-600">No one in the room</p>
+      </ng-template>
+   </div>
+   <div class="text-center" class="w-full pl-28">
+      <span class="font-bold text-lg font-poppins flex gap-2 items-center"><i class="fa-solid fa-hourglass-end"></i><p style="margin: 0px;">{{counter}}</p></span>
+   </div>
+</div>
+<div class="w-full">
+   <div class="w-full flex justify-between gap-2">
+      <div class="w-full">
+         <p class="video_description px-3 py-2 tracking-widest"><span class="px-3 py-1 shadow-lg no-underline font-poppins  text-sm text-white bg-green-600 rounded-full">Local</span></p>
+         <video class="h-[460px] bg-gray-400" #local_video [autoplay]="true" [muted]="true"></video>
+      </div>
+      <div class="w-full ">
+         <p class="video_description px-3 py-2 tracking-widest"><span class="px-3 py-1 shadow-lg no-underline font-poppins  text-sm text-white bg-orange-600 rounded-full">Remote</span></p>
+         <video class=" h-[460px] bg-gray-400" #received_video [autoplay]="true"></video>
+      </div>
+   </div>
+   <div class="w-[615px] mt-3 flex justify-center text-white gap-5">
+      <!-- Camera Off -->
+      <div *ngIf="!videoCamera" (click)="startLocalVideo()" class="w-14 h-14 border border-solid border-sky-950  rounded-full cursor-pointer flex items-center justify-center hover:bg-sky-200">
+         <span  class="text-sky-900 text-lg"><i class="fa-solid fa-video-slash"></i></span>
+      </div>
+
+      <!-- Camera On -->
+      <div *ngIf="videoCamera" (click)="pauseLocalVideo()" class="w-14 h-14 border border-solid border-sky-950 rounded-full cursor-pointer flex items-center justify-center hover:bg-sky-200">
+         <span  class="text-sky-900 text-lg"><i class="fa-solid fa-video"></i></span>
+      </div>
+
+      <!-- Calling Mentee -->
+      <div  (click)="handleCallMentee()" *ngIf="remoteSocketId && role ==='mentor'" class="w-14 h-14 border border-solid border-green-800 hover:bg-green-200 rounded-full cursor-pointer flex items-center justify-center">
+         <span  class="text-green-800 text-lg"><i class="fa-solid fa-phone"></i></span>
+      </div>
+
+      <!-- Start button in mentee -->
+      <div  (click)="handleCallMentee()" *ngIf="remoteSocketId && role ==='mentee' && mentorCallStarted" class="w-14 h-14 border border-solid border-green-800 hover:bg-green-200 rounded-full cursor-pointer flex items-center justify-center">
+         <span  class="text-green-800 text-lg"><i class="fa-solid fa-s"></i></span>
+      </div>
+
+      <!-- Hang Up the Call -->
+      <div  (click)="disconnectCall()" *ngIf="callAccepted" class="w-14 h-14 border border-solid border-red-800 hover:bg-red-200 rounded-full cursor-pointer flex items-center justify-center">
+         <span  class="text-red-800 text-xl"><i class="fa-solid fa-xmark"></i></span>
+      </div>
+   </div>
+</div>

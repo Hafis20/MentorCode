@@ -90,59 +90,63 @@ const getBookingDetails = async (req, res) => {
 const completeMentorShip = async (req, res) => {
   try {
     const menteeId = new mongoose.Types.ObjectId(req.menteeId);
+    console.log(menteeId);
     const { bookingId, status } = req.body;
-    let bookingData = await BookedSlot.findOneAndUpdate({ menteeId: menteeId }); // Finding the mentee booking slot
+    console.log(bookingId)
+
+    let bookingData = await BookedSlot.findOne({ menteeId: menteeId }); // Finding the mentee booking slot
     let fee;
     let mentorId;
     let adminData = await getAdminData()   // Take the admin data
     if (!bookingData) {
       return res.status(400).json({ message: "Booking not found" });
     }
-    bookingData.details.forEach((booking) => {
-      // Find the booking details and update the status into completed
-      if (booking._id.equals(bookingId)) {
-        booking.status = status;
-        fee = booking.fee;      // Taking fee amount
-        mentorId = booking.mentorId;  // Taking mentor Id
-      }
-    });
-    bookingData.save(); // Saving to the database
-
+    if(bookingData){
+      bookingData.details.forEach((booking) => {
+        // Find the booking details and update the status into completed
+        if (booking._id.equals(bookingId)) {
+          booking.status = status;
+          fee = Number(booking.fee);      // Taking fee amount
+          mentorId = booking.mentorId;  // Taking mentor Id
+        }
+      });
+      
+      bookingData.save() // Saving to the database
+    }
     // Wallet management
     let adminWalletAmount = (fee * 15) / 100;
     let mentorWalletAmount = fee - adminWalletAmount;
-
     // Admin Wallet management
     let adminWallet = await Wallet.findOne({user_id:adminData._id});
     if(!adminWallet){      // If there is no admin wallet we want to create one
       adminWallet = new Wallet({
         user_id:adminData._id,
         balance:adminWalletAmount,
-        transaction_history:[adminWalletAmount],
+        transactionHistory:[{amount:adminWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       adminWallet.balance += adminWalletAmount,
-      adminWallet.transaction_history.push(adminWalletAmount);
+      adminWallet.transactionHistory.push({amount:adminWalletAmount,dateOfTransaction:new Date()});
     }
     await adminWallet.save();  // Save to the database
 
+   
     // Mentor Wallet management
     let mentorWallet = await Wallet.findOne({user_id:mentorId});
     if(!mentorWallet){      // If there is no admin wallet we want to create one
       mentorWallet = new Wallet({
         user_id:mentorId,
         balance:mentorWalletAmount,
-        transaction_history:[mentorWalletAmount],
+        transactionHistory:[{amount:mentorWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       mentorWallet.balance += mentorWalletAmount,
-      mentorWallet.transaction_history.push(mentorWalletAmount);
+      mentorWallet.transactionHistory.push({amount:mentorWalletAmount,dateOfTransaction:new Date()});
     }
     await mentorWallet.save();  // Save to the database
-
     res.status(200).json({ message: "Marked As Completed" });
   } catch (error) {
-    console.log(error.message);
+    console.log('Completion error : ',error.message);
     res.status(500).json({ message: "Internal Server error" });
   }
 };
@@ -159,22 +163,25 @@ const cancelMentorShip = async(req,res) =>{
 
     let adminData = await getAdminData();    // getting the admin data
 
-    let bookingData = await BookedSlot.findOneAndUpdate({user_id:menteeId});   //getting the mentee booking details
+    let bookingData = await BookedSlot.findOne({user_id:menteeId});   //getting the mentee booking details
     
     if(!bookingData){   // IF no data available
       return res.status(400).json({message:'Booking not found'})
     }
 
-    bookingData.details.forEach((booking)=>{
-      if(booking._id.equals(bookingId)){
-        booking.status = status;
-        fee = booking.fee;
-        mentorId = booking.mentorId;
-        paymentId = booking.payment_id;
-        slot_id = booking.slot_id;
-      }
-    })
-    await bookingData.save(); // Save the updated booking details into the database
+    if(bookingData){
+      bookingData.details.forEach((booking)=>{
+        if(booking._id.equals(bookingId)){
+          booking.status = status;
+          fee =Number( booking.fee);
+          mentorId = booking.mentorId;
+          paymentId = booking.payment_id;
+          slot_id = booking.slot_id;
+        }
+      })
+      console.log(fee);
+      await bookingData.save(); // Save the updated booking details into the database
+    }
     // Wallet Management
     let dividedAmount = (fee*50)/100;
     let adminWalletAmount = (dividedAmount*20)/100;
@@ -186,16 +193,18 @@ const cancelMentorShip = async(req,res) =>{
 
     // Admin wallet management
     let adminWallet = await Wallet.findOne({user_id:adminData._id}); 
+    // console.log('Admin Wallet : ',adminWallet);
     if(!adminWallet){      // If there is no admin wallet we want to create one
       adminWallet = new Wallet({
         user_id:adminData._id,
         balance:adminWalletAmount,
-        transaction_history:[adminWalletAmount],
+        transactionHistory:[{amount:adminWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       adminWallet.balance += adminWalletAmount,
-      adminWallet.transaction_history.push(adminWalletAmount);
+      adminWallet.transactionHistory.push({amount:adminWalletAmount,dateOfTransaction:new Date()});
     }
+    
     await adminWallet.save();  // Save to the database
 
     // Mentor Wallet management
@@ -204,11 +213,11 @@ const cancelMentorShip = async(req,res) =>{
       mentorWallet = new Wallet({
         user_id:mentorId,
         balance:mentorWalletAmount,
-        transaction_history:[mentorWalletAmount],
+        transactionHistory:[{amount:mentorWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       mentorWallet.balance += mentorWalletAmount,
-      mentorWallet.transaction_history.push(mentorWalletAmount);
+      mentorWallet.transactionHistory.push({amount:mentorWalletAmount,dateOfTransaction:new Date()});
     }
     await mentorWallet.save();  // Save to the database
 
@@ -218,11 +227,11 @@ const cancelMentorShip = async(req,res) =>{
       menteeWallet = new Wallet({
         user_id:menteeId,
         balance:menteeWalletAmount,
-        transaction_history:[menteeWalletAmount],
+        transactionHistory:[{amount:menteeWalletAmount,dateOfTransaction:new Date()}],
       })
     }else{               // If already exists
       menteeWallet.balance += menteeWalletAmount,
-      menteeWallet.transaction_history.push(menteeWalletAmount);
+      menteeWallet.transactionHistory.push({amount:menteeWalletAmount,dateOfTransaction:new Date()});
     }
     await menteeWallet.save();  // Save to the database
 

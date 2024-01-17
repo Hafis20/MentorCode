@@ -2,7 +2,8 @@
    <h1 class="font-bold ">MENTORS LIST</h1>
 </div>
 <div class="px-10 flex justify-between">
-   <filter (filterEvent)="filter($event)"></filter>
-   <searchbar  (searchEvent)="searchText($event)"></searchbar>
+   <filter (filterEvent)="filter($event)" [from]="'users'"></filter>
+   <searchbar (searchEvent)="searchText($event)"></searchbar>
 </div>
-<shared-table [tableHeaders]="tableHeaders" [usersList]="mentors" (totalUsers)="totalMentors" (blockUser)="block($event)" (unblockUser)="unblock($event)"></shared-table>
+<shared-table [tableHeaders]="tableHeaders" [usersList]="mentors" [totalUsers]="totalMentors"
+   (blockUser)="block($event)" (unblockUser)="unblock($event)"></shared-table>
