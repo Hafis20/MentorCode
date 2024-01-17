@@ -16,6 +16,7 @@ export class CardsComponent implements OnInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['mentorDetails']){
       this.mentorDetails = this.mentorDetails;
+      // console.log('mentor details : ',this.mentorDetails);
     }
   }
   
