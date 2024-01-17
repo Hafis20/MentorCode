@@ -2,7 +2,7 @@
    <div *ngFor="let mentor of mentorDetails" class="bg-white rounded-3xl shadow-lg p-8">
       <div class=" flex justify-between">
          <ng-container *ngIf="mentor.image;else defaultImg">
-            <img class="object-cover w-30 h-32" [src]="mentor.image" alt="Profile">
+            <img class="object-cover w-30 h-32" [src]="mentor?.image" alt="{{ mentor.name }} Profile">
          </ng-container>
          <ng-template #defaultImg>
             <img class="object-cover w-32 h-32" src="assets/imgs/background/default-profile.jpeg" alt="Profile">
