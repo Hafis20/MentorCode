@@ -17,7 +17,7 @@ mongoose
 // Cors configuration
 const cors = require("cors");
 app.use(cors({
-  origin: ["http://localhost:4200", "https://admin.socket.io"],
+  origin: ["http://localhost:4200","https://mentorcode.vhhafis.online", "https://admin.socket.io"],
   credentials: true,
 }));
 
