@@ -230,4 +230,5 @@ menteeRouter.get('/getProfile',menteeAuth,menteeController.getProfile); // Get t
 menteeRouter.post('/editProfile',menteeAuth,upload.single('image'),menteeController.editProfile); // Editing the mentee profile
 menteeRouter.post('/onceCompleted',menteeAuth,menteeController.onceCompleted); // Checking the mentor atlease take a class for the mentee
 menteeRouter.post('/setFeedback',menteeAuth,menteeController.setFeedback); // Setting the feedback of the mentor
+menteeRouter.post('/getFeedbackOfMentor',menteeAuth,menteeController.getFeedback); // get the feedback and rating of the mentor
 module.exports = menteeRouter;

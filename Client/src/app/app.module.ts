@@ -77,6 +77,7 @@ import { MenteeProfileComponent } from './component/mentee/mentee-profile/mentee
 import { MenteeEditProfileComponent } from './component/mentee/mentee-edit-profile/mentee-edit-profile.component';
 import { ToDatePipe } from './customPipes/to-date.pipe';
 import { TransactionHistoryComponent } from './shared/transaction-history/transaction-history.component';
+import { StarDirective } from './customDirectives/star.directive';
 
 
 @NgModule({
@@ -132,6 +133,7 @@ import { TransactionHistoryComponent } from './shared/transaction-history/transa
     MenteeEditProfileComponent,
     ToDatePipe,
     TransactionHistoryComponent,
+    StarDirective,
   ],
   imports: [
     BrowserModule,

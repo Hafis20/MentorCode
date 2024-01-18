@@ -12,8 +12,8 @@ export interface MenteeState {
     name: string;
     email: string;
     role: string;
-    image:string;
-    _id:string;
+    image: string;
+    _id: string;
   };
 }
 
@@ -33,8 +33,8 @@ export interface ListMentorsHomeOfMentee {
   experience: string;
   fee: number;
   image: string;
-  skills:string[];
-  about:string
+  skills: string[];
+  about: string;
 }
 
 // Slot model when we call depend on the user
@@ -44,10 +44,23 @@ export interface ShowMenteeCalenderData {
 }
 
 // get profile
-export interface MenteeProfile{
-  _id:string;
-  name:string;
-  mobile:string;
-  email:string;
+export interface MenteeProfile {
+  _id: string;
+  name: string;
+  mobile: string;
+  email: string;
+  image: string;
+}
+
+// Get feedback stat
+export interface ShowFeedback {
+  rating: number;
+  comments: Comments[];
+  totalPersons: number;
+}
+
+export interface Comments{
+  mentee:string;
   image:string;
+  comment:string;
 }
