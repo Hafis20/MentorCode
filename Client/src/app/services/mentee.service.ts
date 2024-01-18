@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HttpResponseModel,LoginModel,LoginResponseModel, UserInfo, ValidateOtpModel } from '../model/commonModel';
 
 import { Observable } from 'rxjs';
-import { ListMentorsHomeOfMentee, MenteeModel, MenteeProfile, ShowMenteeCalenderData } from '../model/menteeModel';
+import { ListMentorsHomeOfMentee, MenteeModel, MenteeProfile, ShowFeedback, ShowMenteeCalenderData } from '../model/menteeModel';
 import { GetMentorSlots } from '../model/mentorModel';
 import { FeedbackBtn } from '../model/bookingsModel';
 
@@ -82,7 +82,11 @@ export class MenteeService {
 
   // Feedback for mentor in mentee side
   sendFeedback(data:any):Observable<HttpResponseModel>{
-    console.log(data);
     return this.http.post<HttpResponseModel>(`${environment.menteeURL}/setFeedback`,data);
+  }
+
+  // get feedback from backend
+  getFeedbackOfMentor(data:{mentorId:string}):Observable<ShowFeedback>{
+    return this.http.post<ShowFeedback>(`${environment.menteeURL}/getFeedbackOfMentor`,data);
   }
 }

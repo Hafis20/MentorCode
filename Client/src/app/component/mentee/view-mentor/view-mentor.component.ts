@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import {
+  Comments,
   ListMentorsHomeOfMentee,
 } from 'src/app/model/menteeModel';
 import { GetMentorSlots } from 'src/app/model/mentorModel';
@@ -33,7 +34,11 @@ export class ViewMentorComponent implements OnInit, OnDestroy {
   bookedDates!:string[];
   slot_id!:string;
   slotTime!:string;
-  feedbackBtnEnable:boolean = false;
+  feedbackBtnEnable:boolean = false; 
+  // Review system
+  rate:number = 0;
+  reviewUserCount:number = 0;
+  comments!:Comments[];
 
 
   // Subscription
@@ -68,6 +73,7 @@ export class ViewMentorComponent implements OnInit, OnDestroy {
     // Dispatch an action for getting menteee data in to the store
     this.store.dispatch(getMentee());
     this.menteeOnceCompleted();
+    this.getFeedbackOfMentor();
   }
 
 
@@ -190,6 +196,17 @@ export class ViewMentorComponent implements OnInit, OnDestroy {
       }
     })
    
+  }
+
+  // Mentee feedback and rating
+  getFeedbackOfMentor(){
+    this.service.getFeedbackOfMentor({mentorId:this.mentorId}).subscribe({
+      next:(response)=>{
+        this.rate = response.rating;
+        this.reviewUserCount = response.totalPersons;
+        this.comments = response.comments;
+      }
+    })
   }
 
   ngOnDestroy(): void {

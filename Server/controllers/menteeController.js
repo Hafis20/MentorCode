@@ -334,6 +334,39 @@ const setFeedback = async (req, res) => {
   }
 };
 
+// get the feedback and mentor
+const getFeedback = async(req,res)=>{
+  try {
+    const {mentorId} = req.body;
+    const feedback = await Feedback.findOne({mentor_id:mentorId}).populate('feedback.mentee_id');
+    
+    let totalRating = 0;
+    let totalComments = [];
+    let totalReview = 0;
+    if(feedback){
+      totalRating = (feedback.feedback.reduce((acc,rate)=>acc+rate.rate,0))/feedback.feedback.length ;
+      totalComments = feedback.feedback.map((user)=>{
+        return {
+          mentee:user.mentee_id.name,
+          image:user.mentee_id.image,
+          comment:user.comment,
+        }
+      });
+      totalReview = feedback.feedback.length;
+    }
+
+    const data = {
+      rating:totalRating,
+      comments:totalComments,
+      totalPersons:totalReview
+    }
+    console.log(data)
+    res.status(201).json(data);
+  } catch (error) {
+    res.status(500).json({message:'Internal server error'});
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -346,4 +379,5 @@ module.exports = {
   editProfile,
   onceCompleted,
   setFeedback,
+  getFeedback
 };
