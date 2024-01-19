@@ -51,11 +51,28 @@ export class MentorDashboardComponent implements OnInit {
     });
   }
 
+  obj =[
+    {
+      month:'Jan',
+      revenue:3000
+    },
+    {
+      month:'Feb',
+      revenue:38700
+    },
+    {
+      month:'Mar',
+      revenue:8550
+    }
+  ]
+
+
   getStatistics() {
     this.service.getStatistics().subscribe({
       next: (response) => {
         this.totalSessions = response.totalSessions;
         this.bookingDetails = response.bookings;
+        
 
         this.pieOptions = {
           background: {

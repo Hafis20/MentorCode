@@ -1,7 +1,17 @@
-<div class="flex justify-between">
+<div class="flex justify-between gap-2">
    <!-- Graph -->
-   <div class="w-2/3">
-      <ag-charts-angular [options]="optionsPie"></ag-charts-angular>
+   <div class="flex flex-col w-full">
+      <div class="w-full h-[300px]">
+         <ag-charts-angular [options]="optionsPie"></ag-charts-angular>
+      </div>
+      <div class="w-full h-[300px]">
+         <ag-charts-angular [options]="options"></ag-charts-angular>
+      </div>
+      <div class="flex mt-3">
+         <div class="bg-blue-100 w-1/2">
+            <!-- <h1 class="text-center">Today's Sessions</h1> -->
+         </div>
+      </div>
    </div>
     <!-- Showing Amount and UserCount -->
 <div class="flex flex-col gap-3">

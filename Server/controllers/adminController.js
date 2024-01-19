@@ -250,6 +250,26 @@ const getBookingDetails = async(req,res)=>{
     res.status(500).json({message:'Internal server error'});
   }
 }
+
+// get monthly amount
+const getMonthlyRevenue = async(req,res)=>{
+  try {
+
+    // Booking data
+    const bookingData = await BookedSlots.find();
+    console.log(bookingData);
+
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    res.status(200).json({message:'Success'});
+
+  } catch (error) {
+    res.status(500).json({message:'Internal Server error'});
+  }
+}
 module.exports = {
   login,
   getAllMentees,
@@ -261,4 +281,5 @@ module.exports = {
   getAdminData,
   getStatistics,
   getBookingDetails,
+  getMonthlyRevenue,
 };
