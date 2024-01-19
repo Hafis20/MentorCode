@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
   totalMentors!:number;
   totalMentees!:number;
   bookingDetails!:any;
+  public options:AgChartOptions = {};
 
   // Subscription
   walletSub$!:Subscription;
@@ -53,6 +54,21 @@ export class DashboardComponent implements OnInit, OnDestroy{
     })
   }
 
+  obj = [
+    {
+      month:'Jan',
+      amount:1000
+    },
+    {
+      month:'Feb',
+      amount:5000
+    },
+    {
+      month:'Mar',
+      amount:650
+    }
+  ]
+
   getStatistics(){
     this.getStatSub$ = this.service.getStatistics().subscribe({
       next:(response)=>{
@@ -60,6 +76,32 @@ export class DashboardComponent implements OnInit, OnDestroy{
         this.totalMentees = response.noOfMentees;
         this.bookingDetails = response.bookingDetails;
   
+        this.options = {
+          background:{
+            visible: true, 
+          },
+          title:{
+            text:'Earnings by Month'
+          },
+          data: this.obj,
+          series: [
+            {
+                type: 'area',
+                xKey: 'month',
+                yKey: 'amount',
+                yName: 'Bookings',
+                stroke: 'blue',
+                strokeWidth: 3,
+                fill: 'lightBlue',
+                marker: {
+                    enabled: true,
+                    fill: 'blue',
+                },
+            },
+           
+        ],
+        }
+
         this.optionsPie = {
           background: {
             visible: true,

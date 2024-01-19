@@ -47,4 +47,6 @@ adminRouter.patch('/unblockMentor',adminAuth,adminController.unblockMentor);
 adminRouter.get('/getStatistics',adminAuth,adminController.getStatistics);
 // Getting the booking details for showing in admin table
 adminRouter.get('/getBookingDetails',adminAuth,adminController.getBookingDetails);
+// Getting the monthly revenue
+adminRouter.get('/getMonthlyRevenue',adminAuth,adminController.getMonthlyRevenue);
 module.exports = adminRouter;
