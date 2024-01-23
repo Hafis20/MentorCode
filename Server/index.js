@@ -16,7 +16,11 @@ mongoose
 
 // Cors configuration
 const cors = require("cors");
-app.use(cors());
+app.use(cors(
+  {
+    origin:'*',
+  }
+));
 
 // Socket configuration
 const socketManager = require("./config/socket.js");
@@ -58,7 +62,11 @@ const server = app.listen(PORT, () => {
 
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: [
+      "http://localhost:4200",
+      "https://mentorcode.vhhafis.online",
+      "https://admin.socket.io",
+    ],
     credentials: true,
   },
 });
