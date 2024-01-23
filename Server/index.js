@@ -58,11 +58,7 @@ const server = app.listen(PORT, () => {
 
 const io = new Server(server, {
   cors: {
-    origin: [
-      "http://localhost:4200",
-      "https://mentorcode.vhhafis.online",
-      "https://admin.socket.io",
-    ],
+    origin: '*',
     credentials: true,
   },
 });
