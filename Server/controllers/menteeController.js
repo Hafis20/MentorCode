@@ -239,7 +239,7 @@ const editProfile = async(req,res)=>{
     let imgUrl = menteeDetails.image;
 
     if(req.file){
-      imgUrl = `http://localhost:7000/${req.file.originalname}`;
+      imgUrl = `https://mentorcode.vhhafis.online/${req.file.originalname}`;
     }
     
     const updateData = await Mentee.findByIdAndUpdate(
