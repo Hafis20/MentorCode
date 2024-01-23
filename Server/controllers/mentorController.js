@@ -295,7 +295,7 @@ const editProfile = async (req, res) => {
     let imgUrl = mentorDetails.image; // If there is no image in the req.file
 
     if (req.file) {
-      imgUrl = `http://localhost:7000/${req.file.originalname}`;
+      imgUrl = `https://mentorcode.vhhafis.online/${req.file.originalname}`;
     }
     const updateMentorSkills = await Skills.findOneAndUpdate(
       // Updating the skills
