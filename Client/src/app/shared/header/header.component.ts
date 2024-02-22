@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
@@ -8,9 +9,10 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
 })
 export class HeaderComponent implements OnInit {
   @Output() gotoProfileEvent:EventEmitter<void> = new EventEmitter<void>
-  constructor(private auth:AuthServiceService) {}
+  constructor(private auth:AuthServiceService,private router:Router) {}
 
   currentUser!: string;
+  menteeLoggedIn:boolean = false;
   isLogin:boolean = false;
 
   ngOnInit(): void {
@@ -24,9 +26,14 @@ export class HeaderComponent implements OnInit {
     } else {
       this.currentUser = '';
     }
+
+    this.menteeLoggedIn = this.auth.checkMenteeLoggedIn();
   }
 
   gotoProfile(){
+    if(this.menteeLoggedIn){
+      this.router.navigate(['/mentee/dashboard']);
+    }
     this.gotoProfileEvent.emit();
   }
 }
