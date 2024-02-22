@@ -4,6 +4,7 @@ const Mentor = require("../models/mentorModel");
 const jwt = require("jsonwebtoken");
 const Skills = require("../models/skillsModel");
 const BookedSlot = require("../models/bookingModel");
+const cloudinary = require('../cloudinary');
 const { default: mongoose } = require("mongoose");
 
 // Registering the mentor controller
@@ -294,8 +295,11 @@ const editProfile = async (req, res) => {
 
     let imgUrl = mentorDetails.image; // If there is no image in the req.file
 
-    if (req.file) {
-      imgUrl = `https://mentorcode.vhhafis.online/${req.file.originalname}`;
+    if(req.file){
+      await cloudinary.uploader.upload(req.file.path,(err,result)=>{
+        if(err) return err;
+        else imgUrl=result.url;
+      })
     }
     const updateMentorSkills = await Skills.findOneAndUpdate(
       // Updating the skills

@@ -14,6 +14,8 @@ mongoose
   .then(() => console.log("MongoDb Connected"))
   .catch((error) => console.log(error.message));
 
+
+
 // Cors configuration
 const cors = require("cors");
 app.use(cors(

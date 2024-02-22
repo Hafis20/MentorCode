@@ -5,6 +5,7 @@ const { hashedPass, comparePass } = require("../Helper/hashPass");
 const Mentee = require("../models/menteeModel");
 const Feedback = require("../models/feedbackModel");
 const Bookings = require('../models/bookingModel');
+const cloudinary = require('../cloudinary');
 const { default: mongoose } = require("mongoose");
 
 // Registering the mentee
@@ -235,11 +236,13 @@ const editProfile = async(req,res)=>{
     const menteeId = req.menteeId;
     const {name,mobile} = req.body;
     let menteeDetails = await Mentee.findById(menteeId);
-
     let imgUrl = menteeDetails.image;
-
+    
     if(req.file){
-      imgUrl = `https://mentorcode.vhhafis.online/${req.file.originalname}`;
+      await cloudinary.uploader.upload(req.file.path,(err,result)=>{
+        if(err) return err;
+        else imgUrl=result.url;
+      })
     }
     
     const updateData = await Mentee.findByIdAndUpdate(
@@ -254,7 +257,7 @@ const editProfile = async(req,res)=>{
       {
         new:true,
       }
-    )
+    );
     res.status(200).json({message:'Edit success'})
   } catch (error) {
     res.status(500).json({message:"Internal server error"});
