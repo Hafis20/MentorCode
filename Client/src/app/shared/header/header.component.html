@@ -39,7 +39,7 @@
             </div>
 
             <div class="pr-5">
-              <button [routerLink]="['/mentee/login']" *ngIf="!currentUser || currentUser === 'mentee'"
+              <button [routerLink]="['/mentee/login']" *ngIf="!menteeLoggedIn;else profile"
                 class="border border-blue-900 text-blue-900 hover:bg-blue-900 duration-300 hover:text-white rounded-full font-bold px-6 py-2">
                 Sign In
               </button>
