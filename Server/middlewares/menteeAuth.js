@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+// Mentee token authentication middleware
+
 const menteeAuth = async(req,res,next)=>{
    const authHeader = req.headers['authorization'];
    if(authHeader && authHeader.startsWith('Mentee-Bearer')){
