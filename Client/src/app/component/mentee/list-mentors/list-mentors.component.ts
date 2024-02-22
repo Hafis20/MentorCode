@@ -25,7 +25,6 @@ export class ListMentorsComponent implements OnInit{
           this.totalMentors = response.length;
           this.searchList = response;
           this.currentUsers = this.showMentorForMentee();
-          
         },
         error:(error)=>{
           this.showMessage.showErrorToastr(error.error.message);
@@ -39,9 +38,17 @@ export class ListMentorsComponent implements OnInit{
     
     // Searching a mentor
     searchMentor(value:string){
-      // this.currentUsers = this.searchList.filter((mentor)=>{
-      //   return mentor.skills.some((skill)=>skill.toLowerCase() === value.toLowerCase());
-      // })
+      if(value ===''){
+        this.currentUsers = this.showMentorForMentee();
+        this.totalMentors = this.mentorsList.length;
+      }else{
+        this.currentUsers = this.searchList.filter((mentor)=>{
+          return mentor.skills.some((skill)=>skill.toLowerCase() === value.toLowerCase());
+        });
+        this.totalMentors = this.searchList.filter((mentor)=>{
+          return mentor.skills.some((skill)=>skill.toLowerCase() === value.toLowerCase());
+        }).length;
+      }
     }
 
     changePage(page:number){
