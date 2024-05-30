@@ -34,7 +34,7 @@
     "datatables.net-dt": "^1.11.3",
     "flv.js": "^1.6.2",
     "jquery": "^3.6.0",
-    "ngx-socket-io": "^4.6.1",
+    "ngx-socket-io": "^4.7.0",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.7.3",
