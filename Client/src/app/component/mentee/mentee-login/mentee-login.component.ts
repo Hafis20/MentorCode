@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ToastrService } from 'ngx-toastr';
-import { MenteeService } from 'src/app/services/mentee.service';
 import { MessageToastrService } from 'src/app/services/message-toastr.service';
 import { SharedFormService } from 'src/app/services/sharedForm.service';
-import { loginMentee, loginMenteeSuccess } from 'src/app/store/Mentee/mentee.action';
-import { getMenteeInfo } from 'src/app/store/Mentee/mentee.selector';
+import { loginMentee } from 'src/app/store/Mentee/mentee.action';
 
 @Component({
   selector: 'mentee-login',
@@ -15,6 +12,7 @@ import { getMenteeInfo } from 'src/app/store/Mentee/mentee.selector';
 })
 export class MenteeLoginComponent implements OnInit {
   loginForm!: FormGroup;
+  isLoading:boolean = false;
   userRole:string = 'mentee';
   constructor(
     private fb: FormBuilder,
@@ -46,6 +44,10 @@ export class MenteeLoginComponent implements OnInit {
         this.showMessage.showWarningToastr(this.sharedFormGroup.passwordError());
       }
     } else {
+      this.isLoading = true;
+      setTimeout(()=>{
+        this.isLoading = false;
+      },20000);
       // If login form is valid
       const data = {
         email: this.loginForm.value.form.email,

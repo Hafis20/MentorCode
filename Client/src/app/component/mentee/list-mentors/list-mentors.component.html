@@ -7,7 +7,23 @@
          <div class="flex justify-center">
             <h2><span class="text-3xl font-bold text-black mb-8">Our Mentors</span></h2>
          </div>
-         <div>
+         <div *ngIf="!currentUsers">
+            <ngx-skeleton-loader count="1" [theme]="{ 
+               'border-radius': '5px',
+               height: '50px',
+               'background-color': '#cbd5e0',
+             }" />
+
+             <ngx-skeleton-loader count="3" [theme]="{ 
+               'border-radius': '5px',
+               height: '350px',
+               'background-color': '#cbd5e0',
+               width:'32%',
+               'margin-left':'12px',
+               'margin-top':'10px'
+             }" />
+         </div>
+         <div *ngIf="currentUsers">
             <form>
                <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"></label>
                <div class="relative">
@@ -28,7 +44,8 @@
       </div>
       <!-- Pagination -->
       <div class="px-20 flex justify-end">
-         <pagination [total]="totalMentors" [currentPage]="currentPage" (changePageEvent)="changePage($event)"></pagination>
+         <pagination [total]="totalMentors" [currentPage]="currentPage" (changePageEvent)="changePage($event)">
+         </pagination>
       </div>
    </div>
 </div>

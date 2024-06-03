@@ -1,6 +1,6 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 // Socket io configuration
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
-const config:SocketIoConfig = {url:'http://localhost:7000',options:{}}
+const config: SocketIoConfig = { url: 'http://localhost:7000', options: {} }
 
 // Components
 import { AppComponent } from './app.component';
@@ -78,6 +78,8 @@ import { MenteeEditProfileComponent } from './component/mentee/mentee-edit-profi
 import { ToDatePipe } from './customPipes/to-date.pipe';
 import { TransactionHistoryComponent } from './shared/transaction-history/transaction-history.component';
 import { StarDirective } from './customDirectives/star.directive';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
 
 
 @NgModule({
@@ -149,8 +151,9 @@ import { StarDirective } from './customDirectives/star.directive';
       progressAnimation: 'increasing',
       preventDuplicates: true,
     }),
-    StoreModule.forRoot({mentee:MenteeReducer,admin:AdminReducer,mentor:MentorReducer}, {}),
-    EffectsModule.forRoot([MenteeEffect,AdminEffect,MentorEffect]),
+    NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' }),
+    StoreModule.forRoot({ mentee: MenteeReducer, admin: AdminReducer, mentor: MentorReducer }, {}),
+    EffectsModule.forRoot([MenteeEffect, AdminEffect, MentorEffect]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     AdminModule,
     AgChartsAngularModule,
@@ -158,9 +161,9 @@ import { StarDirective } from './customDirectives/star.directive';
     StarRatingModule.forRoot()   // For rating
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
-    {provide:HTTP_INTERCEPTORS,useClass:ErrorHandlingInterceptor,multi:true}
-  ], 
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlingInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
