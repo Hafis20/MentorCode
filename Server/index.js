@@ -67,6 +67,7 @@ const io = new Server(server, {
     origin: [
       "http://localhost:4200",
       "https://mentorcode.vhhafis.online",
+      "https://mentorcodevhhafis.netlify.app",
       "https://admin.socket.io",
     ],
     credentials: true,
