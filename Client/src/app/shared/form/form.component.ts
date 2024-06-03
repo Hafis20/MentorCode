@@ -8,12 +8,23 @@ import { FormGroup } from '@angular/forms';
 })
 export class FormComponent implements OnInit {
 
-  @Input() parentGroup!:FormGroup;
-  @Input() form!:FormGroup;
+  passwordFieldType: string = 'password';
 
-    constructor(){}
+  @Input() parentGroup!: FormGroup;
+  @Input() form!: FormGroup;
 
-    ngOnInit(): void {
-      
+  constructor() { }
+
+  ngOnInit(): void {
+
+  }
+
+
+  hideAndShowPassword() {
+    if (this.passwordFieldType === 'password') {
+      this.passwordFieldType = 'text';
+    } else {
+      this.passwordFieldType = 'password';
     }
+  }
 }

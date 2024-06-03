@@ -21,6 +21,7 @@ export class MenteeEffect {
       exhaustMap((action) => {
         return this.menteeService.login(action.data).pipe(
           map((data) => {
+            console.log(data);
             const userData = data;
             if (userData) {
               localStorage.setItem('menteeToken', userData.accessToken);
